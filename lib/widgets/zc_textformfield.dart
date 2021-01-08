@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/widgets/vmd_text.dart';
+import 'package:zaincart_app/widgets/zc_text.dart';
 
-class VMDTextFormField extends StatelessWidget {
-  VMDTextFormField(
+class ZCTextFormField extends StatelessWidget {
+  ZCTextFormField(
       {this.hintText,
       this.subHint,
       this.controller,
@@ -85,7 +85,7 @@ class VMDTextFormField extends StatelessWidget {
                                     letterSpacing: 0.85))
                             .width +
                         20,
-                    child: VMDText(
+                    child: ZCText(
                       text: subHint,
                       color: Constants.vmd_font_light_grey,
                       fontSize: kFontSize,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/utils/constants.dart';
 
-class VMDButton extends StatelessWidget {
-  VMDButton(
+class ZCButton extends StatelessWidget {
+  ZCButton(
       {this.title = "VMDButton",
       this.onPressed,
       this.width,

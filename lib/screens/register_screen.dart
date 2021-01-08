@@ -5,9 +5,9 @@ import 'package:zaincart_app/models/signup_data.dart';
 import 'package:zaincart_app/screens/login_screen.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/widgets/vmd_button.dart';
-import 'package:zaincart_app/widgets/vmd_text.dart';
-import 'package:zaincart_app/widgets/vmd_textformfield.dart';
+import 'package:zaincart_app/widgets/zc_button.dart';
+import 'package:zaincart_app/widgets/zc_text.dart';
+import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -55,7 +55,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                 new Container(
                   height: divHeight / 3,
                   child: Center(
-                      child: VMDText(
+                      child: ZCText(
                     text: "ZainCart",
                     fontSize: 30.0,
                   )),
@@ -81,7 +81,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                           new SizedBox(
                             height: 20.0,
                           ),
-                          new VMDText(
+                          new ZCText(
                             text: "REGISTER",
                             semiBold: true,
                           ),
@@ -89,7 +89,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                             height: 20.0,
                           ),
                           new Container(
-                            child: VMDTextFormField(
+                            child: ZCTextFormField(
                               hintText: "First Name",
                               controller: _firstName_controller,
                               textInputType: TextInputType.text,
@@ -102,7 +102,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                             height: 20.0,
                           ),
                           new Container(
-                            child: VMDTextFormField(
+                            child: ZCTextFormField(
                               hintText: "Last Name",
                               controller: _lastName_controller,
                               textCapitalization: TextCapitalization.sentences,
@@ -114,7 +114,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                             height: 20.0,
                           ),
                           new Container(
-                            child: VMDTextFormField(
+                            child: ZCTextFormField(
                               hintText: "Phone",
                               controller: _lastName_controller,
                               emptyValidator: true,
@@ -126,7 +126,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                             height: 20.0,
                           ),
                           new Container(
-                            child: VMDTextFormField(
+                            child: ZCTextFormField(
                               hintText: "Email",
                               controller: _email_controller,
                               validator: (email) {
@@ -146,7 +146,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                             height: 20.0,
                           ),
                           new Container(
-                            child: VMDTextFormField(
+                            child: ZCTextFormField(
                               hintText: "Password",
                               controller: _password_controller,
                               obscureText: true,
@@ -168,7 +168,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                           Padding(
                             padding: EdgeInsets.only(
                                 left: _edgePadding, right: _edgePadding),
-                            child: new VMDButton(
+                            child: new ZCButton(
                               title: "CREATE",
                               onPressed: () => _signupTapped(),
                             ),
@@ -178,12 +178,12 @@ class SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Row(
                             children: [
-                              new VMDText(
+                              new ZCText(
                                 text: "Already have an account please",
                               ),
                               new FlatButton(
                                 onPressed: () => _navigateToLogin(),
-                                child: new VMDText(
+                                child: new ZCText(
                                   text: 'Sign in',
                                   underline: true,
                                 ),

@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:zaincart_app/screens/home_controller.dart';
 import 'package:zaincart_app/screens/register_screen.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/widgets/vmd_button.dart';
-import 'package:zaincart_app/widgets/vmd_text.dart';
-import 'package:zaincart_app/widgets/vmd_textformfield.dart';
+import 'package:zaincart_app/widgets/zc_button.dart';
+import 'package:zaincart_app/widgets/zc_text.dart';
+import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class LoginScreenState extends State<LoginScreen> {
                   new Container(
                     height: divHeight / 3,
                     child: Center(
-                        child: VMDText(
+                        child: ZCText(
                       text: "ZainCart",
                       fontSize: 30.0,
                     )),
@@ -58,7 +59,7 @@ class LoginScreenState extends State<LoginScreen> {
                             new SizedBox(
                               height: 50.0,
                             ),
-                            new VMDText(
+                            new ZCText(
                               text: "LOGIN",
                               semiBold: true,
                             ),
@@ -68,7 +69,7 @@ class LoginScreenState extends State<LoginScreen> {
                             new Container(
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
-                              child: VMDTextFormField(
+                              child: ZCTextFormField(
                                 hintText: "Email Address",
                                 controller: _usernameController,
                                 textInputType: TextInputType.emailAddress,
@@ -90,7 +91,7 @@ class LoginScreenState extends State<LoginScreen> {
                             new Container(
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
-                              child: VMDTextFormField(
+                              child: ZCTextFormField(
                                 hintText: "Password",
                                 controller: _passwordController,
                                 obscureText: true,
@@ -111,7 +112,7 @@ class LoginScreenState extends State<LoginScreen> {
                             Padding(
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
-                              child: new VMDButton(
+                              child: new ZCButton(
                                 title: "LOGIN",
                                 onPressed: () => _loginTapped(),
                               ),
@@ -124,18 +125,18 @@ class LoginScreenState extends State<LoginScreen> {
                               children: [
                                 InkWell(
                                   onTap: () => _forgotPasswordTapped(),
-                                  child: new VMDText(
+                                  child: new ZCText(
                                     text: 'Forgot Your Password?',
                                     semiBold: false,
                                     color: Constants.vmd_button_text_grey,
                                   ),
                                 ),
-                                new VMDText(
+                                new ZCText(
                                   text: " / ",
                                 ),
                                 new InkWell(
                                   onTap: () => _signUpTapped(),
-                                  child: new VMDText(
+                                  child: new ZCText(
                                     text: 'Create An Account',
                                     color: Constants.vmd_button_text_grey,
                                     semiBold: false,
@@ -163,5 +164,8 @@ class LoginScreenState extends State<LoginScreen> {
 
   void _forgotPasswordTapped() {}
 
-  void _loginTapped() {}
+  void _loginTapped() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => HomeController()));
+  }
 }

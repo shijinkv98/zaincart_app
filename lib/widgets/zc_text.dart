@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/utils/constants.dart';
 
-class VMDText extends StatelessWidget {
-  VMDText(
+class ZCText extends StatelessWidget {
+  ZCText(
       {this.text,
       this.fontSize = kFontSize,
       this.bold = false,
