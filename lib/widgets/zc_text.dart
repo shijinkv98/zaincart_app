@@ -12,7 +12,7 @@ class ZCText extends StatelessWidget {
       this.underline = false,
       this.textAlign,
       this.overflow = TextOverflow.ellipsis,
-      this.color = const Color(0xFF707070)});
+      this.color = Colors.black});
 
   final String text;
   final double fontSize;

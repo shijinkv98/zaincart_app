@@ -32,7 +32,7 @@ class LoginScreenState extends State<LoginScreen> {
         body: ProgressHUD(
           child: Container(
               constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(color: Colors.orange[100]),
+              decoration: BoxDecoration(color: Constants.zc_orange),
               child: ListView(
                 children: <Widget>[
                   new Container(

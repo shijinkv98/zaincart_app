@@ -3,6 +3,8 @@ import 'package:zaincart_app/screens/favourite_screen.dart';
 import 'package:zaincart_app/screens/home_screen.dart';
 import 'package:zaincart_app/screens/my_cart_screen.dart';
 import 'package:zaincart_app/screens/settings_screen.dart';
+import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/widgets/zc_text.dart';
 
 class HomeController extends StatefulWidget {
   @override
@@ -24,7 +26,9 @@ class _HomeControllerState extends State<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Flutter App'),
+        title: ZCText(text: "ZainCart", color: Constants.zc_orange,bold: true, fontSize: 30.0,),
+        backgroundColor: Colors.white,
+        
       ),
       body: _children[_currentIndex],
     
@@ -34,19 +38,19 @@ class _HomeControllerState extends State<HomeController> {
             _currentIndex, // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.home, color: Colors.orange,),
+            icon: new Icon(Icons.home, color: Constants.zc_orange,),
             label: "", 
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.settings,color: Colors.orange,),
+            icon: new Icon(Icons.settings,color: Constants.zc_orange,),
             label: "", 
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.favorite,color: Colors.orange,),
+            icon: new Icon(Icons.favorite,color: Constants.zc_orange,),
             label: ""
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart,color: Colors.orange,),
+            icon: Icon(Icons.shopping_cart,color: Constants.zc_orange,),
             label: ""
           )
         ],

@@ -9,7 +9,7 @@ class Constants {
 
   //colors..
 
-  static const vmd_green = const Color(0xFF00A99D);
+  static const zc_orange = Colors.deepOrange;
   static const vmd_diamond_green = const Color(0xFFB0BF7A);
   static const vmd_bg_grey = const Color(0xFFF8F8F8);
   static const vmd_bg_green = Color.fromRGBO(0, 169, 157, 0.25);
