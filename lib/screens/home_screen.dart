@@ -52,6 +52,82 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Column(children: [
+                            Container(
+                                height: 80.0,
+                                width: 100.0,
+                                child: Image.network(
+                                  "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
+                                  fit: BoxFit.contain,
+                                )),
+                            ZCText(
+                              text: "Grocery",
+                              color: Colors.white,
+                              textAlign: TextAlign.center,
+                            )
+                          ]),
+                        ),
+                        Expanded(
+                          child: Column(
+                              
+                              children: [
+                                Container(
+                                    height: 80.0,
+                                    width: 100.0,
+                                    child: Image.network(
+                                      "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
+                                      fit: BoxFit.contain,
+                                    )),
+                                ZCText(
+                                  text: "Fruit & Vegetables",
+                                  color: Colors.white,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                )
+                              ]),
+                        ),
+                        Expanded(
+                          child: Column(children: [
+                            Center(
+                                child: Container(
+                                    height: 80.0,
+                                    width: 100.0,
+                                    child: Image.network(
+                                      "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
+                                      fit: BoxFit.contain,
+                                    ))),
+                            Center(
+                              child: ZCText(
+                                text: "Diary",
+                                color: Colors.white,
+                              ),
+                            )
+                          ]),
+                        ),
+                        Expanded(
+                          child: Column(children: [
+                            Center(
+                                child: Container(
+                                    height: 80.0,
+                                    width: 100.0,
+                                    child: Image.network(
+                                      "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
+                                      fit: BoxFit.contain,
+                                    ))),
+                            Center(
+                              child: ZCText(
+                                text: "Meat",
+                                color: Colors.white,
+                              ),
+                            )
+                          ]),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),

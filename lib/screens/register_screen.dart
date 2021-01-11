@@ -176,19 +176,21 @@ class SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(
                             height: 15.0,
                           ),
-                          Row(
-                            children: [
-                              new ZCText(
-                                text: "Already have an account please",
-                              ),
-                              new FlatButton(
-                                onPressed: () => _navigateToLogin(),
-                                child: new ZCText(
-                                  text: 'Sign in',
-                                  underline: true,
+                          Expanded(
+                            child: Row(
+                              children: [
+                                new ZCText(
+                                  text: "Already have an account please",
                                 ),
-                              )
-                            ],
+                                new FlatButton(
+                                  onPressed: () => _navigateToLogin(),
+                                  child: new ZCText(
+                                    text: 'Sign in',
+                                    underline: true,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       ),

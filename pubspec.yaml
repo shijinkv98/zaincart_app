@@ -32,6 +32,7 @@ dependencies:
   connectivity: ^2.0.2
   file_picker: ^2.1.5
   image_picker: ^0.6.7+17
+  carousel_pro: ^1.0.0
 
 dev_dependencies:
   flutter_test:
