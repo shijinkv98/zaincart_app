@@ -11,7 +11,7 @@ class ProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 205.0,
+      height: 225.0,
       margin: EdgeInsets.only(top: 10.0),
       padding: EdgeInsets.only(left: 10.0, right: 10.0),
       child: Column(
@@ -32,6 +32,7 @@ class ProductsList extends StatelessWidget {
                         child: new Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
+                            padding: EdgeInsets.only(top: 5.0),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -47,15 +48,24 @@ class ProductsList extends StatelessWidget {
                                 ),
                                 Positioned(
                                     left: 10.0,
-                                    child: Icon(
-                                      Icons.access_alarm,
-                                      color: Colors.grey,
+                                    child: CircleAvatar(
+                                      backgroundColor: Constants.zc_orange,
+                                      radius: 12,
+                                      child: ZCText(text: "5%",color: Colors.white, fontSize: 10,),
                                     )),
                                 Positioned(
                                     right: 10.0,
-                                    child: Icon(
-                                      Icons.favorite_border_outlined,
-                                      color: Colors.grey,
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 10,
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        icon: Icon(Icons.favorite_border_outlined),
+                                        color: Colors.grey,
+                                        onPressed: () {
+                                          print("Add to faviorate button clicked.....");
+                                        },
+                                      ),
                                     )),
                                 Column(
                                   children: [
@@ -63,6 +73,7 @@ class ProductsList extends StatelessWidget {
                                         child: Container(
                                             height: 80.0,
                                             width: 130.0,
+                                            margin: EdgeInsets.only(top: 10.0),
                                             child: Image.network(
                                               "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
                                               fit: BoxFit.contain,
@@ -85,6 +96,9 @@ class ProductsList extends StatelessWidget {
                                         color: Constants.zc_orange,
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
                                     Container(
                                       width: 180,
                                       padding: EdgeInsets.all(5.0),
@@ -104,10 +118,12 @@ class ProductsList extends StatelessWidget {
                                             children: [
                                               Icon(
                                                 Icons.shopping_cart_outlined,
-                                                color: Colors.grey,
+                                                color: Colors.black87,
+                                                size: 20.0,
                                               ),
                                               ZCText(
                                                 text: "Add to Cart",
+                                                fontSize: kSmallFontSize,
                                               ),
                                               Icon(
                                                 Icons.add,
@@ -133,7 +149,7 @@ class ProductsList extends StatelessWidget {
   }
 
   _onItemTap(BuildContext context) {
-     Navigator.of(context).push(
+    Navigator.of(context).push(
         MaterialPageRoute(builder: (BuildContext context) => ProductDetail()));
   }
 }

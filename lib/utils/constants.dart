@@ -4,7 +4,7 @@ class Constants {
   //font
   static const segoe_font = 'Segoe';
   //asset images
-  static const bg_diamonds = 'assets/bg_diamonds.png';
+  static const zc_logo = 'assets/zc_logo.png';
 
 
   //colors..

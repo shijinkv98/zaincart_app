@@ -1,7 +1,10 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/products_list.dart';
+import 'package:zaincart_app/widgets/zc_logo.dart';
+import 'package:zaincart_app/widgets/zc_search_field.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,16 +20,51 @@ class _HomeScreenState extends State<HomeScreen> {
     final double divHeight = MediaQuery.of(context).size.height;
     final double divWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        title: ZCLogo(),
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 0.0),
+          child: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          )
+        ],
+      ),
       body: ProgressHUD(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(
+                  height: 150.0,
+                  width: divWidth,
+                  child: Carousel(
+                    dotBgColor: Colors.transparent,
+                    dotSize: 5.0,
+                    dotSpacing: 15.0,
+                    images: [
+                      NetworkImage(
+                          'https://www.thespruceeats.com/thmb/ZnWDXm0VjfY2wy25ocFqZccy5YY=/2164x1217/smart/filters:no_upscale()/freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.jpg'),
+                      NetworkImage(
+                          'https://d12man5gwydfvl.cloudfront.net/wp-content/uploads/2020/09/Fresh-vegetables-at-the-chiller-940x667.jpg'),
+                      NetworkImage(
+                          'https://previews.123rf.com/images/serezniy/serezniy1110/serezniy111000508/10817587-fresh-vegetables-in-basket-on-wooden-table-on-green-background.jpg'),
+                    ],
+                  )),
               Container(
-                height: 150.0,
-                color: Colors.green,
-              ),
-              Container(
-                height: 220.0,
+                height: 240.0,
                 decoration: BoxDecoration(
                     color: Constants.zc_orange,
                     borderRadius: BorderRadius.only(
@@ -35,12 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: new Container(
-                        height: 35.0,
-                        color: Colors.white,
-                      ),
-                    ),
+                        padding: const EdgeInsets.all(10.0),
+                        child: new ZCSearchField(
+                          hintText: "Search",
+                        )),
                     SizedBox(
                       height: 10,
                     ),
@@ -72,23 +108,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           ]),
                         ),
                         Expanded(
-                          child: Column(
-                              
-                              children: [
-                                Container(
-                                    height: 80.0,
-                                    width: 100.0,
-                                    child: Image.network(
-                                      "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
-                                      fit: BoxFit.contain,
-                                    )),
-                                ZCText(
-                                  text: "Fruit & Vegetables",
-                                  color: Colors.white,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                )
-                              ]),
+                          child: Column(children: [
+                            Container(
+                                height: 80.0,
+                                width: 100.0,
+                                child: Image.network(
+                                  "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
+                                  fit: BoxFit.contain,
+                                )),
+                            ZCText(
+                              text: "Fruit & Vegetables",
+                              color: Colors.white,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                            )
+                          ]),
                         ),
                         Expanded(
                           child: Column(children: [

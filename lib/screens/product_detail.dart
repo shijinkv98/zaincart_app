@@ -20,6 +20,15 @@ class ProductDetailState extends State<ProductDetail> {
           bold: true,
           fontSize: 30.0,
         ),
+        leading: Padding(
+            padding: EdgeInsets.only(left: 0.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black,),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(

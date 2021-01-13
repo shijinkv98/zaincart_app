@@ -25,11 +25,7 @@ class _HomeControllerState extends State<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: ZCText(text: "ZainCart", color: Constants.zc_orange,bold: true, fontSize: 30.0,),
-        backgroundColor: Colors.white,
-        
-      ),
+
       body: _children[_currentIndex],
     
       bottomNavigationBar: BottomNavigationBar(
