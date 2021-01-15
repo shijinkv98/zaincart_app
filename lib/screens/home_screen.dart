@@ -2,8 +2,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/widgets/products_list.dart';
-import 'package:zaincart_app/widgets/zc_logo.dart';
+import 'package:zaincart_app/widgets/zc_products_list.dart';
 import 'package:zaincart_app/widgets/zc_search_field.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -21,14 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final double divWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: ZCLogo(),
+        title: Image.asset(
+      Constants.zc_logo_notext,
+      height: 180.0,
+      fit: BoxFit.contain,
+    ),
         backgroundColor: Colors.white,
         leading: Padding(
           padding: EdgeInsets.only(left: 0.0),
           child: IconButton(
             icon: Icon(
               Icons.menu,
-              color: Colors.black,
+              color: Constants.zc_font_black,
             ),
             onPressed: () {},
           ),
@@ -168,13 +171,13 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 10,
               ),
-              ProductsList(
+              ZCProductsList(
                 title: "LATEST PRODUCTS",
               ),
               SizedBox(
                 height: 10,
               ),
-              ProductsList(
+              ZCProductsList(
                 title: "NEW PRODUCTS",
               ),
               Padding(
@@ -197,10 +200,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           new ZCText(
                             text: "REFER A FRIEND",
-                            semiBold: true,
+                            bold: true,
                             fontSize: 18.0,
                             color: Constants.zc_orange,
                           ),
+                          SizedBox(height: 5.0,),
                           Container(
                               decoration: BoxDecoration(
                                   color: Constants.zc_orange,
@@ -211,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     topRight: Radius.circular(35),
                                   )),
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0, bottom: 5.0),
                                 child: new ZCText(
                                   text: "Refer Now",
                                   semiBold: true,
@@ -233,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              ProductsList(
+              ZCProductsList(
                 title: "FEATURED PRODUCTS",
               ),
               Padding(
@@ -257,11 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.security,
-                              color: Constants.zc_orange,
-                              size: 45.0,
-                            ),
+                            Image.asset(Constants.ic_secure, height: 50.0, width: 50.0,),
                             SizedBox(height: 10.0),
                             new ZCText(
                               text: "100% Secure\nPayments",
@@ -283,11 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.speed_rounded,
-                              color: Constants.zc_orange,
-                              size: 45.0,
-                            ),
+                            Image.asset(Constants.ic_delivery, height: 50.0, width: 50.0,),
                             SizedBox(height: 10.0),
                             new ZCText(
                               text: "Speed Delivery",
@@ -309,11 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.phone_callback_rounded,
-                              color: Constants.zc_orange,
-                              size: 45.0,
-                            ),
+                            Image.asset(Constants.ic_support, height: 50.0, width: 50.0,),
                             SizedBox(height: 10.0),
                             new ZCText(
                               text: "24x7 Support",

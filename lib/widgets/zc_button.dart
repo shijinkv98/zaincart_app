@@ -6,10 +6,10 @@ class ZCButton extends StatelessWidget {
       {this.title = "VMDButton",
       this.onPressed,
       this.width,
-      this.height = 50.0,
+      this.height = 40.0,
       this.fontSize = kFontSize,
       this.border = false,
-      this.color = Colors.deepOrangeAccent,
+      this.color = Constants.zc_orange,
       this.isDisabled = false,
       this.titleColor = Colors.white});
   final String title;
@@ -33,9 +33,9 @@ class ZCButton extends StatelessWidget {
         elevation: 0.0,
         shape: border
             ? RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(3.0),
+                borderRadius: BorderRadius.circular(5.0),
                 side: BorderSide(color: titleColor))
-            : RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+            : RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         child: new Center(
           child: new Text(
             title,

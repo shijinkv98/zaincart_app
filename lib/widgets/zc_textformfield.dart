@@ -64,7 +64,7 @@ class ZCTextFormField extends StatelessWidget {
               contentPadding: EdgeInsets.only(left: 10.0),
               enabledBorder: new UnderlineInputBorder(
                   borderSide: new BorderSide(
-                      color: Constants.vmd_button_text_grey, width: 1.0)),
+                      color: Constants.zc_font_grey, width: 1.0)),
               hintStyle: TextStyle(
                   fontFamily: Constants.segoe_font,
                   fontSize: kFieldFontSize,
@@ -87,7 +87,7 @@ class ZCTextFormField extends StatelessWidget {
                         20,
                     child: ZCText(
                       text: subHint,
-                      color: Constants.vmd_font_light_grey,
+                      color: Constants.zc_font_light_grey,
                       fontSize: kFontSize,
                     ))
                 : new Container())

@@ -6,6 +6,7 @@ import 'package:zaincart_app/screens/register_screen.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
+import 'package:zaincart_app/widgets/zc_logo.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
@@ -32,16 +33,12 @@ class LoginScreenState extends State<LoginScreen> {
         body: ProgressHUD(
           child: Container(
               constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(color: Constants.zc_orange),
+              decoration: BoxDecoration(color: Constants.zc_yellow),
               child: ListView(
                 children: <Widget>[
                   new Container(
                     height: divHeight / 3,
-                    child: Center(
-                        child: ZCText(
-                      text: "ZainCart",
-                      fontSize: 30.0,
-                    )),
+                    child: Center(child: ZCLogo()),
                   ),
                   Container(
                     height: divHeight - divHeight / 3,
@@ -62,6 +59,7 @@ class LoginScreenState extends State<LoginScreen> {
                             new ZCText(
                               text: "LOGIN",
                               semiBold: true,
+                              color: Constants.zc_font_black,
                             ),
                             new SizedBox(
                               height: 50.0,
@@ -70,7 +68,7 @@ class LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
                               child: ZCTextFormField(
-                                hintText: "Email Address",
+                                hintText: "Email",
                                 controller: _usernameController,
                                 textInputType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
@@ -118,7 +116,7 @@ class LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 30.0,
+                              height: 20.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -128,17 +126,22 @@ class LoginScreenState extends State<LoginScreen> {
                                   child: new ZCText(
                                     text: 'Forgot Your Password?',
                                     semiBold: false,
-                                    color: Constants.vmd_button_text_grey,
+                                    fontSize: kSmallFontSize,
+                                    color: Constants.zc_font_black,
                                   ),
                                 ),
                                 new ZCText(
                                   text: " / ",
+                                  fontSize: kSmallFontSize,
+                                  color: Constants.zc_font_black,
+                                  semiBold: false,
                                 ),
                                 new InkWell(
                                   onTap: () => _signUpTapped(),
                                   child: new ZCText(
                                     text: 'Create An Account',
-                                    color: Constants.vmd_button_text_grey,
+                                    fontSize: kSmallFontSize,
+                                    color: Constants.zc_font_black,
                                     semiBold: false,
                                   ),
                                 ),

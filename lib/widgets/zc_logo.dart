@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:zaincart_app/utils/constants.dart';
 
 class ZCLogo extends StatelessWidget {
+  ZCLogo({this.size = 240.0});
+  final double size;
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      "assets/zc_logo.png",
-      height: 40.0,
+      Constants.zc_logo,
+      height: size,
       fit: BoxFit.contain,
     );
   }

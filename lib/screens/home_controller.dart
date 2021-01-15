@@ -17,7 +17,6 @@ class _HomeControllerState extends State<HomeController> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomeScreen(),
-    SettingsScreen(),
     FavouriteScreen(),
     MyCartScreen()
   ];
@@ -25,30 +24,31 @@ class _HomeControllerState extends State<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: _children[_currentIndex],
-    
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex:
             _currentIndex, // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Icons.home, color: Constants.zc_orange,),
-            label: "", 
+            icon: new Icon(
+              Icons.home_outlined,
+              color: Constants.zc_orange,
+            ),
+            label: "",
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.settings,color: Constants.zc_orange,),
-            label: "", 
-          ),
+              icon: new Icon(
+                Icons.favorite_outline,
+                color: Constants.zc_orange,
+              ),
+              label: ""),
           BottomNavigationBarItem(
-            icon: new Icon(Icons.favorite,color: Constants.zc_orange,),
-            label: ""
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart,color: Constants.zc_orange,),
-            label: ""
-          )
+              icon: Icon(
+                Icons.shopping_cart_outlined,
+                color: Constants.zc_orange,
+              ),
+              label: "")
         ],
       ),
     );

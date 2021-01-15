@@ -12,7 +12,7 @@ class ZCText extends StatelessWidget {
       this.underline = false,
       this.textAlign,
       this.overflow = TextOverflow.ellipsis,
-      this.color = Colors.black});
+      this.color = Constants.zc_font_black});
 
   final String text;
   final double fontSize;
@@ -36,10 +36,10 @@ class ZCText extends StatelessWidget {
           fontSize: fontSize,
           fontWeight: semiBold
               ? FontWeight.w600
-              : bold ? FontWeight.bold : FontWeight.normal,
+              : bold ? FontWeight.w800 : FontWeight.normal,
           decoration: underline ? TextDecoration.underline : null,
           fontFamily: Constants.segoe_font,
-          letterSpacing: 0.85),
+          ),
       textAlign: textAlign,
     );
   }

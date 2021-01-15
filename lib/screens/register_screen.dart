@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/models/signup_data.dart';
 import 'package:zaincart_app/screens/login_screen.dart';
+import 'package:zaincart_app/utils/alert_utils.dart';
+import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
@@ -116,7 +119,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                           new Container(
                             child: ZCTextFormField(
                               hintText: "Phone",
-                              controller: _lastName_controller,
+                              controller: _phone_controller,
                               emptyValidator: true,
                               textInputAction: TextInputAction.next,
                               textInputType: TextInputType.phone,
@@ -209,23 +212,27 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   _signupTapped() {
     if (_formKey.currentState.validate()) {
-      _signupData.firstName = _firstName_controller.text;
-      _signupData.lastName = _lastName_controller.text;
+      _signupData.firstname = _firstName_controller.text;
+      _signupData.lastname = _lastName_controller.text;
       _signupData.email = _email_controller.text;
-      _signupData.city = _city_controller.text;
-      _signupData.address1 = _address_controller.text;
-      _signupData.state = _state_controller.text;
-      _signupData.country = _selectedCountry;
-      _signupData.mobilecountrycode = _countryCode;
-      _signupData.mobileNumber = _phone_controller.text;
-      _signupData.phone = _phone_controller.text;
       _signupData.password = _password_controller.text;
-      _signupData.otpauth = radioGroup;
-      _signupData.roles = "Consumer";
 
       if (_validateFields()) {
         AppUtils.isConnectedToInternet(context).then((isConnected) {
-          if (isConnected) {}
+          if (isConnected) {
+            APIService().signUpUser(_signupData).then((response) {
+              setState(() => _isLoading = false);
+              if (response.statusCode == 200) {
+                Response _signupResponse =
+                    Response.fromJson(response.data);
+                if (_signupResponse.success != 1) {
+                  AlertUtils.showToast(_signupResponse.error, context);
+                } else {
+                  AlertUtils.showToast("Registration Successfull", context);
+                }
+              }
+            });
+          }
         });
       }
     } else {

@@ -5,25 +5,23 @@ class Constants {
   static const segoe_font = 'Segoe';
   //asset images
   static const zc_logo = 'assets/zc_logo.png';
-
+  static const zc_logo_notext = 'assets/zc_logo_notext.png';
+  static const ic_add_to_cart = 'assets/ic_add_to_cart.png';
+  static const ic_delivery = 'assets/ic_delivery.png';
+  static const ic_support = 'assets/ic_support.png';
+  static const ic_secure = 'assets/ic_secure.png';
 
   //colors..
 
-  static const zc_orange = Colors.deepOrange;
-  static const vmd_diamond_green = const Color(0xFFB0BF7A);
-  static const vmd_bg_grey = const Color(0xFFF8F8F8);
-  static const vmd_bg_green = Color.fromRGBO(0, 169, 157, 0.25);
-  static const vmd_font_grey = const Color(0xFF707070);
-  static const vmd_button_text_grey = const Color(0xFF8B919D);
-  static const vmd_dialog_font_grey = const Color(0xFFA3A8A8);
-  static const vmd_divider_grey = const Color(0xFFDDDDDD);
-  static const vmd_font_light_grey = const Color.fromRGBO(139, 145, 157, 0.6);
-  static const vmd_shadow = Color.fromRGBO(38, 41, 55, 0.3);
+  static const zc_orange = const Color(0xFFF76623);
+  static const zc_orange_dark = const Color(0xFFF05813);
+  static const zc_font_grey = const Color(0xFF666460);
+  static const zc_font_light_grey = const Color(0xFFA6A6A6);
+  static const zc_white = const Color(0xFFF7F7F7);
+  static const zc_yellow = const Color(0xFFFFF2DB);
+  static const zc_font_black = const Color(0xFF040505);
 
-  //status color
-  static const status_pending_color = Colors.orange;
-  static const status_approved_color = const Color(0xFFB0BF7A);
-  static const status_rejected_color = Colors.red;
+  static const vmd_shadow = Color.fromRGBO(38, 41, 55, 0.3);
 
   //shadow
   static const box_shadow = [
