@@ -200,7 +200,6 @@ class ProductDetailState extends State<ProductDetail> {
                     ZCText(
                       text: "Share this appa",
                       color: Colors.grey,
-                      fontSize: kSmallFontSize,
                     ),
                     SizedBox(
                       height: 10.0,
@@ -210,7 +209,6 @@ class ProductDetailState extends State<ProductDetail> {
                           "Share this appa  da f sdf sd fs df sdfsd f sdf sdfsdfsdfqweqwe aosjnadoasd asd a sd asda da sd as dansdoad as da sd a sdasjdnasndoasdoiasd ",
                       maxLines: 8,
                       color: Colors.grey,
-                      fontSize: kSmallFontSize,
                     ),
                     SizedBox(
                       height: 20.0,
@@ -258,7 +256,6 @@ class ProductDetailState extends State<ProductDetail> {
                           "d asda da sd as dansdoad as da sd a sdasjdnasndoasdoiasd ",
                       maxLines: 8,
                       color: Colors.grey,
-                      fontSize: kSmallFontSize,
                     ),
                   ],
                 ),

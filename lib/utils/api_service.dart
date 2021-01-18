@@ -22,8 +22,8 @@ class APIService {
 
   updateHeader(String authToken) {
     dio.options.headers["Content-Type"] = "application/json";
-    dio.options.headers["X-Auth-Key"] = authToken;
-    print("TOKEN=== ${dio.options.headers["X-Auth-Key"]}");
+    dio.options.headers["token"] = authToken;
+    print("TOKEN=== ${dio.options.headers["token"]}");
   }
 
 ///Signup user///
@@ -32,6 +32,17 @@ class APIService {
     var jsonBody = json.encode(signupData);
     print(jsonBody);
     Response response = await dio.post(APIClient.signup, data: jsonBody);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //login user///
+  Future<Response> login(String email, String password) async {
+    print("URL:::" + APIClient.login);
+    Map<String, String> body = {"email": email, "password": password};
+    var jsonBody = json.encode(body);
+    print(jsonBody);
+    Response response = await dio.post(APIClient.login, data: jsonBody);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }

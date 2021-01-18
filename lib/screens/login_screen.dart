@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:zaincart_app/models/login_response.dart';
+import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/screens/home_controller.dart';
 import 'package:zaincart_app/screens/register_screen.dart';
+import 'package:zaincart_app/utils/alert_utils.dart';
+import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
 import 'package:zaincart_app/widgets/zc_logo.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
@@ -30,7 +35,8 @@ class LoginScreenState extends State<LoginScreen> {
     final double divWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
-        body: ProgressHUD(
+        body: ModalProgressHUD(
+          inAsyncCall: _isLoading,
           child: Container(
               constraints: BoxConstraints.expand(),
               decoration: BoxDecoration(color: Constants.zc_yellow),
@@ -126,13 +132,11 @@ class LoginScreenState extends State<LoginScreen> {
                                   child: new ZCText(
                                     text: 'Forgot Your Password?',
                                     semiBold: false,
-                                    fontSize: kSmallFontSize,
                                     color: Constants.zc_font_black,
                                   ),
                                 ),
                                 new ZCText(
                                   text: " / ",
-                                  fontSize: kSmallFontSize,
                                   color: Constants.zc_font_black,
                                   semiBold: false,
                                 ),
@@ -140,7 +144,6 @@ class LoginScreenState extends State<LoginScreen> {
                                   onTap: () => _signUpTapped(),
                                   child: new ZCText(
                                     text: 'Create An Account',
-                                    fontSize: kSmallFontSize,
                                     color: Constants.zc_font_black,
                                     semiBold: false,
                                   ),
@@ -168,7 +171,34 @@ class LoginScreenState extends State<LoginScreen> {
   void _forgotPasswordTapped() {}
 
   void _loginTapped() {
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => HomeController()));
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        setState(() {
+          _isLoading = true;
+        });
+        APIService()
+            .login(_usernameController.text.trim(), _passwordController.text)
+            .then((response) {
+          setState(() {
+            _isLoading = false;
+          });
+          if (response.statusCode == 200) {
+            LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+            if (loginResponse.success != 1) {
+              AlertUtils.showToast(loginResponse.error, context);
+            } else {
+              //save user to prefs.
+              APIService().updateHeader(loginResponse.data.token);
+              Preferences.save(PrefKey.token, loginResponse.data.token);
+              Preferences.save(PrefKey.id, loginResponse.data.customerId);
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) => HomeController()));
+            }
+          } else {
+            AlertUtils.showToast("Login Failed", context);
+          }
+        });
+      }
+    });
   }
 }

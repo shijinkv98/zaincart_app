@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/models/signup_data.dart';
-import 'package:zaincart_app/screens/login_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
-import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
+import 'package:zaincart_app/widgets/zc_logo.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
@@ -26,14 +25,8 @@ class SignUpScreenState extends State<SignUpScreen> {
   var _firstName_controller = new TextEditingController();
   var _lastName_controller = new TextEditingController();
   var _email_controller = new TextEditingController();
-  String _countryCode;
   var _phone_controller = new TextEditingController();
-  var _address_controller = new TextEditingController();
-  var _city_controller = new TextEditingController();
-  var _state_controller = new TextEditingController();
-  String _selectedCountry;
   var _password_controller = new TextEditingController();
-  var _confirmPassword_controller = new TextEditingController();
 
   SignupData _signupData = new SignupData();
   bool _isLoading = false;
@@ -48,7 +41,8 @@ class SignUpScreenState extends State<SignUpScreen> {
     final double divHeight = MediaQuery.of(context).size.height;
     final double divWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: ProgressHUD(
+        body: ModalProgressHUD(
+      inAsyncCall: _isLoading,
       child: Container(
           constraints: BoxConstraints.expand(),
           color: Colors.orange[100],
@@ -57,11 +51,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               children: <Widget>[
                 new Container(
                   height: divHeight / 3,
-                  child: Center(
-                      child: ZCText(
-                    text: "ZainCart",
-                    fontSize: 30.0,
-                  )),
+                  child: Center(child: ZCLogo()),
                 ),
                 new Container(
                   height: divHeight - divHeight / 3,
@@ -179,21 +169,20 @@ class SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(
                             height: 15.0,
                           ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                new ZCText(
-                                  text: "Already have an account please",
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              new ZCText(
+                                text: "Already have an account please",
+                              ),
+                              new FlatButton(
+                                onPressed: () => _navigateToLogin(),
+                                child: new ZCText(
+                                  text: 'Sign in',
+                                  underline: true,
                                 ),
-                                new FlatButton(
-                                  onPressed: () => _navigateToLogin(),
-                                  child: new ZCText(
-                                    text: 'Sign in',
-                                    underline: true,
-                                  ),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         ],
                       ),
@@ -215,21 +204,24 @@ class SignUpScreenState extends State<SignUpScreen> {
       _signupData.firstname = _firstName_controller.text;
       _signupData.lastname = _lastName_controller.text;
       _signupData.email = _email_controller.text;
+      _signupData.telephone = _phone_controller.text;
       _signupData.password = _password_controller.text;
 
       if (_validateFields()) {
         AppUtils.isConnectedToInternet(context).then((isConnected) {
           if (isConnected) {
+            setState(() => _isLoading = true);
             APIService().signUpUser(_signupData).then((response) {
               setState(() => _isLoading = false);
               if (response.statusCode == 200) {
-                Response _signupResponse =
-                    Response.fromJson(response.data);
+                Response _signupResponse = Response.fromJson(response.data);
                 if (_signupResponse.success != 1) {
                   AlertUtils.showToast(_signupResponse.error, context);
                 } else {
                   AlertUtils.showToast("Registration Successfull", context);
                 }
+              } else {
+                AlertUtils.showToast("Registration Failed", context);
               }
             });
           }

@@ -1,6 +1,6 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_products_list.dart';
 import 'package:zaincart_app/widgets/zc_search_field.dart';
@@ -14,6 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+    bool _isLoading = false;
+
+
   @override
   Widget build(BuildContext context) {
     final double divHeight = MediaQuery.of(context).size.height;
@@ -21,10 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
-      Constants.zc_logo_notext,
-      height: 180.0,
-      fit: BoxFit.contain,
-    ),
+          Constants.zc_logo_notext,
+          height: 180.0,
+          fit: BoxFit.contain,
+        ),
         backgroundColor: Colors.white,
         leading: Padding(
           padding: EdgeInsets.only(left: 0.0),
@@ -33,7 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.menu,
               color: Constants.zc_font_black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              print("Open drawer");
+              Scaffold.of(context).openDrawer();
+            },
           ),
         ),
         actions: <Widget>[
@@ -46,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: ProgressHUD(
+      drawer: Drawer(),
+      body: ModalProgressHUD(
+        inAsyncCall: _isLoading,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -204,7 +212,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 18.0,
                             color: Constants.zc_orange,
                           ),
-                          SizedBox(height: 5.0,),
+                          SizedBox(
+                            height: 5.0,
+                          ),
                           Container(
                               decoration: BoxDecoration(
                                   color: Constants.zc_orange,
@@ -215,7 +225,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     topRight: Radius.circular(35),
                                   )),
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0, bottom: 5.0),
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
+                                    top: 5.0,
+                                    bottom: 5.0),
                                 child: new ZCText(
                                   text: "Refer Now",
                                   semiBold: true,
@@ -261,7 +275,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(Constants.ic_secure, height: 50.0, width: 50.0,),
+                            Image.asset(
+                              Constants.ic_secure,
+                              height: 50.0,
+                              width: 50.0,
+                            ),
                             SizedBox(height: 10.0),
                             new ZCText(
                               text: "100% Secure\nPayments",
@@ -283,7 +301,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(Constants.ic_delivery, height: 50.0, width: 50.0,),
+                            Image.asset(
+                              Constants.ic_delivery,
+                              height: 50.0,
+                              width: 50.0,
+                            ),
                             SizedBox(height: 10.0),
                             new ZCText(
                               text: "Speed Delivery",
@@ -305,7 +327,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(Constants.ic_support, height: 50.0, width: 50.0,),
+                            Image.asset(
+                              Constants.ic_support,
+                              height: 50.0,
+                              width: 50.0,
+                            ),
                             SizedBox(height: 10.0),
                             new ZCText(
                               text: "24x7 Support",

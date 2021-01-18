@@ -42,7 +42,7 @@ class Constants {
 }
 
 // global constants
-const kFontSize = 16.0;
+const kFontSize = 15.0;
 const kSmallFontSize = 13.0;
 const kFieldFontSize = 18.0;
 const kHeadingFontSize = 20.0;
