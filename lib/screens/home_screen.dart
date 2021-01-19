@@ -1,6 +1,8 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_products_list.dart';
 import 'package:zaincart_app/widgets/zc_search_field.dart';
@@ -14,13 +16,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-    bool _isLoading = false;
-
-
   @override
   Widget build(BuildContext context) {
     final double divHeight = MediaQuery.of(context).size.height;
     final double divWidth = MediaQuery.of(context).size.width;
+    Provider.of<HomeBloc>(context, listen: false)
+        .getHomeData(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -53,8 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: Drawer(),
-      body: ModalProgressHUD(
-        inAsyncCall: _isLoading,
+      body: Consumer<HomeBloc>(
+            builder: (context, homeBloc, child) => ModalProgressHUD(
+        inAsyncCall: homeBloc.isLoading,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -356,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }

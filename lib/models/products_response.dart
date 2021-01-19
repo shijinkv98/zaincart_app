@@ -2,14 +2,14 @@
 class ProductsResponse {
   int success;
   String error;
-  Data data;
+  HomeData data;
 
   ProductsResponse({this.success, this.error, this.data});
 
   ProductsResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     error = json['error'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new HomeData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,7 +23,7 @@ class ProductsResponse {
   }
 }
 
-class Data {
+class HomeData {
   int cartCount;
   int wishCount;
   List<SearchCategory> searchCategory;
@@ -32,7 +32,7 @@ class Data {
   List<NewProduct> newProduct;
   List<CategoryProducts> categoryProducts;
 
-  Data(
+  HomeData(
       {this.cartCount,
       this.wishCount,
       this.searchCategory,
@@ -41,7 +41,7 @@ class Data {
       this.newProduct,
       this.categoryProducts});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  HomeData.fromJson(Map<String, dynamic> json) {
     cartCount = json['cart_count'];
     wishCount = json['wish_count'];
     if (json['search_category'] != null) {

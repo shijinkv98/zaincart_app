@@ -171,7 +171,8 @@ class LoginScreenState extends State<LoginScreen> {
   void _forgotPasswordTapped() {}
 
   void _loginTapped() {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
+    if (_formKey.currentState.validate()) {
+      AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         setState(() {
           _isLoading = true;
@@ -200,5 +201,7 @@ class LoginScreenState extends State<LoginScreen> {
         });
       }
     });
+    }
+    
   }
 }

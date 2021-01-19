@@ -3,4 +3,8 @@ class APIClient {
 
   static final signup = Base_URL + "customerreg";
   static final login = Base_URL + "customerlogin";
+  static homeData(String id) {
+    return Base_URL + "homepage?Customer_id=$id";
+  }
+  
 }
