@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:connectivity/connectivity.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:zaincart_app/utils/dialog_utils.dart';
@@ -47,38 +46,38 @@ class AppUtils {
     }
   }
 
-  static Future<File> selectImage(ImageSource imageSource) async {
-    var pickedFile = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (pickedFile != null) {
-      File file = File(pickedFile.files.single.path);
-      print(file);
-      if (file != null) {
-        var result = file;
-        return result;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
+  // static Future<File> selectImage(ImageSource imageSource) async {
+  //   var pickedFile = await FilePicker.platform.pickFiles(type: FileType.image);
+  //   if (pickedFile != null) {
+  //     File file = File(pickedFile.files.single.path);
+  //     print(file);
+  //     if (file != null) {
+  //       var result = file;
+  //       return result;
+  //     } else {
+  //       return null;
+  //     }
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
-  static Future<File> selectFile(ImageSource imageSource) async {
-    var pickedFile = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'pdf'],
-        allowMultiple: false);
-    if (pickedFile != null) {
-      File file = File(pickedFile.files.single.path);
-      print(file);
-      if (file != null) {
-        var result = file;
-        return result;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
+  // static Future<File> selectFile(ImageSource imageSource) async {
+  //   var pickedFile = await FilePicker.platform.pickFiles(
+  //       type: FileType.custom,
+  //       allowedExtensions: ['jpg', 'png', 'pdf'],
+  //       allowMultiple: false);
+  //   if (pickedFile != null) {
+  //     File file = File(pickedFile.files.single.path);
+  //     print(file);
+  //     if (file != null) {
+  //       var result = file;
+  //       return result;
+  //     } else {
+  //       return null;
+  //     }
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }

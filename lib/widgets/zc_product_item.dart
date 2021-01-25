@@ -59,7 +59,7 @@ class ZCProductItem extends StatelessWidget {
                 children: [
                   Center(
                       child: Container(
-                          height: 82.0,
+                          height: 79.0,
                           width: 130.0,
                           margin: EdgeInsets.only(top: 10.0),
                           child: Image.network(
