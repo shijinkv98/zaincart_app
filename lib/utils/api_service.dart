@@ -56,4 +56,14 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //get home data///
+  Future<Response> getPrductDetail(String productId) async {
+    var customerId = await Preferences.get(PrefKey.id);
+    print("URL:::" + APIClient.productDetail(productId: productId, customerId: customerId));
+    Response response = await dio.get(APIClient.productDetail(productId: productId, customerId: customerId));
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
 }

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:zaincart_app/screens/product_detail.dart';
+import 'package:zaincart_app/models/products_response.dart';
+import 'package:zaincart_app/screens/product_detail_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ZCProductItem extends StatelessWidget {
-  
+  ZCProductItem({this.product});
+  final Product product;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _onItemTap(context),
+      onTap: () => _onItemTap(context: context, productId: product.productId),
       child: new Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
@@ -60,13 +63,16 @@ class ZCProductItem extends StatelessWidget {
                           width: 130.0,
                           margin: EdgeInsets.only(top: 10.0),
                           child: Image.network(
-                            "https://freepngimg.com/thumb/fruit/7-2-fruit-png-hd.png",
+                            product.productImage,
                             fit: BoxFit.contain,
                           ))),
                   Center(
-                    child: ZCText(
-                      text: "Orange",
-                      color: Constants.zc_orange,
+                    child: Container(
+                      width: 180,
+                      child: ZCText(
+                        text: product.productName,
+                        color: Constants.zc_orange,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -96,7 +102,7 @@ class ZCProductItem extends StatelessWidget {
                   ),
                   Center(
                     child: ZCText(
-                      text: "QAR 37.09",
+                      text: product.productPrice,
                       color: Constants.zc_font_black,
                       semiBold: true,
                     ),
@@ -154,11 +160,11 @@ class ZCProductItem extends StatelessWidget {
           ),
         ),
       ),
-    ); 
+    );
   }
-  
-  _onItemTap(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => ProductDetail()));
+
+  _onItemTap({BuildContext context, String productId}) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => ProductDetailScreen(productId: productId,)));
   }
 }

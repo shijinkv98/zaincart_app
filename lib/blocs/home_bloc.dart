@@ -31,7 +31,9 @@ class HomeBloc extends ChangeNotifier {
             } else {
               ProductsResponse productsResponse =
                   ProductsResponse.fromJson(response.data);
-              print(productsResponse);
+              homeData = productsResponse.data;
+              notifyListeners();
+              print(productsResponse.data.newProduct.length);
             }
           } else {
             AlertUtils.showToast("Login Failed", context);

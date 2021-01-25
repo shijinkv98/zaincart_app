@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:zaincart_app/models/login_response.dart';
-import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/screens/home_controller.dart';
 import 'package:zaincart_app/screens/register_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
@@ -173,35 +172,36 @@ class LoginScreenState extends State<LoginScreen> {
   void _loginTapped() {
     if (_formKey.currentState.validate()) {
       AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        setState(() {
-          _isLoading = true;
-        });
-        APIService()
-            .login(_usernameController.text.trim(), _passwordController.text)
-            .then((response) {
+        if (isConnected) {
           setState(() {
-            _isLoading = false;
+            _isLoading = true;
           });
-          if (response.statusCode == 200) {
-            LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-            if (loginResponse.success != 1) {
-              AlertUtils.showToast(loginResponse.error, context);
+          APIService()
+              .login(_usernameController.text.trim(), _passwordController.text)
+              .then((response) {
+            setState(() {
+              _isLoading = false;
+            });
+            if (response.statusCode == 200) {
+              LoginResponse loginResponse =
+                  LoginResponse.fromJson(response.data);
+              if (loginResponse.success != 1) {
+                AlertUtils.showToast(loginResponse.error, context);
+              } else {
+                //save user to prefs.
+                APIService().updateHeader(loginResponse.data.token);
+                Preferences.save(PrefKey.token, loginResponse.data.token);
+                Preferences.save(PrefKey.id, loginResponse.data.customerId);
+                Preferences.saveBool(PrefKey.loginStatus, true);
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => HomeController()));
+              }
             } else {
-              //save user to prefs.
-              APIService().updateHeader(loginResponse.data.token);
-              Preferences.save(PrefKey.token, loginResponse.data.token);
-              Preferences.save(PrefKey.id, loginResponse.data.customerId);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => HomeController()));
+              AlertUtils.showToast("Login Failed", context);
             }
-          } else {
-            AlertUtils.showToast("Login Failed", context);
-          }
-        });
-      }
-    });
+          });
+        }
+      });
     }
-    
   }
 }

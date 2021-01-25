@@ -6,5 +6,7 @@ class APIClient {
   static homeData(String id) {
     return Base_URL + "homepage?Customer_id=$id";
   }
-  
+  static productDetail({String productId, String customerId}) {
+    return Base_URL + "productdetails/$productId?Customer_id=$customerId";
+  }
 }
