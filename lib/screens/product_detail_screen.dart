@@ -62,14 +62,14 @@ class ProductDetailState extends State<ProductDetailScreen> {
                   SizedBox(
                       height: 200.0,
                       width: divWidth,
-                      child: Carousel(
+                      child: _productDetail.productImage != null? Carousel(
                         dotBgColor: Colors.transparent,
                         dotSize: 5.0,
                         dotSpacing: 15.0,
                         images: _productDetail.productImage
                             .map((image) => NetworkImage(image))
                             .toList(),
-                      )),
+                      ): new Container()),
                   Positioned(
                       left: 20.0,
                       top: 20.0,

@@ -66,4 +66,14 @@ class APIService {
     return response;
   }
 
+  //get wishlist data///
+  Future<Response> getWishlist() async {
+    var id = await Preferences.get(PrefKey.id);
+    var token = await Preferences.get(PrefKey.token);
+    print("URL:::" + APIClient.wishlist(customerId: id, token: token));
+    Response response = await dio.get(APIClient.wishlist(customerId: id, token: token));
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
 }

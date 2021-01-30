@@ -47,7 +47,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
             inAsyncCall: homeBloc.isLoading,
                       child: GridView.builder(
             scrollDirection: Axis.vertical,
-            itemCount: 14,
+            itemCount: homeBloc.homeData.newProduct.length,
             gridDelegate:
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
             itemBuilder: (BuildContext ctxt, int index) {

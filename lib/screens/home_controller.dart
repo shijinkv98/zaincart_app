@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zaincart_app/screens/favourite_screen.dart';
+import 'package:zaincart_app/screens/wishlist_screen.dart';
 import 'package:zaincart_app/screens/home_screen.dart';
 import 'package:zaincart_app/screens/my_cart_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
@@ -15,7 +15,7 @@ class _HomeControllerState extends State<HomeController> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomeScreen(),
-    FavouriteScreen(),
+    WishlistScreen(),
     MyCartScreen()
   ];
 
