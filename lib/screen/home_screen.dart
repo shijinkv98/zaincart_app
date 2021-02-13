@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/screen/grocery_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
@@ -115,26 +116,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                         return Padding(
                                           padding: const EdgeInsets.only(
                                               right: 15.0),
-                                          child: Column(children: [
-                                            Container(
-                                                height: 80.0,
-                                                width: 80.0,
-                                                child: Image.network(
-                                                  homeBloc
-                                                      .homeData
-                                                      .categoryList[index]
-                                                      .image,
-                                                  fit: BoxFit.cover,
-                                                )),
-                                            ZCText(
-                                              text: homeBloc
-                                                  .homeData
-                                                  .categoryList[index]
-                                                  .categoryName,
-                                              color: Colors.white,
-                                              textAlign: TextAlign.center,
-                                            )
-                                          ]),
+                                          child: InkWell(
+                                            onTap: () => onCategoryTap(index),
+                                            child: Column(children: [
+                                              Container(
+                                                  height: 80.0,
+                                                  width: 80.0,
+                                                  child: Image.network(
+                                                    homeBloc
+                                                        .homeData
+                                                        .categoryList[index]
+                                                        .image,
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                              SizedBox(
+                                                height: 5.0,
+                                              ),
+                                              ZCText(
+                                                text: homeBloc
+                                                    .homeData
+                                                    .categoryList[index]
+                                                    .categoryName,
+                                                color: Colors.white,
+                                                textAlign: TextAlign.center,
+                                              )
+                                            ]),
+                                          ),
                                         );
                                       })
                                   : new Container(),
@@ -145,17 +152,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      homeBloc.homeData.newProduct != null ?ZCProductsList(
-                        title: "LATEST PRODUCTS",
-                        productList: homeBloc.homeData.newProduct,
-                      ): new Container(),
+                      homeBloc.homeData.newProduct != null
+                          ? ZCProductsList(
+                              title: "LATEST PRODUCTS",
+                              productList: homeBloc.homeData.newProduct,
+                            )
+                          : new Container(),
                       SizedBox(
                         height: 10,
                       ),
-                      homeBloc.homeData.newProduct != null ? ZCProductsList(
-                        title: "NEW PRODUCTS",
-                        productList: homeBloc.homeData.newProduct,
-                      ): new Container(),
+                      homeBloc.homeData.newProduct != null
+                          ? ZCProductsList(
+                              title: "NEW PRODUCTS",
+                              productList: homeBloc.homeData.newProduct,
+                            )
+                          : new Container(),
                       Padding(
                         padding: const EdgeInsets.all(18.0),
                         child: new Container(
@@ -219,10 +230,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      homeBloc.homeData.newProduct != null ? ZCProductsList(
-                        title: "FEATURED PRODUCTS",
-                        productList: homeBloc.homeData.newProduct,
-                      ): new Container(),
+                      homeBloc.homeData.newProduct != null
+                          ? ZCProductsList(
+                              title: "FEATURED PRODUCTS",
+                              productList: homeBloc.homeData.newProduct,
+                            )
+                          : new Container(),
                       Padding(
                         padding: const EdgeInsets.all(18.0),
                         child: new Container(
@@ -331,5 +344,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   openDrawer() {
     Scaffold.of(context).openDrawer();
+  }
+
+  onCategoryTap(int index) {
+    if (index ==0){
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (BuildContext context) => GroceryScreen()));
+    }
   }
 }

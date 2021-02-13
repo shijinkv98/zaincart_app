@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/widgets/zc_product_item.dart';
+import 'package:zaincart_app/widgets/zc_account.dart';
+import 'package:zaincart_app/widgets/zc_menu.dart';
+import 'package:zaincart_app/widgets/zc_mycart_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class MyCartScreen extends StatefulWidget {
@@ -17,8 +20,15 @@ class _MyCartScreenState extends State<MyCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ZCMenu(),
+      endDrawer: ZCAccount(),
       appBar: AppBar(
-        title: ZCText(text:"MY CART", fontSize: 23.0, color: Constants.zc_orange_dark, semiBold: true,),
+        title: ZCText(
+          text: "MY CART",
+          fontSize: 23.0,
+          color: Constants.zc_orange_dark,
+          semiBold: true,
+        ),
         backgroundColor: Colors.white,
         leading: Builder(
             builder: (BuildContext context) => Padding(
@@ -43,17 +53,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
         ],
       ),
       body: Consumer<HomeBloc>(
-          builder: (context, homeBloc, child) =>ModalProgressHUD(
-            inAsyncCall: homeBloc.isLoading,
-                      child: GridView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: homeBloc.homeData.newProduct.length,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (BuildContext ctxt, int index) {
-              return ZCProductItem(product: homeBloc.homeData.newProduct[index],);
-            }),
-          )),
+          builder: (context, homeBloc, child) => ModalProgressHUD(
+                inAsyncCall: homeBloc.isLoading,
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: homeBloc.homeData.newProduct.length,
+                    itemBuilder: (BuildContext ctxt, int index) {
+                      return ZCMyCartItem(
+                        product: homeBloc.homeData.newProduct[index],
+                      );
+                    }),
+              )),
     );
   }
 }

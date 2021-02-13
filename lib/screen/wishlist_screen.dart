@@ -8,6 +8,8 @@ import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/widgets/zc_account.dart';
+import 'package:zaincart_app/widgets/zc_menu.dart';
 import 'package:zaincart_app/widgets/zc_product_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -20,7 +22,7 @@ class WishlistScreen extends StatefulWidget {
 
 class _WishlistScreenState extends State<WishlistScreen> {
   bool isLoading = false;
-  List<Product> _wishlistItems;
+  List<Product> _wishlistItems =  new List<Product>();
 
   @override
   void initState() {
@@ -31,6 +33,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ZCMenu(),
+      endDrawer: ZCAccount(),
       appBar: AppBar(
         title: ZCText(
           text: "WISHLIST",

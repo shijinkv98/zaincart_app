@@ -1,25 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:zaincart_app/models/login_response.dart';
-import 'package:zaincart_app/screens/home_controller.dart';
-import 'package:zaincart_app/screens/register_screen.dart';
-import 'package:zaincart_app/utils/alert_utils.dart';
-import 'package:zaincart_app/utils/api_service.dart';
+import 'package:zaincart_app/screen/password_reset/reset_password.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
 import 'package:zaincart_app/widgets/zc_logo.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
-class LoginScreen extends StatefulWidget {
+class OTPScreen extends StatefulWidget {
   @override
-  LoginScreenState createState() => LoginScreenState();
+  OTPScreenState createState() => OTPScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class OTPScreenState extends State<OTPScreen> {
   double _edgePadding = 45.0;
 
   final _formKey = GlobalKey<FormState>();
@@ -62,7 +57,7 @@ class LoginScreenState extends State<LoginScreen> {
                               height: 50.0,
                             ),
                             new ZCText(
-                              text: "LOGIN",
+                              text: "FORGOT PASSWORD",
                               semiBold: true,
                               color: Constants.zc_font_black,
                             ),
@@ -73,7 +68,7 @@ class LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
                               child: ZCTextFormField(
-                                hintText: "Email",
+                                hintText: "Enter Email",
                                 controller: _usernameController,
                                 textInputType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
@@ -95,14 +90,14 @@ class LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
                               child: ZCTextFormField(
-                                hintText: "Password",
+                                hintText: "Enter OTP",
                                 controller: _passwordController,
                                 obscureText: true,
                                 validator: (text) {
                                   if (text.isEmpty) {
                                     return "Required";
                                   } else if (text.length < 6) {
-                                    return "Please enter a valid password";
+                                    return "Please enter a valid otp";
                                   } else {
                                     return null;
                                   }
@@ -116,42 +111,10 @@ class LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
                               child: new ZCButton(
-                                title: "LOGIN",
-                                onPressed: () => _loginTapped(),
+                                title: "SUBMIT",
+                                onPressed: () => _submitTapped(),
                               ),
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () => _forgotPasswordTapped(),
-                                  child: new ZCText(
-                                    text: 'Forgot Your Password?',
-                                    semiBold: false,
-                                    color: Constants.zc_font_black,
-                                  ),
-                                ),
-                                new ZCText(
-                                  text: " / ",
-                                  color: Constants.zc_font_black,
-                                  semiBold: false,
-                                ),
-                                new InkWell(
-                                  onTap: () => _signUpTapped(),
-                                  child: new ZCText(
-                                    text: 'Create An Account',
-                                    color: Constants.zc_font_black,
-                                    semiBold: false,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 50.0,
-                            ),
+                            ),             
                           ],
                         ),
                       ),
@@ -162,46 +125,10 @@ class LoginScreenState extends State<LoginScreen> {
         ));
   }
 
-  void _signUpTapped() {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => SignUpScreen()));
-  }
-
-  void _forgotPasswordTapped() {}
-
-  void _loginTapped() {
+  void _submitTapped() {
     if (_formKey.currentState.validate()) {
-      AppUtils.isConnectedToInternet(context).then((isConnected) {
-        if (isConnected) {
-          setState(() {
-            _isLoading = true;
-          });
-          APIService()
-              .login(_usernameController.text.trim(), _passwordController.text)
-              .then((response) {
-            setState(() {
-              _isLoading = false;
-            });
-            if (response.statusCode == 200) {
-              LoginResponse loginResponse =
-                  LoginResponse.fromJson(response.data);
-              if (loginResponse.success != 1) {
-                AlertUtils.showToast(loginResponse.error, context);
-              } else {
-                //save user to prefs.
-                APIService().updateHeader(loginResponse.data.token);
-                Preferences.save(PrefKey.token, loginResponse.data.token);
-                Preferences.save(PrefKey.id, loginResponse.data.customerId);
-                Preferences.saveBool(PrefKey.loginStatus, true);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => HomeController()));
-              }
-            } else {
-              AlertUtils.showToast("Login Failed", context);
-            }
-          });
-        }
-      });
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => ResetPasswordScreen()));
     }
   }
 }

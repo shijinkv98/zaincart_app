@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:zaincart_app/models/products_response.dart';
-import 'package:zaincart_app/screens/product_detail_screen.dart';
+import 'package:zaincart_app/screen/product_detail_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -121,7 +121,7 @@ class ZCProductItem extends StatelessWidget {
                         )),
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                        padding: const EdgeInsets.only(left: 0.0, right: 0.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [

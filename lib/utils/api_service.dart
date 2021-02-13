@@ -6,6 +6,8 @@ import 'package:zaincart_app/utils/preferences.dart';
 
 class APIService {
   static final APIService _singleton = new APIService._internal();
+  String customerId;
+  String token;
 
   factory APIService() {
     return _singleton;
@@ -21,9 +23,11 @@ class APIService {
     dio.options.headers["Content-Type"] = "application/json";
   }
 
-  updateHeader(String authToken) {
+  updateHeader(String authToken) async {
     dio.options.headers["Content-Type"] = "application/json";
     dio.options.headers["token"] = authToken;
+    customerId = await Preferences.get(PrefKey.id);
+    token = await Preferences.get(PrefKey.token);
     print("TOKEN=== ${dio.options.headers["token"]}");
   }
 
@@ -60,20 +64,29 @@ class APIService {
   //get home data///
   Future<Response> getPrductDetail(String productId) async {
     var customerId = await Preferences.get(PrefKey.id);
-    print("URL:::" + APIClient.productDetail(productId: productId, customerId: customerId));
-    Response response = await dio.get(APIClient.productDetail(productId: productId, customerId: customerId));
+    print("URL:::" +
+        APIClient.productDetail(productId: productId, customerId: customerId));
+    Response response = await dio.get(
+        APIClient.productDetail(productId: productId, customerId: customerId));
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
 
   //get wishlist data///
   Future<Response> getWishlist() async {
-    var id = await Preferences.get(PrefKey.id);
-    var token = await Preferences.get(PrefKey.token);
-    print("URL:::" + APIClient.wishlist(customerId: id, token: token));
-    Response response = await dio.get(APIClient.wishlist(customerId: id, token: token));
+    print("URL:::" + APIClient.wishlist(customerId: customerId, token: token));
+    Response response =
+        await dio.get(APIClient.wishlist(customerId: customerId, token: token));
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
 
+  //get mycart data///
+  Future<Response> getMyCartItems() async {
+    print("URL:::" + APIClient.mycartList(customerId: customerId, token: token));
+    Response response =
+        await dio.get(APIClient.mycartList(customerId: customerId, token: token));
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }

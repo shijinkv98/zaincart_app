@@ -13,4 +13,7 @@ class APIClient {
   static wishlist({String token, String customerId}) {
     return Base_URL + "wishlisitems?customer_id=$customerId&customertoken=$token";
   }
+  static mycartList({String token, String customerId}) {
+    return Base_URL + "cartdisplay?customer_id=$customerId&customertoken=$token";
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zaincart_app/screens/wishlist_screen.dart';
-import 'package:zaincart_app/screens/home_screen.dart';
-import 'package:zaincart_app/screens/my_cart_screen.dart';
+import 'package:zaincart_app/screen/wishlist_screen.dart';
+import 'package:zaincart_app/screen/home_screen.dart';
+import 'package:zaincart_app/screen/my_cart_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 
 class HomeController extends StatefulWidget {
