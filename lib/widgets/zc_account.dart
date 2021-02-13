@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/screen/login_screen.dart';
+import 'package:zaincart_app/screen/my_address_screen.dart';
 import 'package:zaincart_app/screen/register_screen.dart';
+import 'package:zaincart_app/screen/wishlist_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -90,20 +92,26 @@ class ZCAccount extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.favorite_outline,
-                        color: Constants.zc_font_light_grey,
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      ZCText(
-                        text: "Wishlist",
-                        color: Constants.zc_font_grey,
-                      ),
-                    ],
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => WishlistScreen()));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.favorite_outline,
+                          color: Constants.zc_font_light_grey,
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        ZCText(
+                          text: "Wishlist",
+                          color: Constants.zc_font_grey,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Divider(
@@ -205,20 +213,25 @@ class ZCAccount extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.policy_sharp,
-                        color: Constants.zc_font_light_grey,
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      ZCText(
-                        text: "My Address",
-                        color: Constants.zc_font_grey,
-                      ),
-                    ],
+                  child: InkWell(onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => MyAddressScreen()));
+                  },
+                                      child: Row(
+                      children: [
+                        Icon(
+                          Icons.policy_sharp,
+                          color: Constants.zc_font_light_grey,
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        ZCText(
+                          text: "My Address",
+                          color: Constants.zc_font_grey,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Divider(
