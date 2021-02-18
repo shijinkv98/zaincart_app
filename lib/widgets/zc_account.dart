@@ -41,7 +41,10 @@ class ZCAccount extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Image.asset(Constants.ic_signin, scale: 7.0,),
+                        Image.asset(
+                          Constants.ic_signin,
+                          scale: 7.0,
+                        ),
                         SizedBox(
                           width: 8.0,
                         ),
@@ -67,7 +70,10 @@ class ZCAccount extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Image.asset(Constants.ic_register, scale: 7.0,),
+                        Image.asset(
+                          Constants.ic_register,
+                          scale: 7.0,
+                        ),
                         SizedBox(
                           width: 8.0,
                         ),
@@ -93,7 +99,10 @@ class ZCAccount extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Image.asset(Constants.ic_wishlist, scale: 7.0,),
+                        Image.asset(
+                          Constants.ic_wishlist,
+                          scale: 7.0,
+                        ),
                         SizedBox(
                           width: 8.0,
                         ),
@@ -114,7 +123,10 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                      Image.asset(Constants.ic_checkout, scale: 7.0,),
+                      Image.asset(
+                        Constants.ic_checkout,
+                        scale: 7.0,
+                      ),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -134,7 +146,10 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                      Image.asset(Constants.ic_myorder, scale: 7.0,),
+                      Image.asset(
+                        Constants.ic_myorder,
+                        scale: 7.0,
+                      ),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -154,7 +169,10 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                     Image.asset(Constants.ic_rate_app, scale: 7.0,),
+                      Image.asset(
+                        Constants.ic_rate_app,
+                        scale: 7.0,
+                      ),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -174,7 +192,10 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                      Image.asset(Constants.ic_history, scale: 7.0,),
+                      Image.asset(
+                        Constants.ic_history,
+                        scale: 7.0,
+                      ),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -192,13 +213,18 @@ class ZCAccount extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: InkWell(onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) => MyAddressScreen()));
-                  },
-                                      child: Row(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              MyAddressScreen()));
+                    },
+                    child: Row(
                       children: [
-                        Image.asset(Constants.ic_address, scale: 7.0,),
+                        Image.asset(
+                          Constants.ic_address,
+                          scale: 7.0,
+                        ),
                         SizedBox(
                           width: 8.0,
                         ),
