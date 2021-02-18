@@ -6,14 +6,22 @@ class APIClient {
   static homeData(String id) {
     return Base_URL + "homepage?Customer_id=$id";
   }
+
   static productDetail({String productId, String customerId}) {
     return Base_URL + "productdetails/$productId?Customer_id=$customerId";
   }
 
   static wishlist({String token, String customerId}) {
-    return Base_URL + "wishlisitems?customer_id=$customerId&customertoken=$token";
+    return Base_URL +
+        "wishlisitems?customer_id=$customerId&customertoken=$token";
   }
+
   static mycartList({String token, String customerId}) {
-    return Base_URL + "cartdisplay?customer_id=$customerId&customertoken=$token";
+    return Base_URL +
+        "cartdisplay?customer_id=$customerId&customertoken=$token";
   }
+
+  static final wishListAdd = Base_URL + "wishlistadd";
+  static final addToCart = Base_URL + "customercart";
+  
 }

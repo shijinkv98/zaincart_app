@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:zaincart_app/models/products_response.dart';
+import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
+import 'package:zaincart_app/utils/alert_utils.dart';
+import 'package:zaincart_app/utils/api_service.dart';
+import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ZCProductItem extends StatelessWidget {
-  ZCProductItem({this.product});
+  ZCProductItem({this.product, this.isWishListed = false});
   final Product product;
+  final bool isWishListed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +35,19 @@ class ZCProductItem extends StatelessWidget {
               Container(
                 width: 180,
               ),
-              Positioned(
-                  left: 10.0,
-                  child: CircleAvatar(
-                    backgroundColor: Constants.zc_orange_dark,
-                    radius: 12,
-                    child: ZCText(
-                      text: "5%",
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  )),
+              product.productOffer != null
+                  ? Positioned(
+                      left: 10.0,
+                      child: CircleAvatar(
+                        backgroundColor: Constants.zc_orange_dark,
+                        radius: 12,
+                        child: ZCText(
+                          text: product.productOffer,
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                      ))
+                  : new Container(),
               Positioned(
                   right: 10.0,
                   child: CircleAvatar(
@@ -48,10 +55,17 @@ class ZCProductItem extends StatelessWidget {
                     radius: 10,
                     child: IconButton(
                       padding: EdgeInsets.zero,
-                      icon: Icon(Icons.favorite_border_outlined),
-                      color: Colors.grey,
+                      icon: isWishListed
+                          ? Icon(
+                              Icons.favorite,
+                              color: Constants.zc_orange_dark,
+                            )
+                          : Icon(Icons.favorite_border_outlined),
+                      color:
+                          isWishListed ? Constants.zc_orange_dark : Colors.grey,
                       onPressed: () {
                         print("Add to faviorate button clicked.....");
+                        _wishListAdd(context, product.productId);
                       },
                     ),
                   )),
@@ -146,7 +160,9 @@ class ZCProductItem extends StatelessWidget {
                                 //size: 10.0,
                               ),
                               onTap: () {
-                                print("Add to faviorate button clicked.....");
+                                print("Add to Cart.....");
+                                _addToCart(
+                                    context, product.productSku, 1.toString());
                               },
                             )
                           ],
@@ -165,6 +181,50 @@ class ZCProductItem extends StatelessWidget {
 
   _onItemTap({BuildContext context, String productId}) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => ProductDetailScreen(productId: productId,)));
+        builder: (BuildContext context) => ProductDetailScreen(
+              productId: productId,
+            )));
+  }
+
+  _wishListAdd(BuildContext context, String productId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService().wishlistAdd(productId).then((response) {
+          if (response.statusCode == 200) {
+            Response wishlistResponse = Response.fromJson(response.data);
+            if (wishlistResponse.success == 0) {
+              AlertUtils.showToast(wishlistResponse.error, context);
+            } else if (wishlistResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {}
+          } else {
+            AlertUtils.showToast("Login Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  _addToCart(BuildContext context, String productSku, String productQty) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService()
+            .addToCart(productSku: productQty, productQty: productQty)
+            .then((response) {
+          if (response.statusCode == 200) {
+            Response wishlistResponse = Response.fromJson(response.data);
+            if (wishlistResponse.success == 0) {
+              AlertUtils.showToast(wishlistResponse.error, context);
+            } else if (wishlistResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast("Added to Cart", context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
   }
 }

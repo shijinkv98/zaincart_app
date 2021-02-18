@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/wishlist_response.dart';
+import 'package:zaincart_app/screen/login_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
@@ -22,7 +23,7 @@ class WishlistScreen extends StatefulWidget {
 
 class _WishlistScreenState extends State<WishlistScreen> {
   bool isLoading = false;
-  List<Product> _wishlistItems =  new List<Product>();
+  List<Product> _wishlistItems = new List<Product>();
 
   @override
   void initState() {
@@ -73,6 +74,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
           itemBuilder: (BuildContext ctxt, int index) {
             return ZCProductItem(
               product: _wishlistItems[index],
+              isWishListed: true,
             );
           }),
     );
@@ -87,8 +89,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
           if (response.statusCode == 200) {
             WishlistResponse wishlistResponse =
                 WishlistResponse.fromJson(response.data);
-            if (wishlistResponse.success != 1) {
+            if (wishlistResponse.success == 0) {
               AlertUtils.showToast(wishlistResponse.error, context);
+            } else if (wishlistResponse.success == 3) {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) => LoginScreen()));
             } else {
               setState(() {
                 _wishlistItems = wishlistResponse.data.product;

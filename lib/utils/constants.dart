@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zaincart_app/screen/login_screen.dart';
 
 class Constants {
   //font
@@ -52,3 +53,8 @@ const kMarginTop = 30.0;
 
 final GlobalKey<ScaffoldState> drawerScaffoldKey =
     new GlobalKey<ScaffoldState>();
+
+kMoveToLogin(BuildContext context) {
+  Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => LoginScreen()));
+}

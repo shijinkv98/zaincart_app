@@ -83,9 +83,39 @@ class APIService {
 
   //get mycart data///
   Future<Response> getMyCartItems() async {
-    print("URL:::" + APIClient.mycartList(customerId: customerId, token: token));
-    Response response =
-        await dio.get(APIClient.mycartList(customerId: customerId, token: token));
+    print(
+        "URL:::" + APIClient.mycartList(customerId: customerId, token: token));
+    Response response = await dio
+        .get(APIClient.mycartList(customerId: customerId, token: token));
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //wishlist add///
+  Future<Response> wishlistAdd(String produtId) async {
+    var url = APIClient.wishListAdd;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "Product_id": "$produtId"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //wishlist add///
+  Future<Response> addToCart({String productSku, String productQty}) async {
+    var url = APIClient.addToCart;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "Product_sku": "$productSku",
+      "Product_qty": "$productQty"
+    };
+    print("URL:::" + url + " $queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
