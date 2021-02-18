@@ -11,6 +11,14 @@ class Constants {
   static const ic_delivery = 'assets/ic_delivery.png';
   static const ic_support = 'assets/ic_support.png';
   static const ic_secure = 'assets/ic_secure.png';
+  static const ic_about = 'assets/ic_about.png';
+  static const ic_category = 'assets/ic_category.png';
+  static const ic_contact = 'assets/ic_contact.png';
+  static const ic_faq = 'assets/ic_faq.png';
+  static const ic_notification = 'assets/ic_notification.png';
+  static const ic_offer = 'assets/ic_offer.png';
+  static const ic_terms = 'assets/ic_terms.png';
+  
 
   //colors..
 

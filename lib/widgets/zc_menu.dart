@@ -25,7 +25,7 @@ class ZCMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                     child: Row(
                       children: [
-                        Icon(Icons.ac_unit, color: Constants.zc_font_light_grey,),
+                        Image.asset(Constants.ic_category, scale: 7.0,),
                         SizedBox(width: 8.0,),
                         ZCText(text:"Categories", color: Constants.zc_font_grey,),
                       ],
@@ -36,7 +36,7 @@ class ZCMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                     child: Row(
                       children: [
-                        Icon(Icons.local_offer_sharp, color: Constants.zc_font_light_grey,),
+                        Image.asset(Constants.ic_offer, scale: 7.0,),
                         SizedBox(width: 8.0,),
                         ZCText(text:"Offers", color: Constants.zc_font_grey,),
                       ],
@@ -47,7 +47,7 @@ class ZCMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                     child: Row(
                       children: [
-                        Icon(Icons.notification_important, color: Constants.zc_font_light_grey,),
+                        Image.asset(Constants.ic_notification, scale: 7.0,),
                         SizedBox(width: 8.0,),
                         ZCText(text:"Notification", color: Constants.zc_font_grey,),
                       ],
@@ -58,7 +58,7 @@ class ZCMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                     child: Row(
                       children: [
-                        Icon(Icons.account_box_outlined, color: Constants.zc_font_light_grey,),
+                        Image.asset(Constants.ic_about, scale: 7.0,),
                         SizedBox(width: 8.0,),
                         ZCText(text:"About", color: Constants.zc_font_grey,),
                       ],
@@ -69,7 +69,7 @@ class ZCMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                     child: Row(
                       children: [
-                        Icon(Icons.call, color: Constants.zc_font_light_grey,),
+                        Image.asset(Constants.ic_contact, scale: 7.0,),
                         SizedBox(width: 8.0,),
                         ZCText(text:"Contact", color: Constants.zc_font_grey,),
                       ],
@@ -80,7 +80,7 @@ class ZCMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                     child: Row(
                       children: [
-                        Icon(Icons.format_quote, color: Constants.zc_font_light_grey,),
+                        Image.asset(Constants.ic_faq, scale: 7.0,),
                         SizedBox(width: 8.0,),
                         ZCText(text:"Faq", color: Constants.zc_font_grey,),
                       ],
@@ -91,7 +91,7 @@ class ZCMenu extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                     child: Row(
                       children: [
-                        Icon(Icons.security, color: Constants.zc_font_light_grey,),
+                        Image.asset(Constants.ic_terms, scale: 7.0,),
                         SizedBox(width: 8.0,),
                         ZCText(text:"Terms", color: Constants.zc_font_grey,),
                       ],

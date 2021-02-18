@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
+import 'package:zaincart_app/models/wishlistAddResponse.dart';
+import 'package:zaincart_app/models/wishlist_response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -191,12 +193,14 @@ class ZCProductItem extends StatelessWidget {
       if (isConnected) {
         APIService().wishlistAdd(productId).then((response) {
           if (response.statusCode == 200) {
-            Response wishlistResponse = Response.fromJson(response.data);
+            WishlistAddResponse wishlistResponse = WishlistAddResponse.fromJson(response.data);
             if (wishlistResponse.success == 0) {
               AlertUtils.showToast(wishlistResponse.error, context);
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
-            } else {}
+            } else if (wishlistResponse.success == 1){
+              AlertUtils.showToast(wishlistResponse.data.message, context);
+            }
           } else {
             AlertUtils.showToast("Login Failed", context);
           }

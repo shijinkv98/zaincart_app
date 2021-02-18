@@ -3,14 +3,14 @@ import 'package:zaincart_app/models/products_response.dart';
 class WishlistResponse {
   int success;
   String error;
-  Data data;
+  WishlistData data;
 
   WishlistResponse({this.success, this.error, this.data});
 
   WishlistResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     error = json['error'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new WishlistData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,14 +24,14 @@ class WishlistResponse {
   }
 }
 
-class Data {
+class WishlistData {
   int cartCount;
   int wishCount;
   List<Product> product;
 
-  Data({this.cartCount, this.wishCount, this.product});
+  WishlistData({this.cartCount, this.wishCount, this.product});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  WishlistData.fromJson(Map<String, dynamic> json) {
     cartCount = json['cart_count'];
     wishCount = json['wish_count'];
     if (json['product'] != null) {
