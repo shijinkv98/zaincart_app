@@ -42,6 +42,14 @@ flutter:
     - assets/ic_notification.png
     - assets/ic_offer.png
     - assets/ic_terms.png
+    - assets/ic_address.png
+    - assets/ic_checkout.png
+    - assets/ic_history.png
+    - assets/ic_myorder.png
+    - assets/ic_rate_app.png
+    - assets/ic_register.png
+    - assets/ic_signin.png
+    - assets/ic_wishlist.png
 
   # fonts:
   #   - family: Schyler

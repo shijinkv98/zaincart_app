@@ -41,10 +41,7 @@ class ZCAccount extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.verified_user,
-                          color: Constants.zc_font_light_grey,
-                        ),
+                        Image.asset(Constants.ic_signin, scale: 7.0,),
                         SizedBox(
                           width: 8.0,
                         ),
@@ -70,10 +67,7 @@ class ZCAccount extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.add_box_outlined,
-                          color: Constants.zc_font_light_grey,
-                        ),
+                        Image.asset(Constants.ic_register, scale: 7.0,),
                         SizedBox(
                           width: 8.0,
                         ),
@@ -99,10 +93,7 @@ class ZCAccount extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.favorite_outline,
-                          color: Constants.zc_font_light_grey,
-                        ),
+                        Image.asset(Constants.ic_wishlist, scale: 7.0,),
                         SizedBox(
                           width: 8.0,
                         ),
@@ -123,10 +114,7 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Constants.zc_font_light_grey,
-                      ),
+                      Image.asset(Constants.ic_checkout, scale: 7.0,),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -146,10 +134,7 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.arrow_upward,
-                        color: Constants.zc_font_light_grey,
-                      ),
+                      Image.asset(Constants.ic_myorder, scale: 7.0,),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -169,10 +154,7 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.star_border,
-                        color: Constants.zc_font_light_grey,
-                      ),
+                     Image.asset(Constants.ic_rate_app, scale: 7.0,),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -192,10 +174,7 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.history_edu_outlined,
-                        color: Constants.zc_font_light_grey,
-                      ),
+                      Image.asset(Constants.ic_history, scale: 7.0,),
                       SizedBox(
                         width: 8.0,
                       ),
@@ -219,10 +198,7 @@ class ZCAccount extends StatelessWidget {
                   },
                                       child: Row(
                       children: [
-                        Icon(
-                          Icons.policy_sharp,
-                          color: Constants.zc_font_light_grey,
-                        ),
+                        Image.asset(Constants.ic_address, scale: 7.0,),
                         SizedBox(
                           width: 8.0,
                         ),

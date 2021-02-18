@@ -18,6 +18,14 @@ class Constants {
   static const ic_notification = 'assets/ic_notification.png';
   static const ic_offer = 'assets/ic_offer.png';
   static const ic_terms = 'assets/ic_terms.png';
+  static const ic_address = 'assets/ic_address.png';
+  static const ic_checkout = 'assets/ic_checkout.png';
+  static const ic_history = 'assets/ic_history.png';
+  static const ic_myorder = 'assets/ic_myorder.png';
+  static const ic_rate_app = 'assets/ic_rate_app.png';
+  static const ic_register = 'assets/ic_register.png';
+  static const ic_signin = 'assets/ic_signin.png';
+  static const ic_wishlist = 'assets/ic_wishlist.png';
   
 
   //colors..
