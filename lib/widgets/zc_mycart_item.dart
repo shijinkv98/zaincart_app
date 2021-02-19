@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:zaincart_app/models/products_response.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
+import 'package:zaincart_app/models/cartlist_response.dart';
+import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
+import 'package:zaincart_app/utils/alert_utils.dart';
+import 'package:zaincart_app/utils/api_service.dart';
+import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ZCMyCartItem extends StatelessWidget {
-  ZCMyCartItem({this.product});
-  final Product product;
+  ZCMyCartItem({this.cartProduct, this.cartId});
+  final CartProduct cartProduct;
+  final String cartId;
   var itemCount = ValueNotifier(0);
   var isFavorite = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _onItemTap(context: context, productId: product.productId),
+      onTap: () =>
+          _onItemTap(context: context, productId: cartProduct.productId),
       child: new Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -28,7 +36,7 @@ class ZCMyCartItem extends StatelessWidget {
                       height: 90.0,
                       width: 130.0,
                       child: Image.network(
-                        product.productImage,
+                        cartProduct.image,
                         fit: BoxFit.contain,
                       )),
                   Column(
@@ -38,7 +46,7 @@ class ZCMyCartItem extends StatelessWidget {
                         Container(
                           width: 230.0,
                           child: ZCText(
-                            text: product.productName,
+                            text: cartProduct.produtName,
                             color: Constants.zc_orange,
                             semiBold: true,
                             maxLines: 2,
@@ -68,7 +76,7 @@ class ZCMyCartItem extends StatelessWidget {
                           height: 5.0,
                         ),
                         ZCText(
-                          text: product.productPrice,
+                          text: cartProduct.productPrice,
                           color: Constants.zc_font_black,
                           semiBold: true,
                         ),
@@ -179,6 +187,32 @@ class ZCMyCartItem extends StatelessWidget {
                 ],
               ),
             ),
+            new Container(
+              alignment: Alignment.centerRight,
+              child: InkWell(
+                onTap: () {
+                  print("remove from wish list");
+                  _removeFromCart(context, cartProduct.productId, cartProduct.cartItemId);
+                },
+                child: Container(
+                  color: Constants.zc_font_light_grey,
+                  width: 65.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.close,
+                        size: kSmallFontSize,
+                      ),
+                      ZCText(
+                        text: "Remove",
+                        fontSize: kSmallFontSize,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Divider(
               thickness: 1.0,
             )
@@ -193,5 +227,27 @@ class ZCMyCartItem extends StatelessWidget {
         builder: (BuildContext context) => ProductDetailScreen(
               productId: productId,
             )));
+  }
+
+  _removeFromCart(BuildContext context, String itemId, String cartId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService().removeFromCart(itemId, cartId).then((response) {
+          if (response.statusCode == 200) {
+            Response wishlistResponse = Response.fromJson(response.data);
+            if (wishlistResponse.success == 0) {
+              AlertUtils.showToast(wishlistResponse.error, context);
+            } else if (wishlistResponse.success == 3) {
+              kMoveToLogin(context);
+            } else if (wishlistResponse.success == 1) {
+              Provider.of<MyCartBloc>(context, listen: false)
+                  .getMyCartList(context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
   }
 }

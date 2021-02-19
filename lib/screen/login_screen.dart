@@ -196,6 +196,8 @@ class LoginScreenState extends State<LoginScreen> {
                 APIService().updateHeader(loginResponse.data.token);
                 Preferences.save(PrefKey.token, loginResponse.data.token);
                 Preferences.save(PrefKey.id, loginResponse.data.customerId);
+                Preferences.save(PrefKey.firstName ,loginResponse.data.customerName);
+                Preferences.save(PrefKey.email, loginResponse.data.customerEmail);
                 Preferences.saveBool(PrefKey.loginStatus, true);
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (BuildContext context) => HomeController()));

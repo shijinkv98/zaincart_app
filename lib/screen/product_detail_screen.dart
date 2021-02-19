@@ -19,7 +19,7 @@ class ProductDetailScreen extends StatefulWidget {
 class ProductDetailState extends State<ProductDetailScreen> {
   bool isLoading = false;
   ProductDetail _productDetail;
-  
+
   @override
   void initState() {
     getProductDetail(widget.productId);
@@ -62,14 +62,16 @@ class ProductDetailState extends State<ProductDetailScreen> {
                   SizedBox(
                       height: 200.0,
                       width: divWidth,
-                      child: _productDetail.productImage != null? Carousel(
-                        dotBgColor: Colors.transparent,
-                        dotSize: 5.0,
-                        dotSpacing: 15.0,
-                        images: _productDetail.productImage
-                            .map((image) => NetworkImage(image))
-                            .toList(),
-                      ): new Container()),
+                      child: _productDetail.productImage != null
+                          ? Carousel(
+                              dotBgColor: Colors.transparent,
+                              dotSize: 5.0,
+                              dotSpacing: 15.0,
+                              images: _productDetail.productImage
+                                  .map((image) => NetworkImage(image))
+                                  .toList(),
+                            )
+                          : new Container()),
                   Positioned(
                       left: 20.0,
                       top: 20.0,
@@ -155,8 +157,12 @@ class ProductDetailState extends State<ProductDetailScreen> {
                         height: 10.0,
                       ),
                       new ZCText(
-                        text: _productDetail.stockStatus?"In stock":"Out of stock",
-                        color: _productDetail.stockStatus?Colors.green: Colors.red,
+                        text: _productDetail.stockStatus
+                            ? "In stock"
+                            : "Out of stock",
+                        color: _productDetail.stockStatus
+                            ? Colors.green
+                            : Colors.red,
                         semiBold: true,
                         fontSize: kFontSize,
                       ),
@@ -225,8 +231,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                         height: 10.0,
                       ),
                       ZCText(
-                        text:
-                            _productDetail.productDescription,
+                        text: _productDetail.productDescription,
                         maxLines: 8,
                         color: Colors.grey,
                       ),
@@ -272,8 +277,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                         height: 10.0,
                       ),
                       ZCText(
-                        text:
-                            _productDetail.productShortDescription,
+                        text: _productDetail.productShortDescription,
                         maxLines: 8,
                         color: Colors.grey,
                       ),

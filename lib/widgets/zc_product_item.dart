@@ -219,7 +219,7 @@ class ZCProductItem extends StatelessWidget {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         APIService()
-            .addToCart(productSku: productQty, productQty: productQty)
+            .addToCart(productSku: productSku, productQty: productQty)
             .then((response) {
           if (response.statusCode == 200) {
             Response wishlistResponse = Response.fromJson(response.data);

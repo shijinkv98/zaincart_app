@@ -94,8 +94,8 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) => WishlistScreen()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => WishlistScreen(isEnableBack: true,)));
                     },
                     child: Row(
                       children: [

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zaincart_app/models/cartlist_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
+import 'package:zaincart_app/utils/constants.dart';
 
 class MyCartBloc extends ChangeNotifier {
   List<Product> myCartList;
@@ -12,7 +14,13 @@ class MyCartBloc extends ChangeNotifier {
     myCartList = data;
     notifyListeners();
   }
-  
+
+  MyCartResponse _cartResponse;
+  MyCartResponse get cartResponse => _cartResponse;
+  set cartResponseData(MyCartResponse data) {
+    _cartResponse = data;
+    notifyListeners();
+  }
 
   bool isLoading = false;
 
@@ -25,15 +33,14 @@ class MyCartBloc extends ChangeNotifier {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
-            Response loginResponse = Response.fromJson(response.data);
-            if (loginResponse.success != 1) {
-              AlertUtils.showToast(loginResponse.error, context);
+            MyCartResponse cartResponse =
+                MyCartResponse.fromJson(response.data);
+            if (cartResponse.success == 1) {
+              cartResponseData = cartResponse;
+            } else if (cartResponse.success == 3) {
+              kMoveToLogin(context);
             } else {
-              ProductsResponse productsResponse =
-                  ProductsResponse.fromJson(response.data);
-
-              notifyListeners();
-              print(productsResponse.data.newProduct.length);
+              AlertUtils.showToast(cartResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Failed", context);

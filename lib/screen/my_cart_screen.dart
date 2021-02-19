@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
@@ -18,6 +19,7 @@ class MyCartScreen extends StatefulWidget {
 class _MyCartScreenState extends State<MyCartScreen> {
   @override
   Widget build(BuildContext context) {
+    Provider.of<MyCartBloc>(context, listen: false).getMyCartList(context);
     return Scaffold(
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
@@ -51,15 +53,15 @@ class _MyCartScreenState extends State<MyCartScreen> {
                   ))
         ],
       ),
-      body: Consumer<HomeBloc>(
-          builder: (context, homeBloc, child) => ModalProgressHUD(
-                inAsyncCall: homeBloc.isLoading,
+      body: Consumer<MyCartBloc>(
+          builder: (context, cartBloc, child) => ModalProgressHUD(
+                inAsyncCall: cartBloc.isLoading,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: homeBloc.homeData.newProduct.length,
+                    itemCount: cartBloc.cartResponse.data.product.length,
                     itemBuilder: (BuildContext ctxt, int index) {
                       return ZCMyCartItem(
-                        product: homeBloc.homeData.newProduct[index],
+                        cartProduct: cartBloc.cartResponse.data.product[index], cartId: cartBloc.cartResponse.cartInfo.cartId,
                       );
                     }),
               )),

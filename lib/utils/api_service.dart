@@ -26,6 +26,7 @@ class APIService {
   updateHeader(String authToken) async {
     dio.options.headers["Content-Type"] = "application/json";
     dio.options.headers["token"] = authToken;
+    dio.options.headers["Authorization"] = "authToken";
     customerId = await Preferences.get(PrefKey.id);
     token = await Preferences.get(PrefKey.token);
     print("TOKEN=== ${dio.options.headers["token"]}");
@@ -83,10 +84,13 @@ class APIService {
 
   //get mycart data///
   Future<Response> getMyCartItems() async {
-    print(
-        "URL:::" + APIClient.mycartList(customerId: customerId, token: token));
-    Response response = await dio
-        .get(APIClient.mycartList(customerId: customerId, token: token));
+    var url = APIClient.mycartList;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+    };
+    print("URL:::" + url);
+    Response response = await dio.get(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
@@ -127,6 +131,21 @@ class APIService {
       "customer_id": "$customerId",
       "customertoken": "$token",
       "Product_id": "$produtId"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //cart remove///
+  Future<Response> removeFromCart(String itemId, String cartId) async {
+    var url = APIClient.removeFromCart;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "itemid": "$itemId",
+      "itemcartid" : "$cartId"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);

@@ -8,6 +8,8 @@ import 'package:zaincart_app/widgets/zc_product_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class WishlistScreen extends StatefulWidget {
+  final bool isEnableBack;
+  WishlistScreen({this.isEnableBack = false});
   @override
   State<StatefulWidget> createState() {
     return _WishlistScreenState();
@@ -34,7 +36,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
         leading: Builder(
             builder: (BuildContext context) => Padding(
                   padding: EdgeInsets.only(left: 0.0),
-                  child: IconButton(
+                  child: widget.isEnableBack ? IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Constants.zc_font_black,
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ): IconButton(
                     icon: Icon(
                       Icons.menu,
                       color: Constants.zc_font_black,
@@ -55,18 +63,16 @@ class _WishlistScreenState extends State<WishlistScreen> {
       ),
       body: Consumer<HomeBloc>(
           builder: (context, homeBloc, child) => GridView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: homeBloc.wishlistItems.length,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: (BuildContext ctxt, int index) {
-            return ZCProductItem(
-              product: homeBloc.wishlistItems[index],
-              isWishListed: true,
-            );
-          })),
+              scrollDirection: Axis.vertical,
+              itemCount: homeBloc.wishlistItems.length,
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemBuilder: (BuildContext ctxt, int index) {
+                return ZCProductItem(
+                  product: homeBloc.wishlistItems[index],
+                  isWishListed: true,
+                );
+              })),
     );
   }
-
-  
 }

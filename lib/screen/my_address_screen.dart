@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class MyAddressScreen extends StatefulWidget {
@@ -10,6 +11,17 @@ class MyAddressScreen extends StatefulWidget {
 }
 
 class _MyAddressScreenState extends State<MyAddressScreen> {
+  var name;
+  var email;
+  var phone;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getUserInfo();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +59,12 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                 ),
                 ZCText(
                   text: "Edit",
+                  color: Constants.zc_orange,
                 )
               ],
+            ),
+            Divider(
+              thickness: 1.0,
             ),
             Row(
               children: [
@@ -60,61 +76,96 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ZCText(
-                      text: "Raghav PK",
+                      text: name,
                     ),
                     ZCText(
-                      text: "Raghavpk@gmail.com",
+                      text: email,
                     ),
                     ZCText(
-                      text: "970088922737823",
+                      text: phone,
                     ),
                   ],
                 )
               ],
             ),
-            Divider(thickness: 1.0,),
+            Divider(
+              thickness: 1.0,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ZCText(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ZCText(
                       text: "Shipping Address",
                       semiBold: true,
                     ),
-                    SizedBox(height: 5.0,),
+                    ZCText(
+                      text: "Edit",
+                      color: Constants.zc_orange,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
                 ZCText(
-                      text: "Raghav PK",
-                    ),
-                    ZCText(
-                      text: "Raghavpk@gmail.com",
-                    ),
-                    ZCText(
-                      text: "970088922737823",
-                    ),
+                  text: "Raghav PK",
+                ),
+                ZCText(
+                  text: "Raghavpk@gmail.com",
+                ),
+                ZCText(
+                  text: "970088922737823",
+                ),
               ],
             ),
-            Divider(thickness: 1.0,),
+            Divider(
+              thickness: 1.0,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ZCText(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ZCText(
                       text: "Billing Address",
                       semiBold: true,
                     ),
-                    SizedBox(height: 5.0,),
+                    ZCText(
+                      text: "Edit",
+                      color: Constants.zc_orange,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
                 ZCText(
-                      text: "Raghav PK",
-                    ),
-                    ZCText(
-                      text: "Raghavpk@gmail.com",
-                    ),
-                    ZCText(
-                      text: "970088922737823",
-                    ),
+                  text: "Raghav PK",
+                ),
+                ZCText(
+                  text: "Raghavpk@gmail.com",
+                ),
+                ZCText(
+                  text: "970088922737823",
+                ),
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  void getUserInfo() async {
+    name = await Preferences.get(PrefKey.firstName);
+      email = await Preferences.get(PrefKey.email);
+      phone = await Preferences.get(PrefKey.mobileNumber);
+    setState(() {
+      
+    });
   }
 }
