@@ -23,5 +23,5 @@ class APIClient {
 
   static final wishListAdd = Base_URL + "wishlistadd";
   static final addToCart = Base_URL + "customercart";
-  
+  static final wishlistRemove = Base_URL + "wishlistitemremove";
 }

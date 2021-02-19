@@ -105,7 +105,7 @@ class APIService {
     return response;
   }
 
-  //wishlist add///
+  //cart add///
   Future<Response> addToCart({String productSku, String productQty}) async {
     var url = APIClient.addToCart;
     var queryParams = {
@@ -115,6 +115,20 @@ class APIService {
       "Product_qty": "$productQty"
     };
     print("URL:::" + url + " $queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //wishlist remove///
+  Future<Response> wishlistRemove(String produtId) async {
+    var url = APIClient.wishlistRemove;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "Product_id": "$produtId"
+    };
+    print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
