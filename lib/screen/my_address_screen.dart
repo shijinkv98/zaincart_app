@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:zaincart_app/models/address.dart';
+import 'package:zaincart_app/models/addressListResponse.dart';
+import 'package:zaincart_app/utils/alert_utils.dart';
+import 'package:zaincart_app/utils/api_service.dart';
+import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
@@ -14,11 +20,13 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   var name;
   var email;
   var phone;
+  List<Address> addressList = new List<Address>();
+  bool isLoading = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     getUserInfo();
+    getAddressList();
     super.initState();
   }
 
@@ -49,7 +57,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
+        child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,69 +99,46 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
             Divider(
               thickness: 1.0,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ZCText(
-                      text: "Shipping Address",
-                      semiBold: true,
-                    ),
-                    ZCText(
-                      text: "Edit",
-                      color: Constants.zc_orange,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                ZCText(
-                  text: "Raghav PK",
-                ),
-                ZCText(
-                  text: "Raghavpk@gmail.com",
-                ),
-                ZCText(
-                  text: "970088922737823",
-                ),
-              ],
+            Expanded(
+                        child: ListView.builder(
+                  itemCount: addressList.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ZCText(
+                              text: "Shipping Address",
+                              semiBold: true,
+                            ),
+                            ZCText(
+                              text: "Edit",
+                              color: Constants.zc_orange,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        ZCText(
+                          text: addressList[index].firstname +
+                              addressList[index].lastname,
+                        ),
+                        ZCText(
+                          text: addressList[index].street,
+                        ),
+                        ZCText(
+                          text: addressList[index].telephone,
+                        ),
+                        Divider(
+                          thickness: 1.0,
+                        ),
+                      ],
+                    );
+                  }),
             ),
-            Divider(
-              thickness: 1.0,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ZCText(
-                      text: "Billing Address",
-                      semiBold: true,
-                    ),
-                    ZCText(
-                      text: "Edit",
-                      color: Constants.zc_orange,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                ZCText(
-                  text: "Raghav PK",
-                ),
-                ZCText(
-                  text: "Raghavpk@gmail.com",
-                ),
-                ZCText(
-                  text: "970088922737823",
-                ),
-              ],
-            )
           ],
         ),
       ),
@@ -162,10 +147,38 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
 
   void getUserInfo() async {
     name = await Preferences.get(PrefKey.firstName);
-      email = await Preferences.get(PrefKey.email);
-      phone = await Preferences.get(PrefKey.mobileNumber);
-    setState(() {
-      
+    email = await Preferences.get(PrefKey.email);
+    phone = await Preferences.get(PrefKey.mobileNumber);
+    setState(() {});
+  }
+
+  getAddressList() {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        setState(() {
+          isLoading = true;
+        });
+        APIService().addressList().then((response) {
+          setState(() {
+            isLoading = false;
+          });
+          if (response.statusCode == 200) {
+            AddressListResponse addressResponse =
+                AddressListResponse.fromJson(response.data);
+            if (addressResponse.success == 1) {
+              setState(() {
+                addressList = addressResponse.data.addressList;
+              });
+            } else if (addressResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(addressResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
     });
   }
 }

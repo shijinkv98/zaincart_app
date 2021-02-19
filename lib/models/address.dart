@@ -1,4 +1,5 @@
 class Address {
+    String addressId;
   String customerId;
   String firstname;
   String lastname;
@@ -14,7 +15,7 @@ class Address {
   String customertoken;
 
   Address(
-      {this.customerId,
+      {this.addressId,this.customerId,
       this.firstname,
       this.lastname,
       this.postcode,
@@ -29,6 +30,7 @@ class Address {
       this.customertoken});
 
   Address.fromJson(Map<String, dynamic> json) {
+    addressId = json['address_id'];
     customerId = json['customer_id'];
     firstname = json['firstname'];
     lastname = json['lastname'];
@@ -38,14 +40,15 @@ class Address {
     telephone = json['telephone'];
     countryid = json['countryid'];
     street = json['street'];
-    defaultbilling = json['defaultbilling'];
-    defaultshipping = json['defaultshipping'];
+    //defaultbilling = json['defaultbilling'];
+    //defaultshipping = json['defaultshipping'];
     saveinaddressbook = json['saveinaddressbook'];
     customertoken = json['customertoken'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['address_id'] = this.addressId;
     data['customer_id'] = this.customerId;
     data['firstname'] = this.firstname;
     data['lastname'] = this.lastname;

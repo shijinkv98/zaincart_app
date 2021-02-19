@@ -9,18 +9,6 @@ class LoginResponse {
     success = json['success'];
     error = json['error'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['error'] = this.error;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-   
-    return data;
   }
 }
 
@@ -29,6 +17,7 @@ class Data {
   String customerName;
   String customerEmail;
   String token;
+  String phone;
   String message;
 
   Data(
@@ -36,6 +25,7 @@ class Data {
       this.customerName,
       this.customerEmail,
       this.token,
+      this.phone,
       this.message});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -43,16 +33,7 @@ class Data {
     customerName = json['customer_name'];
     customerEmail = json['customer_email'];
     token = json['token'];
+    phone = json['phone'];
     message = json['message'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customer_id'] = this.customerId;
-    data['customer_name'] = this.customerName;
-    data['customer_email'] = this.customerEmail;
-    data['token'] = this.token;
-    data['message'] = this.message;
-    return data;
   }
 }

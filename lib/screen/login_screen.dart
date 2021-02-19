@@ -169,8 +169,8 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void _forgotPasswordTapped() {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => ForgotPasswordScreen()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => ForgotPasswordScreen()));
   }
 
   void _loginTapped() {
@@ -196,8 +196,12 @@ class LoginScreenState extends State<LoginScreen> {
                 APIService().updateHeader(loginResponse.data.token);
                 Preferences.save(PrefKey.token, loginResponse.data.token);
                 Preferences.save(PrefKey.id, loginResponse.data.customerId);
-                Preferences.save(PrefKey.firstName ,loginResponse.data.customerName);
-                Preferences.save(PrefKey.email, loginResponse.data.customerEmail);
+                Preferences.save(
+                    PrefKey.firstName, loginResponse.data.customerName);
+                Preferences.save(
+                    PrefKey.email, loginResponse.data.customerEmail);
+                Preferences.save(
+                    PrefKey.mobileNumber, loginResponse.data.phone);
                 Preferences.saveBool(PrefKey.loginStatus, true);
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (BuildContext context) => HomeController()));
