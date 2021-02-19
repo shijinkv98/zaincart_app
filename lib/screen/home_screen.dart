@@ -154,8 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       homeBloc.homeData.newProduct != null
                           ? ZCProductsList(
-                              title: "LATEST PRODUCTS",
-                              productList: homeBloc.homeData.newProduct,
+                              title: homeBloc.homeData.categoryProducts.first.name,
+                              productList: homeBloc.homeData.categoryProducts.first.items,
                             )
                           : new Container(),
                       SizedBox(
@@ -230,10 +230,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      homeBloc.homeData.newProduct != null
+                      homeBloc.homeData.featuredProduct != null
                           ? ZCProductsList(
-                              title: "FEATURED PRODUCTS",
-                              productList: homeBloc.homeData.newProduct,
+                              title: homeBloc.homeData.featuredProduct.first.name,
+                              productList: homeBloc.homeData.featuredProduct.first.items,
                             )
                           : new Container(),
                       Padding(

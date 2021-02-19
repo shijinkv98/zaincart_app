@@ -11,16 +11,6 @@ class ProductsResponse {
     error = json['error'];
     data = json['data'] != null ? new HomeData.fromJson(json['data']) : null;
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['error'] = this.error;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    return data;
-  }
 }
 
 class HomeData {
@@ -31,6 +21,7 @@ class HomeData {
   List<Slider> slider;
   List<Product> newProduct;
   List<CategoryProducts> categoryProducts;
+  List<CategoryProducts> featuredProduct;
 
   HomeData(
       {this.cartCount,
@@ -39,7 +30,8 @@ class HomeData {
       this.categoryList,
       this.slider,
       this.newProduct,
-      this.categoryProducts});
+      this.categoryProducts,
+      this.featuredProduct});
 
   HomeData.fromJson(Map<String, dynamic> json) {
     cartCount = json['cart_count'];
@@ -74,30 +66,12 @@ class HomeData {
         categoryProducts.add(new CategoryProducts.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cart_count'] = this.cartCount;
-    data['wish_count'] = this.wishCount;
-    if (this.searchCategory != null) {
-      data['search_category'] =
-          this.searchCategory.map((v) => v.toJson()).toList();
+    if (json['featured_product'] != null) {
+      featuredProduct = new List<CategoryProducts>();
+      json['featured_product'].forEach((v) {
+        featuredProduct.add(new CategoryProducts.fromJson(v));
+      });
     }
-    if (this.categoryList != null) {
-      data['category_list'] = this.categoryList.map((v) => v.toJson()).toList();
-    }
-    if (this.slider != null) {
-      data['slider'] = this.slider.map((v) => v.toJson()).toList();
-    }
-    if (this.newProduct != null) {
-      data['new_product'] = this.newProduct.map((v) => v.toJson()).toList();
-    }
-    if (this.categoryProducts != null) {
-      data['category_products'] =
-          this.categoryProducts.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -117,16 +91,6 @@ class SearchCategory {
         subcategory.add(new Subcategory.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category_name'] = this.categoryName;
-    data['category_id'] = this.categoryId;
-    if (this.subcategory != null) {
-      data['subcategory'] = this.subcategory.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -195,17 +159,6 @@ class Slider {
     label = json['label'];
     mediaType = json['media_type'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['entity_type'] = this.entityType;
-    data['entity_id'] = this.entityId;
-    data['link'] = this.link;
-    data['file'] = this.file;
-    data['label'] = this.label;
-    data['media_type'] = this.mediaType;
-    return data;
-  }
 }
 
 class Product {
@@ -241,44 +194,21 @@ class Product {
     productOffer = json['product_offer'];
     productImage = json['product_image'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['product_wishlisted'] = this.productWishlisted;
-    data['product_id'] = this.productId;
-    data['product_sku'] = this.productSku;
-    data['product_type'] = this.productType;
-    data['product_name'] = this.productName;
-    data['product_price'] = this.productPrice;
-    data['product_sp_price'] = this.productSpPrice;
-    data['product_offer'] = this.productOffer;
-    data['product_image'] = this.productImage;
-    return data;
-  }
 }
 
 class CategoryProducts {
   String name;
-  List<Product> item;
+  List<Product> items;
 
-  CategoryProducts({this.name, this.item});
+  CategoryProducts({this.name, this.items});
 
   CategoryProducts.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     if (json['item'] != null) {
-      item = new List<Product>();
+      items = new List<Product>();
       json['item'].forEach((v) {
-        item.add(new Product.fromJson(v));
+        items.add(new Product.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    if (this.item != null) {
-      data['item'] = this.item.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }

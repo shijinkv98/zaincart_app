@@ -12,16 +12,6 @@ class WishlistResponse {
     error = json['error'];
     data = json['data'] != null ? new WishlistData.fromJson(json['data']) : null;
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['error'] = this.error;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    return data;
-  }
 }
 
 class WishlistData {
@@ -40,15 +30,5 @@ class WishlistData {
         product.add(new Product.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cart_count'] = this.cartCount;
-    data['wish_count'] = this.wishCount;
-    if (this.product != null) {
-      data['product'] = this.product.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
