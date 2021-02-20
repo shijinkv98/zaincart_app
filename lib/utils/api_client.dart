@@ -24,4 +24,5 @@ class APIClient {
   static final addressList = Base_URL + "loadaddress";
   static final addAddress = Base_URL + "customeraddressadd";
   static final addressUpdate = Base_URL + "updateaddress";
+  static final placeOrder = Base_URL + "createorder";
 }

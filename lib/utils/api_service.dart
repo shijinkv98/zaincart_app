@@ -146,7 +146,7 @@ class APIService {
       "customer_id": "$customerId",
       "customertoken": "$token",
       "itemid": "$itemId",
-      "itemcartid" : "$cartId"
+      "itemcartid": "$cartId"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
@@ -183,6 +183,27 @@ class APIService {
     var jsonBody = json.encode(address);
     print("URL:::" + url + "$jsonBody");
     Response response = await dio.post(url, data: jsonBody);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //address list///
+  Future<Response> placeOrder(
+      {dynamic shippingAdresss,
+      dynamic billingAddress,
+      dynamic orderData}) async {
+    var url = APIClient.placeOrder;
+    var queryParams = {
+      "customerId": "$customerId",
+      "customertoken": "$token",
+      "promocode": "0",
+      "discount": "0",
+      "shippingaddress": json.encode(shippingAdresss),
+      "billingaddress": json.encode(billingAddress),
+      "OrderData": orderData
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }

@@ -3,6 +3,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
+import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
@@ -59,16 +60,19 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: cartBloc.cartResponse != null ? ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: cartBloc.cartResponse.data.product.length,
-                          itemBuilder: (BuildContext ctxt, int index) {
-                            return ZCMyCartItem(
-                              cartProduct:
-                                  cartBloc.cartResponse.data.product[index],
-                              cartId: cartBloc.cartResponse.cartInfo.cartId,
-                            );
-                          }) : new Container(),
+                      child: cartBloc.cartResponse != null
+                          ? ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount:
+                                  cartBloc.cartResponse.data.product.length,
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return ZCMyCartItem(
+                                  cartProduct:
+                                      cartBloc.cartResponse.data.product[index],
+                                  cartId: cartBloc.cartResponse.cartInfo.cartId,
+                                );
+                              })
+                          : new Container(),
                     ),
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -77,20 +81,38 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           child: new Container(
                             height: 40.0,
                             color: Constants.zc_yellow,
-                            child: Center(child: Column(
+                            child: Center(
+                                child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ZCText(text: "Total", color: Constants.zc_orange_dark,fontSize: 11.0,),
-                                ZCText(text: "QAR${cartBloc.totalAmount.toString()}", semiBold: true,),
+                                ZCText(
+                                  text: "Total",
+                                  color: Constants.zc_orange_dark,
+                                  fontSize: 11.0,
+                                ),
+                                ZCText(
+                                  text: "QAR${cartBloc.totalAmount.toString()}",
+                                  semiBold: true,
+                                ),
                               ],
                             )),
                           ),
                         ),
                         Expanded(
-                          child: new Container(
-                            height: 40.0,
-                            color: Constants.zc_orange_dark,
-                            child: Center(child: ZCText(text: "Place Order", semiBold: true, color: Colors.white,)),
+                          child: InkWell(
+                            onTap: () {
+                              cartBloc.placeOrder(context);
+                            },
+                            child: new Container(
+                              height: 40.0,
+                              color: Constants.zc_orange_dark,
+                              child: Center(
+                                  child: ZCText(
+                                text: "Place Order",
+                                semiBold: true,
+                                color: Colors.white,
+                              )),
+                            ),
                           ),
                         )
                       ],

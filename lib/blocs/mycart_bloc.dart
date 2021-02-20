@@ -6,6 +6,7 @@ import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/utils/preferences.dart';
 
 class MyCartBloc extends ChangeNotifier {
   List<Product> myCartList;
@@ -32,6 +33,46 @@ class MyCartBloc extends ChangeNotifier {
         isLoading = true;
         notifyListeners();
         APIService().getMyCartItems().then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            MyCartResponse cartResponse =
+                MyCartResponse.fromJson(response.data);
+            if (cartResponse.success == 1) {
+              cartResponseData = cartResponse;
+              getTodtal();
+            } else if (cartResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(cartResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  placeOrder(BuildContext context) async {
+    AppUtils.isConnectedToInternet(context).then((isConnected) async {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        var orderData = {
+          "date": DateTime.now().toString(),
+          "email": await Preferences.get(PrefKey.email),
+          "payment_method": "cashondelivery",
+          "currency_id": "QAR",
+          "shipping_method": "flatrate_flatrate",
+          "time": "12"
+        };
+        APIService()
+            .placeOrder(
+                shippingAdresss: _cartResponse.cartInfo.address.shippingAddress,
+                billingAddress: _cartResponse.cartInfo.address.billingAddress,
+                orderData: orderData)
+            .then((response) {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
