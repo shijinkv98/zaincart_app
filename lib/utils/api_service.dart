@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/utils/api_client.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 
@@ -162,6 +163,26 @@ class APIService {
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //Add address///
+  Future<Response> addAddress(dynamic address) async {
+    var url = APIClient.addAddress;
+    var jsonBody = json.encode(address);
+    print("URL:::" + url + "$jsonBody");
+    Response response = await dio.post(url, data: jsonBody);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //address update///
+  Future<Response> addressUpdate(dynamic address) async {
+    var url = APIClient.addressUpdate;
+    var jsonBody = json.encode(address);
+    print("URL:::" + url + "$jsonBody");
+    Response response = await dio.post(url, data: jsonBody);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }

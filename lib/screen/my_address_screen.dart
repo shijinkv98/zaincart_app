@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
+import 'package:zaincart_app/screen/add_address_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
@@ -54,6 +55,20 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                     },
                   ),
                 )),
+        actions: <Widget>[
+          Builder(
+              builder: (BuildContext context) => IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              AddAddressScreen()));
+                    },
+                  ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -100,7 +115,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
               thickness: 1.0,
             ),
             Expanded(
-                        child: ListView.builder(
+              child: ListView.builder(
                   itemCount: addressList.length,
                   itemBuilder: (BuildContext ctxt, int index) {
                     return Column(
@@ -113,9 +128,18 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                               text: "Shipping Address",
                               semiBold: true,
                             ),
-                            ZCText(
-                              text: "Edit",
-                              color: Constants.zc_orange,
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        AddAddressScreen(
+                                          address: addressList[index],
+                                        )));
+                              },
+                              child: ZCText(
+                                text: "Edit",
+                                color: Constants.zc_orange,
+                              ),
                             )
                           ],
                         ),

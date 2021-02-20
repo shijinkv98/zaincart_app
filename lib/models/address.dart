@@ -7,10 +7,10 @@ class Address {
   String city;
   String state;
   String telephone;
-  String countryid;
+  String countryId;
   String street;
-  String defaultbilling;
-  String defaultshipping;
+  int defaultbilling;
+  int defaultshipping;
   String saveinaddressbook;
   String customertoken;
 
@@ -22,7 +22,7 @@ class Address {
       this.city,
       this.state,
       this.telephone,
-      this.countryid,
+      this.countryId,
       this.street,
       this.defaultbilling,
       this.defaultshipping,
@@ -38,10 +38,10 @@ class Address {
     city = json['city'];
     state = json['state'];
     telephone = json['telephone'];
-    countryid = json['countryid'];
+    countryId = json['country_id'];
     street = json['street'];
-    //defaultbilling = json['defaultbilling'];
-    //defaultshipping = json['defaultshipping'];
+    defaultbilling = json['defaultbilling'];
+    defaultshipping = json['defaultshipping'];
     saveinaddressbook = json['saveinaddressbook'];
     customertoken = json['customertoken'];
   }
@@ -56,7 +56,7 @@ class Address {
     data['city'] = this.city;
     data['state'] = this.state;
     data['telephone'] = this.telephone;
-    data['countryid'] = this.countryid;
+    data['country_id'] = this.countryId;
     data['street'] = this.street;
     data['defaultbilling'] = this.defaultbilling;
     data['defaultshipping'] = this.defaultshipping;

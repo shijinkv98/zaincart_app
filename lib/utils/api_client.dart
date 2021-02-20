@@ -22,4 +22,6 @@ class APIClient {
   static final wishlistRemove = Base_URL + "wishlistitemremove";
   static final removeFromCart = Base_URL + "deletecustomercartitem";
   static final addressList = Base_URL + "loadaddress";
+  static final addAddress = Base_URL + "customeraddressadd";
+  static final addressUpdate = Base_URL + "updateaddress";
 }
