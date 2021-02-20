@@ -22,6 +22,8 @@ class MyCartBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  double totalAmount = 0.0;
+
   bool isLoading = false;
 
   getMyCartList(BuildContext context) async {
@@ -37,6 +39,7 @@ class MyCartBloc extends ChangeNotifier {
                 MyCartResponse.fromJson(response.data);
             if (cartResponse.success == 1) {
               cartResponseData = cartResponse;
+              getTodtal();
             } else if (cartResponse.success == 3) {
               kMoveToLogin(context);
             } else {
@@ -48,5 +51,15 @@ class MyCartBloc extends ChangeNotifier {
         });
       }
     });
+  }
+
+  getTodtal() {
+    double total = 0.0;
+    for (CartProduct product in cartResponse.data.product) {
+      total = total +
+          product.quantity * double.parse(product.productPrice.substring(3));
+    }
+    totalAmount = total;
+    notifyListeners();
   }
 }

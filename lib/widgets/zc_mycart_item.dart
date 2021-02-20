@@ -113,7 +113,8 @@ class ZCMyCartItem extends StatelessWidget {
                                   valueListenable: itemCount,
                                   builder: (context, count, child) => Center(
                                           child: ZCText(
-                                        text: count.toString(),
+                                        text: (count + cartProduct.quantity)
+                                            .toString(),
                                         fontSize: kSmallFontSize,
                                       ))),
                             ),
@@ -192,7 +193,8 @@ class ZCMyCartItem extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   print("remove from wish list");
-                  _removeFromCart(context, cartProduct.productId, cartProduct.cartItemId);
+                  _removeFromCart(
+                      context, cartProduct.productId, cartProduct.cartItemId);
                 },
                 child: Container(
                   color: Constants.zc_font_light_grey,

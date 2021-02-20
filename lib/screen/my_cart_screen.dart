@@ -56,14 +56,47 @@ class _MyCartScreenState extends State<MyCartScreen> {
       body: Consumer<MyCartBloc>(
           builder: (context, cartBloc, child) => ModalProgressHUD(
                 inAsyncCall: cartBloc.isLoading,
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: cartBloc.cartResponse.data.product.length,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return ZCMyCartItem(
-                        cartProduct: cartBloc.cartResponse.data.product[index], cartId: cartBloc.cartResponse.cartInfo.cartId,
-                      );
-                    }),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: cartBloc.cartResponse != null ? ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: cartBloc.cartResponse.data.product.length,
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return ZCMyCartItem(
+                              cartProduct:
+                                  cartBloc.cartResponse.data.product[index],
+                              cartId: cartBloc.cartResponse.cartInfo.cartId,
+                            );
+                          }) : new Container(),
+                    ),
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: new Container(
+                            height: 40.0,
+                            color: Constants.zc_yellow,
+                            child: Center(child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ZCText(text: "Total", color: Constants.zc_orange_dark,fontSize: 11.0,),
+                                ZCText(text: "QAR${cartBloc.totalAmount.toString()}", semiBold: true,),
+                              ],
+                            )),
+                          ),
+                        ),
+                        Expanded(
+                          child: new Container(
+                            height: 40.0,
+                            color: Constants.zc_orange_dark,
+                            child: Center(child: ZCText(text: "Place Order", semiBold: true, color: Colors.white,)),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               )),
     );
   }
