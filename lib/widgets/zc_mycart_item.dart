@@ -3,11 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/cartlist_response.dart';
-import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
-import 'package:zaincart_app/utils/alert_utils.dart';
-import 'package:zaincart_app/utils/api_service.dart';
-import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -192,9 +188,12 @@ class ZCMyCartItem extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: InkWell(
                 onTap: () {
-                  print("remove from wish list");
-                  _removeFromCart(
-                      context, cartProduct.productId, cartProduct.cartItemId);
+                  print("remove from wish list ${cartProduct.cartItemId} - $cartId");
+                  Provider.of<MyCartBloc>(context, listen: false)
+                      .removeFromCart(
+                          context: context,
+                          itemId: cartProduct.cartItemId,
+                          cartId: cartId);
                 },
                 child: Container(
                   color: Constants.zc_font_light_grey,
@@ -229,27 +228,5 @@ class ZCMyCartItem extends StatelessWidget {
         builder: (BuildContext context) => ProductDetailScreen(
               productId: productId,
             )));
-  }
-
-  _removeFromCart(BuildContext context, String itemId, String cartId) {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        APIService().removeFromCart(itemId, cartId).then((response) {
-          if (response.statusCode == 200) {
-            Response wishlistResponse = Response.fromJson(response.data);
-            if (wishlistResponse.success == 0) {
-              AlertUtils.showToast(wishlistResponse.error, context);
-            } else if (wishlistResponse.success == 3) {
-              kMoveToLogin(context);
-            } else if (wishlistResponse.success == 1) {
-              Provider.of<MyCartBloc>(context, listen: false)
-                  .getMyCartList(context);
-            }
-          } else {
-            AlertUtils.showToast("Something went wrong", context);
-          }
-        });
-      }
-    });
   }
 }

@@ -44,6 +44,7 @@ class MyCartBloc extends ChangeNotifier {
             } else if (cartResponse.success == 3) {
               kMoveToLogin(context);
             } else {
+              cartResponseData = null;
               AlertUtils.showToast(cartResponse.error, context);
             }
           } else {
@@ -88,6 +89,27 @@ class MyCartBloc extends ChangeNotifier {
             }
           } else {
             AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  removeFromCart({BuildContext context, String itemId, String cartId}) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService().removeFromCart(itemId, cartId).then((response) {
+          if (response.statusCode == 200) {
+            Response wishlistResponse = Response.fromJson(response.data);
+            if (wishlistResponse.success == 0) {
+              AlertUtils.showToast(wishlistResponse.error, context);
+            } else if (wishlistResponse.success == 3) {
+              kMoveToLogin(context);
+            } else if (wishlistResponse.success == 1) {
+              getMyCartList(context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
           }
         });
       }

@@ -74,7 +74,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               })
                           : new Container(),
                     ),
-                    new Row(
+                    cartBloc.cartResponse != null ? new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Expanded(
@@ -116,7 +116,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           ),
                         )
                       ],
-                    )
+                    ) : new Container()
                   ],
                 ),
               )),

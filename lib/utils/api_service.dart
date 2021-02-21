@@ -103,7 +103,7 @@ class APIService {
       "customer_id": "$customerId",
       "customertoken": "$token",
     };
-    print("URL:::" + url);
+    print("URL:::" + url + queryParams.toString());
     Response response = await dio.get(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
@@ -158,7 +158,7 @@ class APIService {
   Future<Response> removeFromCart(String itemId, String cartId) async {
     var url = APIClient.removeFromCart;
     var queryParams = {
-      "customer_id": "$customerId",
+      "customerid": "$customerId",
       "customertoken": "$token",
       "itemid": "$itemId",
       "itemcartid": "$cartId"
