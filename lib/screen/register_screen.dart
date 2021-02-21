@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/models/signup_data.dart';
+import 'package:zaincart_app/screen/login_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
@@ -158,9 +159,8 @@ class SignUpScreenState extends State<SignUpScreen> {
                           new SizedBox(
                             height: 20.0,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: _edgePadding, right: _edgePadding),
+                          SizedBox(
+                            height: 40.0,
                             child: new ZCButton(
                               title: "CREATE",
                               onPressed: () => _signupTapped(),
@@ -169,20 +169,26 @@ class SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(
                             height: 15.0,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              new ZCText(
-                                text: "Already have an account please",
-                              ),
-                              new FlatButton(
-                                onPressed: () => _navigateToLogin(),
-                                child: new ZCText(
-                                  text: 'Sign in',
-                                  underline: true,
+                          SizedBox(
+                            width: divWidth,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                new ZCText(
+                                  text: "Already have an account please",
                                 ),
-                              )
-                            ],
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                new InkWell(
+                                  onTap: () => _navigateToLogin(),
+                                  child: new ZCText(
+                                    text: 'Sign in',
+                                    underline: true,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -196,7 +202,8 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   _navigateToLogin() {
-    Navigator.of(context).pop();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => LoginScreen()));
   }
 
   _signupTapped() {
@@ -219,6 +226,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                   AlertUtils.showToast(_signupResponse.error, context);
                 } else {
                   AlertUtils.showToast("Registration Successfull", context);
+                  _navigateToLogin();
                 }
               } else {
                 AlertUtils.showToast("Registration Failed", context);

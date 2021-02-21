@@ -30,7 +30,7 @@ class Address {
       this.customertoken});
 
   Address.fromJson(Map<String, dynamic> json) {
-    addressId = json['address_id'];
+    addressId = json['addressid'];
     customerId = json['customer_id'];
     firstname = json['firstname'];
     lastname = json['lastname'];
@@ -38,7 +38,7 @@ class Address {
     city = json['city'];
     state = json['state'];
     telephone = json['telephone'];
-    countryId = json['country_id'];
+    countryId = json['countryid'];
     street = json['street'];
     defaultbilling = json['defaultbilling'];
     defaultshipping = json['defaultshipping'];
@@ -48,7 +48,7 @@ class Address {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address_id'] = this.addressId;
+    data['addressid'] = this.addressId;
     data['customer_id'] = this.customerId;
     data['firstname'] = this.firstname;
     data['lastname'] = this.lastname;
@@ -56,7 +56,7 @@ class Address {
     data['city'] = this.city;
     data['state'] = this.state;
     data['telephone'] = this.telephone;
-    data['country_id'] = this.countryId;
+    data['countryid'] = this.countryId;
     data['street'] = this.street;
     data['defaultbilling'] = this.defaultbilling;
     data['defaultshipping'] = this.defaultshipping;

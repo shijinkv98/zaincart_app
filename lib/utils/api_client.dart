@@ -3,6 +3,9 @@ class APIClient {
 
   static final signup = Base_URL + "customerreg";
   static final login = Base_URL + "customerlogin";
+  static final bearerToken = Base_URL + "accesstoken";
+  static final forgotPassword = Base_URL + "passwordforgot";
+  static final resetPassword = Base_URL + "passwordreset";
   static homeData(String id) {
     return Base_URL + "homepage?Customer_id=$id";
   }

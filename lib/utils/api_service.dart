@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/utils/api_client.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 
@@ -27,7 +26,6 @@ class APIService {
   updateHeader(String authToken) async {
     dio.options.headers["Content-Type"] = "application/json";
     dio.options.headers["token"] = authToken;
-    dio.options.headers["Authorization"] = "authToken";
     customerId = await Preferences.get(PrefKey.id);
     token = await Preferences.get(PrefKey.token);
     print("TOKEN=== ${dio.options.headers["token"]}");
@@ -52,6 +50,21 @@ class APIService {
     Response response = await dio.post(APIClient.login, data: jsonBody);
     print("RESPONSE:::" + response.data.toString());
     return response;
+  }
+
+  //Bearer token///
+  updateBearerToken(String token) async {
+    var url = APIClient.bearerToken;
+    var queryParams = {
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + queryParams.toString());
+    Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    if (response.statusCode == 200) {
+      var token = response.data['data']['accesstoken'];
+      dio.options.headers["Authorization"] = token;
+    }
   }
 
   //get home data///
@@ -120,6 +133,8 @@ class APIService {
       "Product_qty": "$productQty"
     };
     print("URL:::" + url + " $queryParams");
+
+    print("HEADERS::: ${dio.options.headers}");
     Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
@@ -201,6 +216,32 @@ class APIService {
       "shippingaddress": json.encode(shippingAdresss),
       "billingaddress": json.encode(billingAddress),
       "OrderData": orderData
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //forgot password///
+  Future<Response> forgotPassword(String email) async {
+    var url = APIClient.forgotPassword;
+    var queryParams = {
+      "email": "$email",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //reset password///
+  Future<Response> resetPassword({String email, String otp, String password}) async {
+    var url = APIClient.resetPassword;
+    var queryParams = {
+      "email": "$email",
+      "newPassword" : "$password",
+      "customerOtp" : "$otp"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);

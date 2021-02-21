@@ -19,8 +19,8 @@ class OTPScreenState extends State<OTPScreen> {
 
   final _formKey = GlobalKey<FormState>();
   bool _autovalidate = false;
-  TextEditingController _usernameController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
+  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _otpController = new TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -68,8 +68,8 @@ class OTPScreenState extends State<OTPScreen> {
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
                               child: ZCTextFormField(
-                                hintText: "Enter Email",
-                                controller: _usernameController,
+                                hintText: "Enter Your Email",
+                                controller: _emailController,
                                 textInputType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
                                 validator: (email) {
@@ -91,7 +91,8 @@ class OTPScreenState extends State<OTPScreen> {
                                   left: _edgePadding, right: _edgePadding),
                               child: ZCTextFormField(
                                 hintText: "Enter OTP",
-                                controller: _passwordController,
+                                controller: _otpController,
+                                textInputAction: TextInputAction.done,
                                 obscureText: true,
                                 validator: (text) {
                                   if (text.isEmpty) {
@@ -114,7 +115,7 @@ class OTPScreenState extends State<OTPScreen> {
                                 title: "SUBMIT",
                                 onPressed: () => _submitTapped(),
                               ),
-                            ),             
+                            ),
                           ],
                         ),
                       ),
@@ -127,8 +128,11 @@ class OTPScreenState extends State<OTPScreen> {
 
   void _submitTapped() {
     if (_formKey.currentState.validate()) {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => ResetPasswordScreen()));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => ResetPasswordScreen(
+                email: _emailController.text,
+                otp: _otpController.text,
+              )));
     }
   }
 }

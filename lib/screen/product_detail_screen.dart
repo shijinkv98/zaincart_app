@@ -224,7 +224,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                         height: 10.0,
                       ),
                       ZCText(
-                        text: "Share this appa",
+                        text: "Share this app",
                         color: Colors.grey,
                       ),
                       SizedBox(

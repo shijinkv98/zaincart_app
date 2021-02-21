@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:zaincart_app/models/login_response.dart';
+import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/screen/password_reset/otp_screen.dart';
+import 'package:zaincart_app/utils/alert_utils.dart';
+import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
@@ -67,7 +71,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               padding: EdgeInsets.only(
                                   left: _edgePadding, right: _edgePadding),
                               child: ZCTextFormField(
-                                hintText: "Email",
+                                hintText: "Enter Your Email",
                                 controller: _usernameController,
                                 textInputType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
@@ -123,8 +127,29 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   void _sendTapped() {
     if (_formKey.currentState.validate()) {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (BuildContext context) => OTPScreen()));
+      AppUtils.isConnectedToInternet(context).then((isConnected) {
+        if (isConnected) {
+          setState(() => _isLoading = true);
+          APIService()
+              .forgotPassword(_usernameController.text)
+              .then((response) {
+            setState(() => _isLoading = false);
+            if (response.statusCode == 200) {
+              LoginResponse _loginResponse =
+                  LoginResponse.fromJson(response.data);
+              if (_loginResponse.success == 1) {
+                AlertUtils.showToast(_loginResponse.data.message, context);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => OTPScreen()));
+              } else {
+                AlertUtils.showToast(_loginResponse.error, context);
+              }
+            } else {
+              AlertUtils.showToast("Something went wrong", context);
+            }
+          });
+        }
+      });
     }
   }
 }

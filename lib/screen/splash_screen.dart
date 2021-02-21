@@ -18,6 +18,7 @@ class SplashScreenState extends State<SplashScreen> {
         if (isLogin) {
           Preferences.get(PrefKey.token).then((authToken) {
             APIService().updateHeader(authToken);
+            APIService().updateBearerToken(authToken);
           });
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (BuildContext context) => HomeController()));

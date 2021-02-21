@@ -192,6 +192,7 @@ class LoginScreenState extends State<LoginScreen> {
               if (loginResponse.success != 1) {
                 AlertUtils.showToast(loginResponse.error, context);
               } else {
+                APIService().updateBearerToken(loginResponse.data.token);
                 //save user to prefs.
                 APIService().updateHeader(loginResponse.data.token);
                 Preferences.save(PrefKey.token, loginResponse.data.token);
