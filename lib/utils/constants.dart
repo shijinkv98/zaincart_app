@@ -26,7 +26,7 @@ class Constants {
   static const ic_register = 'assets/ic_register.png';
   static const ic_signin = 'assets/ic_signin.png';
   static const ic_wishlist = 'assets/ic_wishlist.png';
-  
+  static const ic_account = 'assets/ic_account.png';
 
   //colors..
 
@@ -71,6 +71,6 @@ final GlobalKey<ScaffoldState> drawerScaffoldKey =
     new GlobalKey<ScaffoldState>();
 
 kMoveToLogin(BuildContext context) {
-  Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) => LoginScreen()));
+  Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (BuildContext context) => LoginScreen()));
 }

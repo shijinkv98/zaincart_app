@@ -50,10 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           Builder(
               builder: (BuildContext context) => IconButton(
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.black,
-                    ),
+                    icon: Image.asset(Constants.ic_account),
                     onPressed: () => Scaffold.of(context).openEndDrawer(),
                   ))
         ],
@@ -93,8 +90,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: new ZCSearchField(
                                   hintText: "Search",
-                                  items: homeBloc.categories.map((e) => e.categoryName).toList(),
+                                  items: homeBloc.homeData.searchCategory
+                                      .map((e) => e.categoryName)
+                                      .toList(),
                                   onChanged: (value) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                ProductSearchScreen()));
+                                  },
+                                  onCategorySelected: (value) {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>

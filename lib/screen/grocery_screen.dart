@@ -41,10 +41,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
         actions: <Widget>[
           Builder(
               builder: (BuildContext context) => IconButton(
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.black,
-                    ),
+                    icon: Image.asset(Constants.ic_account),
                     onPressed: () => Scaffold.of(context).openEndDrawer(),
                   ))
         ],

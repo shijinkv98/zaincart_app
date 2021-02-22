@@ -42,6 +42,7 @@ class ZCSearchField extends StatelessWidget {
         children: [
           Container(
             width: 160.0,
+            padding: EdgeInsets.only(left: 10.0),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -62,7 +63,7 @@ class ZCSearchField extends StatelessWidget {
                       onChanged: (value) {
                         selectedValue.value = value;
                         onCategorySelected(value);
-                      },
+                      },  
                     )),
           ),
           Expanded(

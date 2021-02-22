@@ -7,6 +7,7 @@ import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -32,6 +33,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
     final double divHeight = MediaQuery.of(context).size.height;
     final double divWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      endDrawer: ZCAccount(),
       appBar: AppBar(
         title: ZCAppBarTitle("GROCERY"),
         leading: Padding(
@@ -46,6 +48,13 @@ class ProductDetailState extends State<ProductDetailScreen> {
             },
           ),
         ),
+        actions: <Widget>[
+          Builder(
+              builder: (BuildContext context) => IconButton(
+                    icon: Image.asset(Constants.ic_account),
+                    onPressed: () => Scaffold.of(context).openEndDrawer(),
+                  ))
+        ],
         backgroundColor: Colors.white,
       ),
       body: ModalProgressHUD(
