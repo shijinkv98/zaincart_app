@@ -10,6 +10,9 @@ import 'package:zaincart_app/widgets/zc_menu.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class GroceryScreen extends StatefulWidget {
+  final String categoryId;
+  final String title;
+  GroceryScreen({this.categoryId, this.title});
   @override
   State<StatefulWidget> createState() {
     return _GroceryScreenState();
@@ -19,11 +22,13 @@ class GroceryScreen extends StatefulWidget {
 class _GroceryScreenState extends State<GroceryScreen> {
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeBloc>(context, listen: false).getProductsByCategory(
+        context: context, categoryId: widget.categoryId, pageNo: "1");
     return Scaffold(
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
       appBar: AppBar(
-        title: ZCAppBarTitle("GROCERY"),
+        title: ZCAppBarTitle(widget.title),
         backgroundColor: Colors.white,
         leading: Builder(
             builder: (BuildContext context) => Padding(
@@ -51,10 +56,10 @@ class _GroceryScreenState extends State<GroceryScreen> {
                 inAsyncCall: homeBloc.isLoading,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: homeBloc.homeData.newProduct.length,
+                    itemCount: homeBloc.categoryProducts.length,
                     itemBuilder: (BuildContext ctxt, int index) {
                       return ZCCategoryItem(
-                        product: homeBloc.homeData.newProduct[index],
+                        product: homeBloc.categoryProducts[index],
                       );
                     }),
               )),

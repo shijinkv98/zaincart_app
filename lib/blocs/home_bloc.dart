@@ -27,7 +27,6 @@ class HomeBloc extends ChangeNotifier {
   List<Category> categories = new List<Category>();
   List<Product> categoryProducts = new List<Product>();
 
-
   bool isLoading = false;
 
   getHomeData(BuildContext context) async {
@@ -113,12 +112,16 @@ class HomeBloc extends ChangeNotifier {
     });
   }
 
-  getProductsByCategory({BuildContext context, String categoryId, String pageNo}) {
+  getProductsByCategory(
+      {BuildContext context, String categoryId, String pageNo}) {
+    categoryProducts.clear();
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         isLoading = true;
         notifyListeners();
-        APIService().getProductsByCategory(categoryId: categoryId, pageNo: pageNo).then((response) {
+        APIService()
+            .getProductsByCategory(categoryId: categoryId, pageNo: pageNo)
+            .then((response) {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
