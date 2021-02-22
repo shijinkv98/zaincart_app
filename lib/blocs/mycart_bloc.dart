@@ -95,7 +95,7 @@ class MyCartBloc extends ChangeNotifier {
     });
   }
 
-  addToCart(BuildContext context, String productSku, String productQty) {
+  addToCart({BuildContext context, String productSku, String productQty}) {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         APIService()
@@ -126,7 +126,8 @@ class MyCartBloc extends ChangeNotifier {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         APIService()
-            .updateCartItem(productQty: productQty, cartItemId: cartItemId, cartId: cartId)
+            .updateCartItem(
+                productQty: productQty, cartItemId: cartItemId, cartId: cartId)
             .then((response) {
           if (response.statusCode == 200) {
             Response wishlistResponse = Response.fromJson(response.data);
@@ -135,7 +136,8 @@ class MyCartBloc extends ChangeNotifier {
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
             } else {
-              AlertUtils.showToast("Added to Cart", context);
+              AlertUtils.showToast("Item successfully updated", context);
+              getMyCartList(context);
             }
           } else {
             AlertUtils.showToast("Something went wrong", context);

@@ -32,7 +32,7 @@ class APIService {
   }
 
   updateBearerToken(String bearerToken) {
-    dio.options.headers["Authorization"] = token;
+    dio.options.headers["Authorization"] = bearerToken;
   }
 
   ///Signup user///

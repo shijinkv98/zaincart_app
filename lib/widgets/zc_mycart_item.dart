@@ -12,8 +12,10 @@ class ZCMyCartItem extends StatelessWidget {
   final CartProduct cartProduct;
   final String cartId;
   var itemCount = ValueNotifier(0);
+
   var isFavorite = ValueNotifier(false);
 
+  
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -46,6 +48,7 @@ class ZCMyCartItem extends StatelessWidget {
                             color: Constants.zc_orange,
                             semiBold: true,
                             maxLines: 2,
+                            fontSize: kFieldFontSize,
                           ),
                         ),
                         SizedBox(
@@ -87,7 +90,10 @@ class ZCMyCartItem extends StatelessWidget {
                               child: Center(
                                   child: FlatButton(
                                 onPressed: () {
-                                  itemCount.value = itemCount.value + 1;
+                                  itemCount.value = cartProduct.quantity+1;
+
+                                  _onQuantityUpdate(context,
+                                      itemCount.value, cartProduct);
                                 },
                                 child: ZCText(
                                   text: "+",
@@ -109,7 +115,8 @@ class ZCMyCartItem extends StatelessWidget {
                                   valueListenable: itemCount,
                                   builder: (context, count, child) => Center(
                                           child: ZCText(
-                                        text: (count + cartProduct.quantity)
+                                        text: (count +
+                                                cartProduct.quantity)
                                             .toString(),
                                         fontSize: kSmallFontSize,
                                       ))),
@@ -120,8 +127,13 @@ class ZCMyCartItem extends StatelessWidget {
                                 child: Center(
                                     child: FlatButton(
                                   onPressed: () {
-                                    if (itemCount.value > 0) {
-                                      itemCount.value = itemCount.value - 1;
+                                    if (cartProduct.quantity > 0) {
+                                      itemCount.value = cartProduct.quantity - 1;
+
+                                      _onQuantityUpdate(
+                                          context,
+                                          itemCount.value,
+                                          cartProduct);
                                     }
                                   },
                                   child: ZCText(
@@ -191,7 +203,7 @@ class ZCMyCartItem extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   print(
-                      "remove from wish list ${cartProduct.cartItemId} - $cartId");
+                      "remove from wish list ${cartProduct.cartItemId} - ${cartId}");
                   Provider.of<MyCartBloc>(context, listen: false)
                       .removeFromCart(
                           context: context,
@@ -199,8 +211,9 @@ class ZCMyCartItem extends StatelessWidget {
                           cartId: cartId);
                 },
                 child: Container(
-                  color: Constants.zc_font_light_grey,
+                  color: Colors.grey[200],
                   width: 65.0,
+                  margin: EdgeInsets.only(top: 5.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -231,5 +244,13 @@ class ZCMyCartItem extends StatelessWidget {
         builder: (BuildContext context) => ProductDetailScreen(
               productId: productId,
             )));
+  }
+
+  _onQuantityUpdate(BuildContext context, int qty, CartProduct product) {
+    Provider.of<MyCartBloc>(context, listen: false).updateCartItem(
+        context: context,
+        productQty: qty.toString(),
+        cartItemId: product.cartItemId,
+        cartId: cartId);
   }
 }

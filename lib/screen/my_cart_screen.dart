@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
-import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
-import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
@@ -84,7 +82,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   fontSize: 11.0,
                                 ),
                                 ZCText(
-                                  text: "QAR${cartBloc.totalAmount.toString()}",
+                                  text: cartBloc.cartResponse.cartInfo.cartTotalAmount,
                                   semiBold: true,
                                 ),
                               ],

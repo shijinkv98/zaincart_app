@@ -10,8 +10,9 @@ import 'package:zaincart_app/widgets/zc_search_field.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ProductSearchScreen extends StatefulWidget {
-  final bool isEnableBack;
-  ProductSearchScreen({this.isEnableBack = false});
+  final String selectedCategory;
+  final String searchKey;
+  ProductSearchScreen({this.selectedCategory, this.searchKey});
   @override
   State<StatefulWidget> createState() {
     return _ProductSearchScreenState();
@@ -61,6 +62,7 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                             left: 10.0, right: 10.0, bottom: 10.0),
                         child: new ZCSearchField(
                           hintText: "Search",
+                          selectedItem: widget.selectedCategory,
                           items: homeBloc.categories
                               .map((e) => e.categoryName)
                               .toList(),
@@ -79,16 +81,19 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                         )),
                   ),
                   Expanded(
-                    child: homeBloc.isLoading ? Center(child: CircularProgressIndicator()): GridView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: homeBloc.categoryProducts.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                        itemBuilder: (BuildContext ctxt, int index) {
-                          return ZCProductItem(
-                            product: homeBloc.categoryProducts[index],
-                          );
-                        }),
+                    child: homeBloc.isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : GridView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: homeBloc.categoryProducts.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              return ZCProductItem(
+                                product: homeBloc.categoryProducts[index],
+                              );
+                            }),
                   ),
                 ],
               )),

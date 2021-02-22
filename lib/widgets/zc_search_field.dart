@@ -4,6 +4,7 @@ import 'package:zaincart_app/utils/constants.dart';
 class ZCSearchField extends StatelessWidget {
   ZCSearchField(
       {this.hintText,
+      this.selectedItem,
       this.height = 47.0,
       this.width,
       this.validator,
@@ -18,6 +19,7 @@ class ZCSearchField extends StatelessWidget {
       this.items});
 
   final String hintText;
+  final String selectedItem;
   final double height;
   final double width;
   final TextEditingController controller;
@@ -53,7 +55,7 @@ class ZCSearchField extends StatelessWidget {
                 valueListenable: selectedValue,
                 builder: (context, selected, child) =>
                     new DropdownButton<String>(
-                      value: selected,
+                      value: selectedItem != null ? selectedItem : selected,
                       items: items.map((String value) {
                         return new DropdownMenuItem<String>(
                           value: value,
@@ -63,7 +65,7 @@ class ZCSearchField extends StatelessWidget {
                       onChanged: (value) {
                         selectedValue.value = value;
                         onCategorySelected(value);
-                      },  
+                      },
                     )),
           ),
           Expanded(

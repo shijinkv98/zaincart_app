@@ -22,8 +22,9 @@ class SplashScreenState extends State<SplashScreen> {
             APIService().getBearerToken(authToken).then((response) {
               if (response.statusCode == 200) {
                 if (response.data["success"] == 1) {
-                  var token = response.data['data']['accesstoken'];
-                  APIService().updateBearerToken(token);
+                  var bearerToken = response.data['data']['accesstoken'];
+                  print("BEARER TOKEN +++ $bearerToken");
+                  APIService().updateBearerToken(bearerToken);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) => HomeController()));
                 } else {

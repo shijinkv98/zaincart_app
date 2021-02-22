@@ -169,8 +169,10 @@ class ZCProductItem extends StatelessWidget {
                               onTap: () {
                                 print("Add to Cart.....");
                                 Provider.of<MyCartBloc>(context, listen: false)
-                                    .addToCart(context, product.productSku,
-                                        1.toString())(context);
+                                    .addToCart(
+                                        context: context,
+                                        productSku: product.productSku,
+                                        productQty: 1.toString());
                               },
                             )
                           ],

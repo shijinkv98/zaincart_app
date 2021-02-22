@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                ProductSearchScreen()));
+                                                ProductSearchScreen(selectedCategory: value,)));
                                   },
                                 )),
                             SizedBox(
