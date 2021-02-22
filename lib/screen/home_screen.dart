@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final double divHeight = MediaQuery.of(context).size.height;
     final double divWidth = MediaQuery.of(context).size.width;
     Provider.of<HomeBloc>(context, listen: false).getHomeData(context);
+    Provider.of<HomeBloc>(context, listen: false).getRootCategories(context);
     return Scaffold(
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
@@ -154,8 +155,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       homeBloc.homeData.newProduct != null
                           ? ZCProductsList(
-                              title: homeBloc.homeData.categoryProducts.first.name,
-                              productList: homeBloc.homeData.categoryProducts.first.items,
+                              title:
+                                  homeBloc.homeData.categoryProducts.first.name,
+                              productList: homeBloc
+                                  .homeData.categoryProducts.first.items,
                             )
                           : new Container(),
                       SizedBox(
@@ -232,8 +235,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       homeBloc.homeData.featuredProduct != null
                           ? ZCProductsList(
-                              title: homeBloc.homeData.featuredProduct.first.name,
-                              productList: homeBloc.homeData.featuredProduct.first.items,
+                              title:
+                                  homeBloc.homeData.featuredProduct.first.name,
+                              productList:
+                                  homeBloc.homeData.featuredProduct.first.items,
                             )
                           : new Container(),
                       Padding(
@@ -347,9 +352,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   onCategoryTap(int index) {
-    if (index ==0){
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => GroceryScreen()));
+    if (index == 0) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => GroceryScreen()));
     }
   }
 }

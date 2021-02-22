@@ -31,6 +31,10 @@ class APIService {
     print("TOKEN=== ${dio.options.headers["token"]}");
   }
 
+  updateBearerToken(String bearerToken) {
+    dio.options.headers["Authorization"] = token;
+  }
+
   ///Signup user///
   Future<Response> signUpUser(dynamic signupData) async {
     print("URL:::" + APIClient.signup);
@@ -53,7 +57,7 @@ class APIService {
   }
 
   //Bearer token///
-  updateBearerToken(String token) async {
+  Future<Response> getBearerToken(String token) async {
     var url = APIClient.bearerToken;
     var queryParams = {
       "customertoken": "$token",
@@ -61,10 +65,7 @@ class APIService {
     print("URL:::" + url + queryParams.toString());
     Response response = await dio.get(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
-    if (response.statusCode == 200) {
-      var token = response.data['data']['accesstoken'];
-      dio.options.headers["Authorization"] = token;
-    }
+    return response;
   }
 
   //get home data///
@@ -236,15 +237,25 @@ class APIService {
   }
 
   //reset password///
-  Future<Response> resetPassword({String email, String otp, String password}) async {
+  Future<Response> resetPassword(
+      {String email, String otp, String password}) async {
     var url = APIClient.resetPassword;
     var queryParams = {
       "email": "$email",
-      "newPassword" : "$password",
-      "customerOtp" : "$otp"
+      "newPassword": "$password",
+      "customerOtp": "$otp"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //root categories///
+  Future<Response> getRootCategories() async {
+    var url = APIClient.rootCategories;
+    print("URL:::" + url);
+    Response response = await dio.get(url);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }

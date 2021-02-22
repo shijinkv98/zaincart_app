@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
+import 'package:zaincart_app/models/root_categories_response.dart';
 import 'package:zaincart_app/models/wishlist_response.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -22,7 +23,8 @@ class HomeBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  
+  List<Category> categories = new List<Category>();
+
 
   bool isLoading = false;
 
@@ -36,13 +38,16 @@ class HomeBloc extends ChangeNotifier {
           notifyListeners();
           if (response.statusCode == 200) {
             Response loginResponse = Response.fromJson(response.data);
-            if (loginResponse.success != 1) {
-              AlertUtils.showToast(loginResponse.error, context);
-            } else {
+            if (loginResponse.success == 1) {
               ProductsResponse productsResponse =
                   ProductsResponse.fromJson(response.data);
               homeData = productsResponse.data;
               notifyListeners();
+            } else if (loginResponse.success == 3) {
+              print("NEED TO LOGIN HERE......");
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(loginResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Login Failed", context);
@@ -69,6 +74,33 @@ class HomeBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               _wishlistItems = wishlistResponse.data.product;
+              notifyListeners();
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
+  getRootCategories(BuildContext context) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().getRootCategories().then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            RootCategoriesResponse rootCategoriesResponse =
+                RootCategoriesResponse.fromJson(response.data);
+            if (rootCategoriesResponse.success == 0) {
+              AlertUtils.showToast(rootCategoriesResponse.error, context);
+            } else if (rootCategoriesResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              categories = rootCategoriesResponse.category;
               notifyListeners();
             }
           } else {
