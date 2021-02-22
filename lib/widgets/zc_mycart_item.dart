@@ -25,7 +25,7 @@ class ZCMyCartItem extends StatelessWidget {
           children: [
             Container(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
@@ -120,7 +120,9 @@ class ZCMyCartItem extends StatelessWidget {
                                 child: Center(
                                     child: FlatButton(
                                   onPressed: () {
-                                    itemCount.value = itemCount.value - 1;
+                                    if (itemCount.value > 0) {
+                                      itemCount.value = itemCount.value - 1;
+                                    }
                                   },
                                   child: ZCText(
                                     text: "-",
@@ -137,50 +139,50 @@ class ZCMyCartItem extends StatelessWidget {
                           ],
                         )
                       ]),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Constants.zc_orange_dark,
-                        radius: 12,
-                        child: ZCText(
-                          text: "5%",
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 3.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5.0),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 10,
-                          child: ValueListenableBuilder(
-                              valueListenable: isFavorite,
-                              builder: (context, isFav, child) => IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: isFav
-                                        ? Icon(
-                                            Icons.favorite,
-                                            color: Constants.zc_orange_dark,
-                                          )
-                                        : Icon(Icons.favorite_border_outlined),
-                                    color: Colors.grey,
-                                    onPressed: () {
-                                      if (isFavorite.value == true) {
-                                        isFavorite.value = false;
-                                      } else {
-                                        isFavorite.value = true;
-                                      }
-                                      print(
-                                          "Add to faviorate button clicked.....");
-                                    },
-                                  )),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     CircleAvatar(
+                  //       backgroundColor: Constants.zc_orange_dark,
+                  //       radius: 12,
+                  //       child: ZCText(
+                  //         text: "5%",
+                  //         color: Colors.white,
+                  //         fontSize: 10,
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 3.0,
+                  //     ),
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(right: 5.0),
+                  //       child: CircleAvatar(
+                  //         backgroundColor: Colors.white,
+                  //         radius: 10,
+                  //         child: ValueListenableBuilder(
+                  //             valueListenable: isFavorite,
+                  //             builder: (context, isFav, child) => IconButton(
+                  //                   padding: EdgeInsets.zero,
+                  //                   icon: isFav
+                  //                       ? Icon(
+                  //                           Icons.favorite,
+                  //                           color: Constants.zc_orange_dark,
+                  //                         )
+                  //                       : Icon(Icons.favorite_border_outlined),
+                  //                   color: Colors.grey,
+                  //                   onPressed: () {
+                  //                     if (isFavorite.value == true) {
+                  //                       isFavorite.value = false;
+                  //                     } else {
+                  //                       isFavorite.value = true;
+                  //                     }
+                  //                     print(
+                  //                         "Add to faviorate button clicked.....");
+                  //                   },
+                  //                 )),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -188,7 +190,8 @@ class ZCMyCartItem extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: InkWell(
                 onTap: () {
-                  print("remove from wish list ${cartProduct.cartItemId} - $cartId");
+                  print(
+                      "remove from wish list ${cartProduct.cartItemId} - $cartId");
                   Provider.of<MyCartBloc>(context, listen: false)
                       .removeFromCart(
                           context: context,

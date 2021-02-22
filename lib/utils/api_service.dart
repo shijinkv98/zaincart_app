@@ -141,6 +141,24 @@ class APIService {
     return response;
   }
 
+  //cart update item///
+  Future<Response> updateCartItem({String cartItemId, String productQty, String cartId}) async {
+    var url = APIClient.updateCart;
+    var queryParams = {
+      "customerId": "$customerId",
+      "customertoken": "$token",
+      "itemid": "$cartItemId",
+      "Product_qty": "$productQty",
+      "itemcartid" : "$cartId"
+    };
+    print("URL:::" + url + " $queryParams");
+
+    print("HEADERS::: ${dio.options.headers}");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
   //wishlist remove///
   Future<Response> wishlistRemove(String produtId) async {
     var url = APIClient.wishlistRemove;

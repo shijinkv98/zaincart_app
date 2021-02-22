@@ -95,6 +95,56 @@ class MyCartBloc extends ChangeNotifier {
     });
   }
 
+  addToCart(BuildContext context, String productSku, String productQty) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService()
+            .addToCart(productSku: productSku, productQty: productQty)
+            .then((response) {
+          if (response.statusCode == 200) {
+            Response wishlistResponse = Response.fromJson(response.data);
+            if (wishlistResponse.success == 0) {
+              AlertUtils.showToast(wishlistResponse.error, context);
+            } else if (wishlistResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast("Added to Cart", context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
+  updateCartItem(
+      {BuildContext context,
+      String productQty,
+      String cartItemId,
+      String cartId}) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService()
+            .updateCartItem(productQty: productQty, cartItemId: cartItemId, cartId: cartId)
+            .then((response) {
+          if (response.statusCode == 200) {
+            Response wishlistResponse = Response.fromJson(response.data);
+            if (wishlistResponse.success == 0) {
+              AlertUtils.showToast(wishlistResponse.error, context);
+            } else if (wishlistResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast("Added to Cart", context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
   removeFromCart({BuildContext context, String itemId, String cartId}) {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {

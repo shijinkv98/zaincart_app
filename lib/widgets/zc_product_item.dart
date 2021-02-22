@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/models/wishlistAddResponse.dart';
@@ -167,8 +168,9 @@ class ZCProductItem extends StatelessWidget {
                               ),
                               onTap: () {
                                 print("Add to Cart.....");
-                                _addToCart(
-                                    context, product.productSku, 1.toString());
+                                Provider.of<MyCartBloc>(context, listen: false)
+                                    .addToCart(context, product.productSku,
+                                        1.toString())(context);
                               },
                             )
                           ],
@@ -204,34 +206,12 @@ class ZCProductItem extends StatelessWidget {
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
             } else if (wishlistResponse.success == 1) {
-              Provider.of<HomeBloc>(context, listen: false).getWishlistItems(context);
+              Provider.of<HomeBloc>(context, listen: false)
+                  .getWishlistItems(context);
               AlertUtils.showToast(wishlistResponse.data.message, context);
             }
           } else {
             AlertUtils.showToast("Login Failed", context);
-          }
-        });
-      }
-    });
-  }
-
-  _addToCart(BuildContext context, String productSku, String productQty) {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        APIService()
-            .addToCart(productSku: productSku, productQty: productQty)
-            .then((response) {
-          if (response.statusCode == 200) {
-            Response wishlistResponse = Response.fromJson(response.data);
-            if (wishlistResponse.success == 0) {
-              AlertUtils.showToast(wishlistResponse.error, context);
-            } else if (wishlistResponse.success == 3) {
-              kMoveToLogin(context);
-            } else {
-              AlertUtils.showToast("Added to Cart", context);
-            }
-          } else {
-            AlertUtils.showToast("Something went wrong", context);
           }
         });
       }
@@ -250,7 +230,8 @@ class ZCProductItem extends StatelessWidget {
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
             } else if (wishlistResponse.success == 1) {
-              Provider.of<HomeBloc>(context, listen: false).getWishlistItems(context);
+              Provider.of<HomeBloc>(context, listen: false)
+                  .getWishlistItems(context);
               AlertUtils.showToast(wishlistResponse.data.message, context);
             }
           } else {
