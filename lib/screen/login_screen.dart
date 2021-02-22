@@ -194,7 +194,6 @@ class LoginScreenState extends State<LoginScreen> {
               } else {
                 APIService().getBearerToken(loginResponse.data.token);
                 //save user to prefs.
-                APIService().updateHeader(loginResponse.data.token);
                 Preferences.save(PrefKey.token, loginResponse.data.token);
                 Preferences.save(PrefKey.id, loginResponse.data.customerId);
                 Preferences.save(
@@ -204,8 +203,22 @@ class LoginScreenState extends State<LoginScreen> {
                 Preferences.save(
                     PrefKey.mobileNumber, loginResponse.data.phone);
                 Preferences.saveBool(PrefKey.loginStatus, true);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => HomeController()));
+                APIService().updateHeader(loginResponse.data.token);
+                APIService()
+                    .getBearerToken(loginResponse.data.token)
+                    .then((response) {
+                  if (response.statusCode == 200) {
+                    if (response.data["success"] == 1) {
+                      var bearerToken = response.data['data']['accesstoken'];
+                      print("BEARER TOKEN +++ $bearerToken");
+                      APIService().updateBearerToken(bearerToken);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => HomeController()));
+                    } else {
+                      kMoveToLogin(context);
+                    }
+                  }
+                });
               }
             } else {
               AlertUtils.showToast("Login Failed", context);

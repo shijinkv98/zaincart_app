@@ -2,6 +2,8 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/product_detail_response.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -77,18 +79,18 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   .toList(),
                             )
                           : new Container()),
-                  Positioned(
+                  _productDetail.productOffer != null ? Positioned(
                       left: 20.0,
                       top: 20.0,
                       child: CircleAvatar(
                         backgroundColor: Constants.zc_orange_dark,
                         radius: 18,
                         child: ZCText(
-                          text: "50%",
+                          text: _productDetail.productOffer,
                           color: Colors.white,
                           fontSize: kSmallFontSize,
                         ),
-                      )),
+                      )) : new Container(),
                   Positioned(
                       right: 20.0,
                       top: 20.0,
@@ -217,7 +219,12 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   ),
                                   onTap: () {
                                     print(
-                                        "Add to faviorate button clicked.....");
+                                        "Add to cart button clicked.....");
+                                        Provider.of<MyCartBloc>(context, listen: false)
+                                    .addToCart(
+                                        context: context,
+                                        productSku: _productDetail.productSku,
+                                        productQty: 1.toString());
                                   },
                                 )
                               ],
