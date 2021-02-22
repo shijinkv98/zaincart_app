@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
@@ -45,7 +47,7 @@ class ZCCategoryItem extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 5.0,
+                          height: 10.0,
                         ),
                         RatingBar.builder(
                           initialRating: 3,
@@ -65,7 +67,7 @@ class ZCCategoryItem extends StatelessWidget {
                           },
                         ),
                         SizedBox(
-                          height: 5.0,
+                          height: 10.0,
                         ),
                         ZCText(
                           text: product.productPrice,
@@ -73,7 +75,7 @@ class ZCCategoryItem extends StatelessWidget {
                           semiBold: true,
                         ),
                         SizedBox(
-                          height: 5.0,
+                          height: 10.0,
                         ),
                         Container(
                           width: 200,
@@ -111,7 +113,12 @@ class ZCCategoryItem extends StatelessWidget {
                                     ),
                                     onTap: () {
                                       print(
-                                          "Add to faviorate button clicked.....");
+                                          "Add to cart button clicked.....");
+                                          Provider.of<MyCartBloc>(context, listen: false)
+                                    .addToCart(
+                                        context: context,
+                                        productSku: product.productSku,
+                                        productQty: 1.toString());
                                     },
                                   )
                                 ],
@@ -122,15 +129,15 @@ class ZCCategoryItem extends StatelessWidget {
                       ]),
                   Row(
                     children: [
-                      CircleAvatar(
+                      product.productOffer != null ?  CircleAvatar(
                         backgroundColor: Constants.zc_orange_dark,
                         radius: 12,
                         child: ZCText(
-                          text: "5%",
+                          text: product.productOffer,
                           color: Colors.white,
                           fontSize: 10,
                         ),
-                      ),
+                      ): new Container(),
                       SizedBox(
                         width: 3.0,
                       ),
@@ -158,6 +165,7 @@ class ZCCategoryItem extends StatelessWidget {
                                       }
                                       print(
                                           "Add to faviorate button clicked.....");
+                                          
                                     },
                                   )),
                         ),
@@ -167,6 +175,7 @@ class ZCCategoryItem extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 10.0),
             Divider(
               thickness: 1.0,
             )
