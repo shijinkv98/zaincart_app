@@ -7,6 +7,7 @@ import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -32,12 +33,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
     final double divWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: ZCText(
-          text: "GROCERY",
-          color: Constants.zc_orange,
-          bold: true,
-          fontSize: 30.0,
-        ),
+        title: ZCAppBarTitle("GROCERY"),
         leading: Padding(
           padding: EdgeInsets.only(left: 0.0),
           child: IconButton(

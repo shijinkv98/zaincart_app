@@ -29,4 +29,7 @@ class APIClient {
   static final addressUpdate = Base_URL + "updateaddress";
   static final placeOrder = Base_URL + "createorder";
   static final rootCategories = Base_URL + "rootcategories";
+  static  productsByCategory({String categoryId, String pageNo}) {
+    return Base_URL + "productsbycategory/$categoryId/$pageNo";
+  } 
 }

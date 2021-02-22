@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
+import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
 import 'package:zaincart_app/widgets/zc_product_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
@@ -26,12 +27,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
       appBar: AppBar(
-        title: ZCText(
-          text: "WISHLIST",
-          fontSize: 23.0,
-          color: Constants.zc_orange_dark,
-          semiBold: true,
-        ),
+        title: ZCAppBarTitle("WISHLIST"),
         backgroundColor: Colors.white,
         leading: Builder(
             builder: (BuildContext context) => Padding(

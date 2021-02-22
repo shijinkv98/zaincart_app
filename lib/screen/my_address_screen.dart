@@ -8,6 +8,7 @@ import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
+import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class MyAddressScreen extends StatefulWidget {
@@ -35,12 +36,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ZCText(
-          text: "MY ADDRESS",
-          fontSize: 23.0,
-          color: Constants.zc_orange_dark,
-          semiBold: true,
-        ),
+        title: ZCAppBarTitle("MY ADDRESS"),
         backgroundColor: Colors.white,
         leading: Builder(
             builder: (BuildContext context) => Padding(

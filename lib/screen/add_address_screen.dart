@@ -7,6 +7,7 @@ import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
+import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 import 'package:zaincart_app/widgets/zc_textformfield.dart';
@@ -53,12 +54,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ZCText(
-          text: "ADD ADDRESS",
-          fontSize: 23.0,
-          color: Constants.zc_orange_dark,
-          semiBold: true,
-        ),
+        title: ZCAppBarTitle("ADD ADDRESS"),
         backgroundColor: Colors.white,
         leading: Builder(
             builder: (BuildContext context) => Padding(

@@ -14,7 +14,8 @@ class ZCSearchField extends StatelessWidget {
       this.controller,
       this.onSearchTap,
       this.onChanged,
-      this.obscureText = false});
+      this.onCategorySelected,
+      this.items});
 
   final String hintText;
   final double height;
@@ -25,47 +26,81 @@ class ZCSearchField extends StatelessWidget {
   final String emptyValidatorMsg;
   final TextInputType textInputType;
   final int maxLength;
-  final bool obscureText;
+  final List<String> items;
   final void Function(String) onSearchTap;
   final void Function(String) onChanged;
+  final void Function(String) onCategorySelected;
+
+  var selectedValue = ValueNotifier("Category");
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10.0, bottom: 0.0, left: 5.0, right: 5.0),
       height: height,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20))),
-      child: TextField(
-          maxLines: 1,
-          maxLength: maxLength,
-          controller: controller,
-          keyboardType: textInputType,
-          onSubmitted: (value) => onSearchTap(controller.text),
-          onChanged: (value) => onChanged(value),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hintText,
-            contentPadding: EdgeInsets.only(top: 13.0, left: 10.0),
-            hintStyle: new TextStyle(
-                color: Colors.grey,
-                fontSize: kFontSize,
-                fontWeight: FontWeight.normal,
-                fontFamily: Constants.segoe_font,
-                letterSpacing: 0.85),
-            prefixIcon: InkWell(
-              child: Icon(
-                Icons.search,
-                size: 30.0,
-              ),
-              onTap: () => onSearchTap(controller.text),
+      child: Row(
+        children: [
+          Container(
+            width: 160.0,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                )),
+            child: ValueListenableBuilder(
+                valueListenable: selectedValue,
+                builder: (context, selected, child) =>
+                    new DropdownButton<String>(
+                      value: selected,
+                      items: items.map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        selectedValue.value = value;
+                        onCategorySelected(value);
+                      },
+                    )),
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(20),
+                      topRight: Radius.circular(20))),
+              child: TextField(
+                  maxLines: 1,
+                  maxLength: maxLength,
+                  controller: controller,
+                  keyboardType: textInputType,
+                  onSubmitted: (value) => onSearchTap(controller.text),
+                  onChanged: (value) => onChanged(value),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: hintText,
+                    contentPadding: EdgeInsets.only(top: 13.0, left: 10.0),
+                    hintStyle: new TextStyle(
+                        color: Colors.grey,
+                        fontSize: kFontSize,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: Constants.segoe_font,
+                        letterSpacing: 0.85),
+                    prefixIcon: InkWell(
+                      child: Icon(
+                        Icons.search,
+                        size: 20.0,
+                      ),
+                      onTap: () => onSearchTap(controller.text),
+                    ),
+                  )),
             ),
-          )),
+          ),
+        ],
+      ),
     );
   }
 }

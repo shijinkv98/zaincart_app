@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zaincart_app/models/products_by_category_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/models/root_categories_response.dart';
@@ -24,6 +25,7 @@ class HomeBloc extends ChangeNotifier {
   }
 
   List<Category> categories = new List<Category>();
+  List<Product> categoryProducts = new List<Product>();
 
 
   bool isLoading = false;
@@ -101,6 +103,33 @@ class HomeBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               categories = rootCategoriesResponse.category;
+              notifyListeners();
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
+  getProductsByCategory({BuildContext context, String categoryId, String pageNo}) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().getProductsByCategory(categoryId: categoryId, pageNo: pageNo).then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            ProductsByCategoryResponse categoryProductsResponse =
+                ProductsByCategoryResponse.fromJson(response.data);
+            if (categoryProductsResponse.success == 0) {
+              AlertUtils.showToast(categoryProductsResponse.error, context);
+            } else if (categoryProductsResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              categoryProducts = categoryProductsResponse.data.categoryProduct;
               notifyListeners();
             }
           } else {

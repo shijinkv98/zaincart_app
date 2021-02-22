@@ -4,6 +4,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/screen/grocery_screen.dart';
+import 'package:zaincart_app/screen/product_search_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
@@ -92,6 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: new ZCSearchField(
                                   hintText: "Search",
+                                  items: homeBloc.categories.map((e) => e.categoryName).toList(),
+                                  onChanged: (value) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                ProductSearchScreen()));
+                                  },
                                 )),
                             SizedBox(
                               height: 10,

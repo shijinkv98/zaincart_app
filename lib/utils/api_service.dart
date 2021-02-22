@@ -259,4 +259,18 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //products by category///
+  Future<Response> getProductsByCategory(
+      {String categoryId, String pageNo}) async {
+    var url =
+        APIClient.productsByCategory(categoryId: categoryId, pageNo: pageNo);
+    var queryParams = {
+      "Customer_id": "$customerId",
+    };
+    print("URL:::" + url + queryParams.toString());
+    Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
