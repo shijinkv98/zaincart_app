@@ -7,7 +7,6 @@ import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
 import 'package:zaincart_app/widgets/zc_product_item.dart';
 import 'package:zaincart_app/widgets/zc_search_field.dart';
-import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ProductSearchScreen extends StatefulWidget {
   final String selectedCategory;
@@ -21,6 +20,13 @@ class ProductSearchScreen extends StatefulWidget {
 
 class _ProductSearchScreenState extends State<ProductSearchScreen> {
   bool isLoading = false;
+  var selectedCategory = ValueNotifier("Category");
+
+  @override
+  void initState() {
+    selectedCategory.value = widget.selectedCategory;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,25 +66,29 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                     child: Padding(
                         padding: const EdgeInsets.only(
                             left: 10.0, right: 10.0, bottom: 10.0),
-                        child: new ZCSearchField(
-                          hintText: "Search",
-                          selectedItem: widget.selectedCategory,
-                          items: homeBloc.categories
-                              .map((e) => e.categoryName)
-                              .toList(),
-                          onChanged: (value) {},
-                          onCategorySelected: (category) {
-                            var categoryId = homeBloc.categories
-                                .where((element) =>
-                                    element.categoryName == category)
-                                .first
-                                .categoryId;
-                            homeBloc.getProductsByCategory(
-                                context: context,
-                                categoryId: categoryId,
-                                pageNo: "1");
-                          },
-                        )),
+                        child: ValueListenableBuilder(
+                            valueListenable: selectedCategory,
+                            builder: (context, selected, child) =>
+                                new ZCSearchField(
+                                  hintText: "Search",
+                                  selectedItem: selected,
+                                  items: homeBloc.categories
+                                      .map((e) => e.categoryName)
+                                      .toList(),
+                                  onChanged: (value) {},
+                                  onCategorySelected: (category) {
+                                    selectedCategory.value = category;
+                                    var categoryId = homeBloc.categories
+                                        .where((element) =>
+                                            element.categoryName == category)
+                                        .first
+                                        .categoryId;
+                                    homeBloc.getProductsByCategory(
+                                        context: context,
+                                        categoryId: categoryId,
+                                        pageNo: "1");
+                                  },
+                                ))),
                   ),
                   Expanded(
                     child: homeBloc.isLoading

@@ -9,7 +9,6 @@ import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
-import 'package:zaincart_app/widgets/zc_text.dart';
 import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
 class AddAddressScreen extends StatefulWidget {
@@ -54,8 +53,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ZCAppBarTitle("ADD ADDRESS"),
+        title: ZCAppBarTitle(widget.address != null ? "UPDATE":"ADD ADDRESS"),
         backgroundColor: Colors.white,
+        
         leading: Builder(
             builder: (BuildContext context) => Padding(
                   padding: EdgeInsets.only(left: 0.0),
@@ -162,7 +162,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 30, right: 30),
                   child: new ZCButton(
-                    title: "Add Address",
+                    title: widget.address != null ? "Update Address":"Add Address",
                     onPressed: () => addTapped(),
                   ),
                 ),

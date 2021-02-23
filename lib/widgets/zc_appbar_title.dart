@@ -12,12 +12,12 @@ class ZCAppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-          child: ZCText(
-            text: title,
-            fontSize: 23.0,
-            color: Constants.zc_orange_dark,
-            semiBold: true,
-          ),
-        );
+      child: ZCText(
+        text: title,
+        fontSize: 23.0,
+        color: Constants.zc_orange_dark,
+        semiBold: true,
+      ),
+    );
   }
 }
