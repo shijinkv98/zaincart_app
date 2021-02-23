@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
@@ -82,7 +83,8 @@ class ZCCategoryItem extends StatelessWidget {
                           padding: EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
                               color: Constants.zc_yellow,
-                              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
                           child: Center(
                             child: Padding(
                               padding:
@@ -112,13 +114,13 @@ class ZCCategoryItem extends StatelessWidget {
                                       //size: 10.0,
                                     ),
                                     onTap: () {
-                                      print(
-                                          "Add to cart button clicked.....");
-                                          Provider.of<MyCartBloc>(context, listen: false)
-                                    .addToCart(
-                                        context: context,
-                                        productSku: product.productSku,
-                                        productQty: 1.toString());
+                                      print("Add to cart button clicked.....");
+                                      Provider.of<MyCartBloc>(context,
+                                              listen: false)
+                                          .addToCart(
+                                              context: context,
+                                              productSku: product.productSku,
+                                              productQty: 1.toString());
                                     },
                                   )
                                 ],
@@ -129,15 +131,17 @@ class ZCCategoryItem extends StatelessWidget {
                       ]),
                   Row(
                     children: [
-                      product.productOffer != null ?  CircleAvatar(
-                        backgroundColor: Constants.zc_orange_dark,
-                        radius: 12,
-                        child: ZCText(
-                          text: product.productOffer,
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                      ): new Container(),
+                      product.productOffer != null
+                          ? CircleAvatar(
+                              backgroundColor: Constants.zc_orange_dark,
+                              radius: 12,
+                              child: ZCText(
+                                text: product.productOffer,
+                                color: Colors.white,
+                                fontSize: 10,
+                              ),
+                            )
+                          : new Container(),
                       SizedBox(
                         width: 3.0,
                       ),
@@ -160,12 +164,19 @@ class ZCCategoryItem extends StatelessWidget {
                                     onPressed: () {
                                       if (isFavorite.value == true) {
                                         isFavorite.value = false;
+                                        Provider.of<HomeBloc>(context,
+                                                listen: false)
+                                            .wishListRemove(
+                                                context, product.productId);
                                       } else {
                                         isFavorite.value = true;
+                                        Provider.of<HomeBloc>(context,
+                                                listen: false)
+                                            .wishListAdd(
+                                                context, product.productId);
                                       }
                                       print(
                                           "Add to faviorate button clicked.....");
-                                          
                                     },
                                   )),
                         ),

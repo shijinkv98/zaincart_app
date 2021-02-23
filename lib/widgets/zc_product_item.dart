@@ -18,6 +18,7 @@ class ZCProductItem extends StatelessWidget {
   ZCProductItem({this.product, this.isWishListed = false});
   final Product product;
   final bool isWishListed;
+  var isFavorite = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -58,23 +59,43 @@ class ZCProductItem extends StatelessWidget {
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 10,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: isWishListed
-                          ? Icon(
-                              Icons.favorite,
-                              color: Constants.zc_orange_dark,
-                            )
-                          : Icon(Icons.favorite_border_outlined),
-                      color:
-                          isWishListed ? Constants.zc_orange_dark : Colors.grey,
-                      onPressed: () {
-                        print("Add to faviorate button clicked.....");
-                        isWishListed
-                            ? _wishListRemove(context, product.productId)
-                            : _wishListAdd(context, product.productId);
-                      },
-                    ),
+                    child: ValueListenableBuilder(
+                        valueListenable: isFavorite,
+                        builder: (context, isFav, child) => IconButton(
+                              padding: EdgeInsets.zero,
+                              icon: isWishListed ||
+                                      isFav ||
+                                      product.productWishlisted
+                                  ? Icon(
+                                      Icons.favorite,
+                                      color: Constants.zc_orange_dark,
+                                    )
+                                  : Icon(Icons.favorite_border_outlined),
+                              color: isWishListed ||
+                                      isFav ||
+                                      product.productWishlisted
+                                  ? Constants.zc_orange_dark
+                                  : Colors.grey,
+                              onPressed: () {
+                                print("Add to faviorate button clicked.....");
+                                if (isFavorite.value == true) {
+                                  isFavorite.value = false;
+                                } else {
+                                  isFavorite.value = true;
+                                }
+                                isWishListed ||
+                                        isFav ||
+                                        product.productWishlisted
+                                    ? Provider.of<HomeBloc>(context,
+                                            listen: false)
+                                        .wishListRemove(
+                                            context, product.productId)
+                                    : Provider.of<HomeBloc>(context,
+                                            listen: false)
+                                        .wishListAdd(
+                                            context, product.productId);
+                              },
+                            )),
                   )),
               Column(
                 children: [
@@ -194,53 +215,5 @@ class ZCProductItem extends StatelessWidget {
         builder: (BuildContext context) => ProductDetailScreen(
               productId: productId,
             )));
-  }
-
-  _wishListAdd(BuildContext context, String productId) {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        APIService().wishlistAdd(productId).then((response) {
-          if (response.statusCode == 200) {
-            WishlistAddResponse wishlistResponse =
-                WishlistAddResponse.fromJson(response.data);
-            if (wishlistResponse.success == 0) {
-              AlertUtils.showToast(wishlistResponse.error, context);
-            } else if (wishlistResponse.success == 3) {
-              kMoveToLogin(context);
-            } else if (wishlistResponse.success == 1) {
-              Provider.of<HomeBloc>(context, listen: false)
-                  .getWishlistItems(context);
-              AlertUtils.showToast(wishlistResponse.data.message, context);
-            }
-          } else {
-            AlertUtils.showToast("Login Failed", context);
-          }
-        });
-      }
-    });
-  }
-
-  _wishListRemove(BuildContext context, String productId) {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        APIService().wishlistRemove(productId).then((response) {
-          if (response.statusCode == 200) {
-            WishlistAddResponse wishlistResponse =
-                WishlistAddResponse.fromJson(response.data);
-            if (wishlistResponse.success == 0) {
-              AlertUtils.showToast(wishlistResponse.error, context);
-            } else if (wishlistResponse.success == 3) {
-              kMoveToLogin(context);
-            } else if (wishlistResponse.success == 1) {
-              Provider.of<HomeBloc>(context, listen: false)
-                  .getWishlistItems(context);
-              AlertUtils.showToast(wishlistResponse.data.message, context);
-            }
-          } else {
-            AlertUtils.showToast("Login Failed", context);
-          }
-        });
-      }
-    });
   }
 }
