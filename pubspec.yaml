@@ -51,6 +51,7 @@ flutter:
     - assets/ic_signin.png
     - assets/ic_wishlist.png
     - assets/ic_account.png
+    
 
   # fonts:
   #   - family: Schyler

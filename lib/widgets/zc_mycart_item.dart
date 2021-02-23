@@ -85,8 +85,8 @@ class ZCMyCartItem extends StatelessWidget {
                         Row(
                           children: [
                             new Container(
-                              height: 20.0,
-                              width: 30.0,
+                              height: 30.0,
+                              width: 35.0,
                               child: Center(
                                   child: FlatButton(
                                 onPressed: () {
@@ -109,8 +109,8 @@ class ZCMyCartItem extends StatelessWidget {
                                   )),
                             ),
                             new Container(
-                              height: 20.0,
-                              width: 30.0,
+                              height: 30.0,
+                              width: 35.0,
                               child: ValueListenableBuilder(
                                   valueListenable: itemCount,
                                   builder: (context, count, child) => Center(
@@ -122,8 +122,8 @@ class ZCMyCartItem extends StatelessWidget {
                                       ))),
                             ),
                             new Container(
-                                height: 20.0,
-                                width: 30.0,
+                                height: 30.0,
+                                width: 35.0,
                                 child: Center(
                                     child: FlatButton(
                                   onPressed: () {

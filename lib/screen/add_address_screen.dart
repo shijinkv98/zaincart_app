@@ -53,9 +53,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ZCAppBarTitle(widget.address != null ? "UPDATE":"ADD ADDRESS"),
+        title: ZCAppBarTitle(widget.address != null ? "UPDATE" : "ADD ADDRESS"),
         backgroundColor: Colors.white,
-        
         leading: Builder(
             builder: (BuildContext context) => Padding(
                   padding: EdgeInsets.only(left: 0.0),
@@ -162,7 +161,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 30, right: 30),
                   child: new ZCButton(
-                    title: widget.address != null ? "Update Address":"Add Address",
+                    title: widget.address != null
+                        ? "Update Address"
+                        : "Add Address",
                     onPressed: () => addTapped(),
                   ),
                 ),
@@ -176,7 +177,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   addTapped() async {
     if (_formKey.currentState.validate()) {
-      _address.addressId = widget.address != null? widget.address.addressId: "";
+      _address.addressId =
+          widget.address != null ? widget.address.addressId : "";
       _address.firstname = _firstnameController.text;
       _address.lastname = _lastnameController.text;
       _address.postcode = _postcodeController.text;
@@ -184,6 +186,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       _address.street = _streetController.text;
       _address.telephone = _telephoneController.text;
       _address.countryId = _countryController.text;
+      _address.countryid = _countryController.text;
       _address.state = _stateController.text;
       _address.customerId = await Preferences.get(PrefKey.id);
       _address.customertoken = await Preferences.get(PrefKey.token);

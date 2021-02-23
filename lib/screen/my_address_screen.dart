@@ -67,7 +67,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             Row(
@@ -87,10 +87,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
             ),
             Row(
               children: [
-                Icon(
-                  Icons.person,
-                  size: 100.0,
-                ),
+                Image.asset(Constants.ic_account,height: 100.0,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -103,6 +100,11 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                     ZCText(
                       text: phone,
                     ),
+                    SizedBox(height: 5.0,),
+                    InkWell(onTap: () {}, child: ZCText(
+                                text: "Change Password",
+                                color: Constants.zc_orange,
+                              )),
                   ],
                 )
               ],

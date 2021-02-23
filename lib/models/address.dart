@@ -1,5 +1,5 @@
 class Address {
-    String addressId;
+  String addressId;
   String customerId;
   String firstname;
   String lastname;
@@ -8,6 +8,7 @@ class Address {
   String state;
   String telephone;
   String countryId;
+  String countryid;
   String street;
   int defaultbilling;
   int defaultshipping;
@@ -15,7 +16,8 @@ class Address {
   String customertoken;
 
   Address(
-      {this.addressId,this.customerId,
+      {this.addressId,
+      this.customerId,
       this.firstname,
       this.lastname,
       this.postcode,
@@ -23,6 +25,7 @@ class Address {
       this.state,
       this.telephone,
       this.countryId,
+      this.countryid,
       this.street,
       this.defaultbilling,
       this.defaultshipping,
@@ -38,7 +41,8 @@ class Address {
     city = json['city'];
     state = json['state'];
     telephone = json['telephone'];
-    countryId = json['countryid'];
+    countryId = json['countryId'];
+    countryid = json['countryid'];
     street = json['street'];
     defaultbilling = json['defaultbilling'];
     defaultshipping = json['defaultshipping'];
@@ -56,7 +60,8 @@ class Address {
     data['city'] = this.city;
     data['state'] = this.state;
     data['telephone'] = this.telephone;
-    data['countryid'] = this.countryId;
+    data['countryId'] = this.countryId;
+    data['countryid'] = this.countryid;
     data['street'] = this.street;
     data['defaultbilling'] = this.defaultbilling;
     data['defaultshipping'] = this.defaultshipping;

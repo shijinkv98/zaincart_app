@@ -32,6 +32,7 @@ class _HomeControllerState extends State<HomeController> {
             icon: new Icon(
               Icons.home_outlined,
               color: Constants.zc_orange,
+              size: 35.0,
             ),
             label: "",
           ),
@@ -39,12 +40,14 @@ class _HomeControllerState extends State<HomeController> {
               icon: new Icon(
                 Icons.favorite_outline,
                 color: Constants.zc_orange,
+                size: 35.0,
               ),
               label: ""),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.shopping_cart_outlined,
                 color: Constants.zc_orange,
+                size: 35.0,
               ),
               label: "")
         ],
