@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zaincart_app/models/my_order_response.dart';
 import 'package:zaincart_app/models/products_by_category_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
@@ -27,6 +28,7 @@ class HomeBloc extends ChangeNotifier {
 
   List<Category> categories = new List<Category>();
   List<Product> categoryProducts = new List<Product>();
+  List<OrderDetail> myOrderList = new List<OrderDetail>();
 
   bool isLoading = false;
 
@@ -182,6 +184,33 @@ class HomeBloc extends ChangeNotifier {
             }
           } else {
             AlertUtils.showToast("Login Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  getMyOrders(BuildContext context) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().myOrderList().then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            MyOrderResponse myOrderResponse =
+                MyOrderResponse.fromJson(response.data);
+            if (myOrderResponse.success == 1) {
+              myOrderList = myOrderResponse.data.orderlist;
+              notifyListeners();
+            } else if (myOrderResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(myOrderResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
           }
         });
       }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/screen/login_screen.dart';
 import 'package:zaincart_app/screen/my_address_screen.dart';
+import 'package:zaincart_app/screen/my_orders_screen.dart';
 import 'package:zaincart_app/screen/register_screen.dart';
 import 'package:zaincart_app/screen/wishlist_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
@@ -95,7 +96,9 @@ class ZCAccount extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => WishlistScreen(isEnableBack: true,)));
+                          builder: (BuildContext context) => WishlistScreen(
+                                isEnableBack: true,
+                              )));
                     },
                     child: Row(
                       children: [
@@ -144,20 +147,26 @@ class ZCAccount extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        Constants.ic_myorder,
-                        scale: 7.0,
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      ZCText(
-                        text: "My Order",
-                        color: Constants.zc_font_grey,
-                      ),
-                    ],
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => MyOrdersScreen()));
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          Constants.ic_myorder,
+                          scale: 7.0,
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        ZCText(
+                          text: "My Order",
+                          color: Constants.zc_font_grey,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Divider(

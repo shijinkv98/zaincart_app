@@ -142,14 +142,15 @@ class APIService {
   }
 
   //cart update item///
-  Future<Response> updateCartItem({String cartItemId, String productQty, String cartId}) async {
+  Future<Response> updateCartItem(
+      {String cartItemId, String productQty, String cartId}) async {
     var url = APIClient.updateCart;
     var queryParams = {
       "customerId": "$customerId",
       "customertoken": "$token",
       "itemid": "$cartItemId",
       "Product_qty": "$productQty",
-      "itemcartid" : "$cartId"
+      "itemcartid": "$cartId"
     };
     print("URL:::" + url + " $queryParams");
 
@@ -288,6 +289,19 @@ class APIService {
     };
     print("URL:::" + url + queryParams.toString());
     Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //myorder list///
+  Future<Response> myOrderList() async {
+    var url = APIClient.myorder;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
