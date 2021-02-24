@@ -195,7 +195,7 @@ class HomeBloc extends ChangeNotifier {
       if (isConnected) {
         isLoading = true;
         notifyListeners();
-        APIService().myOrderList().then((response) {
+        APIService().getMyOrderList().then((response) {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {

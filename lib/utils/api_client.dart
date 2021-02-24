@@ -34,5 +34,6 @@ class APIClient {
   }
 
   static final updateCart = Base_URL + "updateitemscart";
-  static final myorder = Base_URL + "myorder";
+  static final myOrder = Base_URL + "myorder";
+  static final myOrderDetail = Base_URL + "myorderdetail";
 }

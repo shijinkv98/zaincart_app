@@ -294,11 +294,25 @@ class APIService {
   }
 
   //myorder list///
-  Future<Response> myOrderList() async {
-    var url = APIClient.myorder;
+  Future<Response> getMyOrderList() async {
+    var url = APIClient.myOrder;
     var queryParams = {
       "customer_id": "$customerId",
       "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //myorder detail///
+  Future<Response> getOrderDetail(String orderId) async {
+    var url = APIClient.myOrderDetail;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "orderid" : "$orderId"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
