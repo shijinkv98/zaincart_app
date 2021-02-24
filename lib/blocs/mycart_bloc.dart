@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/models/cartlist_response.dart';
+import 'package:zaincart_app/models/create_order_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
@@ -22,6 +23,8 @@ class MyCartBloc extends ChangeNotifier {
     _cartResponse = data;
     notifyListeners();
   }
+
+  OrderData orderData;
 
   double totalAmount = 0.0;
 
@@ -60,7 +63,7 @@ class MyCartBloc extends ChangeNotifier {
       if (isConnected) {
         isLoading = true;
         notifyListeners();
-        var orderData = {
+        var orderDataInput = {
           "date": DateTime.now().toString(),
           "email": await Preferences.get(PrefKey.email),
           "payment_method": "cashondelivery",
@@ -72,16 +75,16 @@ class MyCartBloc extends ChangeNotifier {
             .placeOrder(
                 shippingAdresss: _cartResponse.cartInfo.address.shippingAddress,
                 billingAddress: _cartResponse.cartInfo.address.billingAddress,
-                orderData: orderData)
+                orderData: orderDataInput)
             .then((response) {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
-            MyCartResponse cartResponse =
-                MyCartResponse.fromJson(response.data);
+            CreateOrderResponse orderResponse =
+                CreateOrderResponse.fromJson(response.data);
             if (cartResponse.success == 1) {
-              cartResponseData = cartResponse;
-              getTodtal();
+              orderData = orderResponse.orderData;
+              AlertUtils.showToast("Order Placed Successfully", context);
             } else if (cartResponse.success == 3) {
               kMoveToLogin(context);
             } else {

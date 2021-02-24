@@ -234,7 +234,7 @@ class APIService {
       "discount": "0",
       "shippingaddress": json.encode(shippingAdresss),
       "billingaddress": json.encode(billingAddress),
-      "OrderData": orderData
+      "OrderData": json.encode(orderData)
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);

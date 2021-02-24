@@ -108,7 +108,7 @@ class CartProduct {
 }
 
 class CartInfo {
-  CartAddress address;
+  Address address;
   String cartTotalAmount;
   String actualAmount;
   String discount;
@@ -125,7 +125,7 @@ class CartInfo {
 
   CartInfo.fromJson(Map<String, dynamic> json) {
     address =
-        json['address'] != null ? new CartAddress.fromJson(json['address']) : null;
+        json['address'] != null ? new Address.fromJson(json['address']) : null;
     cartTotalAmount = json['cart_total_amount'];
     actualAmount = json['actual_amount'];
     discount = json['discount'];
@@ -147,18 +147,18 @@ class CartInfo {
   }
 }
 
-class CartAddress {
+class Address {
   BillingAddress billingAddress;
-  ShippingAddress shippingAddress;
+  BillingAddress shippingAddress;
 
-  CartAddress({this.billingAddress, this.shippingAddress});
+  Address({this.billingAddress, this.shippingAddress});
 
-  CartAddress.fromJson(Map<String, dynamic> json) {
+  Address.fromJson(Map<String, dynamic> json) {
     billingAddress = json['Billing address'] != null
         ? new BillingAddress.fromJson(json['Billing address'])
         : null;
     shippingAddress = json['Shipping address'] != null
-        ? new ShippingAddress.fromJson(json['Shipping address'])
+        ? new BillingAddress.fromJson(json['Shipping address'])
         : null;
   }
 
@@ -175,118 +175,53 @@ class CartAddress {
 }
 
 class BillingAddress {
-  String addressId;
   String city;
-  String state;
-  int stateid;
-  Null company;
   String countryId;
-  String country;
   String firstname;
   String lastname;
-  List<String> street;
   String postcode;
+  String region;
+  String street;
+  String state;
+  int regionId;
   String telephone;
 
   BillingAddress(
-      {this.addressId,
-      this.city,
-      this.state,
-      this.stateid,
-      this.company,
+      {this.city,
       this.countryId,
-      this.country,
       this.firstname,
       this.lastname,
-      this.street,
       this.postcode,
+      this.region,
+      this.street,
+      this.state,
+      this.regionId,
       this.telephone});
 
   BillingAddress.fromJson(Map<String, dynamic> json) {
-    addressId = json['address_id'];
     city = json['city'];
-    state = json['state'];
-    stateid = json['stateid'];
-    company = json['company'];
     countryId = json['country_id'];
-    country = json['country'];
     firstname = json['firstname'];
     lastname = json['lastname'];
-    street = json['street'].cast<String>();
     postcode = json['postcode'];
+    region = json['region'];
+    street = json['street'];
+    state = json['state'];
+    regionId = json['region_id'];
     telephone = json['telephone'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address_id'] = this.addressId;
     data['city'] = this.city;
-    data['state'] = this.state;
-    data['stateid'] = this.stateid;
-    data['company'] = this.company;
-    data['country_id'] = this.countryId;
-    data['country'] = this.country;
-    data['firstname'] = this.firstname;
-    data['lastname'] = this.lastname;
-    data['street'] = this.street;
-    data['postcode'] = this.postcode;
-    data['telephone'] = this.telephone;
-    return data;
-  }
-}
-
-class ShippingAddress {
-  String addressId;
-  String city;
-  String state;
-  int stateid;
-  Null company;
-  String countryId;
-  String firstname;
-  String lastname;
-  List<String> street;
-  String postcode;
-  String telephone;
-
-  ShippingAddress(
-      {this.addressId,
-      this.city,
-      this.state,
-      this.stateid,
-      this.company,
-      this.countryId,
-      this.firstname,
-      this.lastname,
-      this.street,
-      this.postcode,
-      this.telephone});
-
-  ShippingAddress.fromJson(Map<String, dynamic> json) {
-    addressId = json['address_id'];
-    city = json['city'];
-    state = json['state'];
-    stateid = json['stateid'];
-    company = json['company'];
-    countryId = json['country_id'];
-    firstname = json['firstname'];
-    lastname = json['lastname'];
-    street = json['street'].cast<String>();
-    postcode = json['postcode'];
-    telephone = json['telephone'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address_id'] = this.addressId;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['stateid'] = this.stateid;
-    data['company'] = this.company;
     data['country_id'] = this.countryId;
     data['firstname'] = this.firstname;
     data['lastname'] = this.lastname;
-    data['street'] = this.street;
     data['postcode'] = this.postcode;
+    data['region'] = this.region;
+    data['street'] = this.street;
+    data['state'] = this.state;
+    data['region_id'] = this.regionId;
     data['telephone'] = this.telephone;
     return data;
   }
