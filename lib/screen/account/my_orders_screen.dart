@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/models/my_order_response.dart';
-import 'package:zaincart_app/screen/myorder_detail_screen.dart';
+import 'package:zaincart_app/screen/account/myorder_detail_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';

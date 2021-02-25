@@ -319,4 +319,12 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //myorder detail///
+  Future<Response> getAboutUs() async {
+    var url = APIClient.getAbout;
+    Response response = await dio.get(url);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
