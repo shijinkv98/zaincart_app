@@ -62,68 +62,73 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
             ? new Center(
                 child: CircularProgressIndicator(),
               )
-            : Padding(
-                padding:
-                    const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0),
-                child: new Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ZCText(
-                        text: "Order Id: ${widget.orderId} ",
-                      ),
+            : new Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: ZCText(
+                      text: "Order Id: ${widget.orderId} ",
                     ),
-                    Container(
-                      height: 30.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ZCText(
-                            text: "Product Name",
-                          ),
-                          ZCText(
-                            text: "SKU",
-                          ),
-                          ZCText(
-                            text: "Quantity",
-                          ),
-                          ZCText(
-                            text: "Price",
-                          ),
-                          ZCText(
-                            text: "SubTotal",
-                          )
-                        ],
-                      ),
-                    ),
-                    orderDetail.value.products != null
-                        ? ValueListenableBuilder(
-                            valueListenable: orderDetail,
-                            builder: (context, detail, child) => Expanded(
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: detail.products.length + 1,
-                                      itemBuilder:
-                                          (BuildContext ctxt, int index) {
-                                        if (index ==
-                                            orderDetail.value.products.length) {
-                                          return bottomWidget();
-                                        } else {
-                                          return orderWidget(
-                                              detail.products[index], index);
-                                        }
-                                      }),
-                                ))
-                        : new Container(),
-                  ],
+                  ),
                 ),
-              ));
+                SizedBox(height: 10.0,),
+                Container(
+                  height: 30.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ZCText(
+                        text: "Product Name",
+                        color: Constants.zc_font_light_grey,
+                      ),
+                      ZCText(
+                        text: "SKU",
+                        color: Constants.zc_font_light_grey,
+                      ),
+                      ZCText(
+                        text: "Quantity",
+                        color: Constants.zc_font_light_grey,
+                      ),
+                      ZCText(
+                        text: "Price",
+                        color: Constants.zc_font_light_grey,
+                      ),
+                      ZCText(
+                        text: "SubTotal",
+                        color: Constants.zc_font_light_grey,
+                      )
+                    ],
+                  ),
+                ),
+                orderDetail.value.products != null
+                    ? ValueListenableBuilder(
+                        valueListenable: orderDetail,
+                        builder: (context, detail, child) => Expanded(
+                              child: ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: detail.products.length + 1,
+                                  itemBuilder:
+                                      (BuildContext ctxt, int index) {
+                                    if (index ==
+                                        orderDetail.value.products.length) {
+                                      return bottomWidget();
+                                    } else {
+                                      return orderWidget(
+                                          detail.products[index], index);
+                                    }
+                                  }),
+                            ))
+                    : new Container(),
+              ],
+            ));
   }
 
   Widget orderWidget(OrderProduct product, int index) {
     return Container(
-      color: index % 2 == 0 ? Colors.grey[100] : Colors.white,
-      padding: EdgeInsets.only(bottom: 10.0),
+      color: index % 2 == 0 ? Colors.grey[200] : Colors.white,
+      padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -207,8 +212,8 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
           ),
         ),
         new Container(
-          padding: EdgeInsets.all(10.0),
-          color: Colors.grey[100],
+          padding: EdgeInsets.all(20.0),
+          color: Colors.grey[200],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -233,7 +238,7 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
           ),
         ),
         new Container(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -258,8 +263,8 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
           ),
         ),
         new Container(
-          padding: EdgeInsets.all(10.0),
-          color: Colors.grey[100],
+          padding: EdgeInsets.all(20.0),
+          color: Colors.grey[200],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -275,7 +280,7 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
           ),
         ),
         new Container(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

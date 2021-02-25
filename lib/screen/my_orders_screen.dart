@@ -92,7 +92,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                     semiBold: true,
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   ZCText(
                     text: "Quantity",
@@ -122,7 +122,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                     semiBold: true,
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 15.0,
                   ),
                   ZCText(
                     text: "Total Amount",

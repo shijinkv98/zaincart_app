@@ -86,26 +86,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                 bottomRight: Radius.circular(35))),
                         child: Column(
                           children: [
-                            Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: new ZCSearchField(
-                                  hintText: "Search",
-                                  items: homeBloc.homeData.searchCategory
-                                      .map((e) => e.categoryName)
-                                      .toList(),
-                                  onChanged: (value) {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                ProductSearchScreen()));
-                                  },
-                                  onCategorySelected: (value) {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                ProductSearchScreen(selectedCategory: value,)));
-                                  },
-                                )),
+                            homeBloc.homeData.searchCategory != null
+                                ? Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: new ZCSearchField(
+                                      hintText: "Search",
+                                      items: homeBloc.homeData.searchCategory
+                                          .map((e) => e.categoryName)
+                                          .toList(),
+                                      onChanged: (value) {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        ProductSearchScreen()));
+                                      },
+                                      onCategorySelected: (value) {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        ProductSearchScreen(
+                                                          selectedCategory:
+                                                              value,
+                                                        )));
+                                      },
+                                    ))
+                                : new Container(),
                             SizedBox(
                               height: 10,
                             ),
@@ -131,7 +138,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                           padding: const EdgeInsets.only(
                                               right: 15.0),
                                           child: InkWell(
-                                            onTap: () => onCategoryTap(homeBloc.homeData.categoryList[index].categoryName,homeBloc.homeData.categoryList[index].categoryId),
+                                            onTap: () => onCategoryTap(
+                                                homeBloc
+                                                    .homeData
+                                                    .categoryList[index]
+                                                    .categoryName,
+                                                homeBloc
+                                                    .homeData
+                                                    .categoryList[index]
+                                                    .categoryId),
                                             child: Column(children: [
                                               Container(
                                                   height: 80.0,
@@ -366,6 +381,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   onCategoryTap(String name, int categoryId) {
     Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => GroceryScreen(title: name, categoryId: categoryId.toString(),)));
+        builder: (BuildContext context) => GroceryScreen(
+              title: name,
+              categoryId: categoryId.toString(),
+            )));
   }
 }
