@@ -12,9 +12,7 @@ class ZCProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 230.0,
-      margin: EdgeInsets.only(top: 10.0),
-      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+      height: 250.0,
       child: Column(
         children: [
           new ZCText(
@@ -22,15 +20,13 @@ class ZCProductsList extends StatelessWidget {
             color: Constants.zc_orange,
             semiBold: true,
           ),
-          Container(
-            child: Expanded(
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: productList.length,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return ZCProductItem(product: productList[index],);
-                    })),
-          ),
+          Expanded(
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: productList.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return ZCProductItem(product: productList[index],);
+                  })),
         ],
       ),
     );

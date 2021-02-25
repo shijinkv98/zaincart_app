@@ -56,7 +56,6 @@ class _WishlistScreenState extends State<WishlistScreen> {
       ),
       body: Consumer<HomeBloc>(
           builder: (context, homeBloc, child) => GridView.builder(
-              scrollDirection: Axis.vertical,
               itemCount: homeBloc.wishlistItems.length,
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
