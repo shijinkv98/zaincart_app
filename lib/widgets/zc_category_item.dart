@@ -44,7 +44,7 @@ class ZCCategoryItem extends StatelessWidget {
                             text: product.productName,
                             color: Constants.zc_orange,
                             semiBold: true,
-                            maxLines: 2,
+                            maxLines: 3,
                           ),
                         ),
                         SizedBox(
