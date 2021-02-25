@@ -37,4 +37,5 @@ class APIClient {
   static final myOrder = Base_URL + "myorder";
   static final myOrderDetail = Base_URL + "myorderdetail";
   static final getAbout = Base_URL + "getabout";
+  static final getTermsAndCondition = Base_URL + "getermsandcondition";
 }

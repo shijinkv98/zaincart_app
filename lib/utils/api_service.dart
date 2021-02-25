@@ -327,4 +327,12 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+   //myorder detail///
+  Future<Response> getTermsConditions() async {
+    var url = APIClient.getTermsAndCondition;
+    Response response = await dio.get(url);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }

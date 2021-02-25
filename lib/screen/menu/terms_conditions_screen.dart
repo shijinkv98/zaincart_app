@@ -10,17 +10,17 @@ import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
 
-class AboutUsScreen extends StatefulWidget {
+class TermsAndConditionsScreen extends StatefulWidget {
   @override
-  AboutUsScreenState createState() => AboutUsScreenState();
+  TermsAndConditionsScreenState createState() => TermsAndConditionsScreenState();
 }
 
-class AboutUsScreenState extends State<AboutUsScreen> {
+class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   var aboutUsContent = ValueNotifier("");
 
   @override
   void initState() {
-    getAboutUs();
+    getTermsConditions();
     super.initState();
   }
 
@@ -80,14 +80,14 @@ class AboutUsScreenState extends State<AboutUsScreen> {
         ));
   }
 
-  getAboutUs() {
+  getTermsConditions() {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
-        APIService().getAboutUs().then((response) {
+        APIService().getTermsConditions().then((response) {
           if (response.statusCode == 200) {
             AboutUsResponse aboutUsResponse =
                 AboutUsResponse.fromJson(response.data);
-            if (aboutUsResponse.success == 1) {
+            if (aboutUsResponse.success == 0) {
               aboutUsContent.value = aboutUsResponse.data.details;
             } else if (aboutUsResponse.success == 3) {
               kMoveToLogin(context);
