@@ -75,7 +75,8 @@ class ZCProductItem extends StatelessWidget {
                                       ? Constants.zc_orange_dark
                                       : Colors.grey,
                                   onPressed: () {
-                                    print("Add to faviorate button clicked.....");
+                                    print(
+                                        "Add to faviorate button clicked.....");
                                     if (isFavorite.value == true) {
                                       isFavorite.value = false;
                                     } else {
@@ -159,39 +160,37 @@ class ZCProductItem extends StatelessWidget {
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      Constants.ic_add_to_cart,
-                      height: 23.0,
-                      width: 23.0,
-                    ),
-                    ZCText(
-                      text: "Add to Cart",
-                      fontSize: kSmallFontSize,
-                    ),
-                    ZCText(
-                      text: "|",
-                      fontSize: kFontSize,
-                      color: Colors.white,
-                    ),
-                    InkWell(
-                      child: Icon(
+                child: InkWell(
+                  onTap: () {
+                    Provider.of<MyCartBloc>(context, listen: false).addToCart(
+                        context: context,
+                        productSku: product.productSku,
+                        productQty: 1.toString());
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Image.asset(
+                        Constants.ic_add_to_cart,
+                        height: 23.0,
+                        width: 23.0,
+                      ),
+                      ZCText(
+                        text: "Add to Cart",
+                        fontSize: kSmallFontSize,
+                      ),
+                      ZCText(
+                        text: "|",
+                        fontSize: kFontSize,
+                        color: Colors.white,
+                      ),
+                      Icon(
                         Icons.add,
                         color: Constants.zc_orange,
                         //size: 10.0,
-                      ),
-                      onTap: () {
-                        print("Add to Cart.....");
-                        Provider.of<MyCartBloc>(context, listen: false)
-                            .addToCart(
-                                context: context,
-                                productSku: product.productSku,
-                                productQty: 1.toString());
-                      },
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               )
             ],

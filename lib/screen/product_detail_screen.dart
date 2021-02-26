@@ -125,24 +125,25 @@ class ProductDetailState extends State<ProductDetailScreen> {
                             text: _productDetail.productName,
                             color: Constants.zc_orange_dark,
                             semiBold: true,
-                            fontSize: kTitleFontSize,
+                            fontSize: kHeadingFontSize,
                           ),
+                          SizedBox(height: 5.0,),
                           Row(
                             children: [
                               new ZCText(
                                 text: _productDetail.productPrice,
                                 color: Constants.zc_font_grey,
                                 semiBold: true,
-                                fontSize: kTitleFontSize,
+                                fontSize: kHeadingFontSize,
                               ),
                               SizedBox(
                                 width: 10.0,
                               ),
                               new ZCText(
-                                text: "",
-                                color: Colors.grey,
+                                text:  _productDetail.productSpPrice,
+                                color: Constants.zc_font_light_grey,
                                 semiBold: true,
-                                fontSize: kFontSize,
+                                fontSize: kHeadingFontSize,
                               ),
                             ],
                           ),

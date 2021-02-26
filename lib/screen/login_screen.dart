@@ -211,7 +211,6 @@ class LoginScreenState extends State<LoginScreen> {
                   if (response.statusCode == 200) {
                     if (response.data["success"] == 1) {
                       var bearerToken = response.data['data']['accesstoken'];
-                      print("BEARER TOKEN +++ $bearerToken");
                       APIService().updateBearerToken(bearerToken);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) => HomeController()));

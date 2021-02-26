@@ -22,37 +22,41 @@ class _HomeControllerState extends State<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped,
-        currentIndex:
-            _currentIndex, // this will be set when a new tab is tapped
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(
-              Icons.home_outlined,
-              color: Constants.zc_orange,
-              size: 35.0,
-            ),
-            label: "",
+        body: _children[_currentIndex],
+        bottomNavigationBar: SizedBox(
+    height: 90,
+          child: BottomNavigationBar(
+      onTap: onTabTapped,
+      
+      currentIndex:
+          _currentIndex, // this will be set when a new tab is tapped
+      items: [
+        BottomNavigationBarItem(
+          icon: new Icon(
+            Icons.home_outlined,
+            color: Constants.zc_orange,
+            size: 30.0,
           ),
-          BottomNavigationBarItem(
-              icon: new Icon(
-                Icons.favorite_outline,
-                color: Constants.zc_orange,
-                size: 35.0,
-              ),
-              label: ""),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_cart_outlined,
-                color: Constants.zc_orange,
-                size: 35.0,
-              ),
-              label: "")
-        ],
-      ),
-    );
+          label: "",
+        ),
+        BottomNavigationBarItem(
+            icon: new Icon(
+              Icons.favorite_outline,
+              color: Constants.zc_orange,
+              size: 30.0,
+            ),
+            label: ""),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart_outlined,
+              color: Constants.zc_orange,
+              size: 30.0,
+            ),
+            label: "")
+      ],
+    ),
+        ),
+      );
   }
 
   void onTabTapped(int index) {

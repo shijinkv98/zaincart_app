@@ -16,6 +16,8 @@ class ZCSearchField extends StatelessWidget {
       this.onSearchTap,
       this.onChanged,
       this.onCategorySelected,
+      this.focusNode,
+      this.readOnly,
       this.items});
 
   final String hintText;
@@ -32,6 +34,8 @@ class ZCSearchField extends StatelessWidget {
   final void Function(String) onSearchTap;
   final void Function(String) onChanged;
   final void Function(String) onCategorySelected;
+  final FocusNode focusNode;
+  final bool readOnly;
 
   var selectedValue = ValueNotifier("Category");
 
@@ -80,6 +84,9 @@ class ZCSearchField extends StatelessWidget {
                   maxLength: maxLength,
                   controller: controller,
                   keyboardType: textInputType,
+                  readOnly: true,
+                  focusNode: focusNode,
+                  onTap: () => onSearchTap(""),
                   onSubmitted: (value) => onSearchTap(controller.text),
                   onChanged: (value) => onChanged(value),
                   decoration: InputDecoration(

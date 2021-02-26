@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _searchController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     final double divHeight = MediaQuery.of(context).size.height;
@@ -30,10 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
       appBar: AppBar(
-        title: Image.asset(
-          Constants.zc_logo_notext,
-          height: 180.0,
-          fit: BoxFit.contain,
+        title: Center(
+          child: Image.asset(
+            Constants.zc_logo_notext,
+            height: 180.0,
+            fit: BoxFit.contain,
+          ),
         ),
         backgroundColor: Colors.white,
         leading: Builder(
@@ -91,10 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: new ZCSearchField(
                                       hintText: "Search",
+                                      controller: _searchController,
                                       items: homeBloc.homeData.searchCategory
                                           .map((e) => e.categoryName)
                                           .toList(),
-                                      onChanged: (value) {
+                                      onSearchTap: (value) {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder:
@@ -312,6 +316,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
+                              VerticalDivider(
+                                thickness: 1.0,
+                                color: Constants.zc_orange,
+                              ),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,6 +345,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ],
                                 ),
+                              ),
+                              VerticalDivider(
+                                thickness: 1.0,
+                                color: Constants.zc_orange,
                               ),
                               Expanded(
                                 child: Column(

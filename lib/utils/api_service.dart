@@ -30,8 +30,6 @@ class APIService {
     customerId = await Preferences.get(PrefKey.id);
     token = await Preferences.get(PrefKey.token);
     email = await Preferences.get(PrefKey.email);
-    print("TOKEN=== ${email}");
-    print("TOKEN=== ${dio.options.headers["token"]}");
   }
 
   updateBearerToken(String bearerToken) {
