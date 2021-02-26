@@ -8,6 +8,7 @@ class APIService {
   static final APIService _singleton = new APIService._internal();
   String customerId;
   String token;
+  String email;
 
   factory APIService() {
     return _singleton;
@@ -28,6 +29,8 @@ class APIService {
     dio.options.headers["token"] = authToken;
     customerId = await Preferences.get(PrefKey.id);
     token = await Preferences.get(PrefKey.token);
+    email = await Preferences.get(PrefKey.email);
+    print("TOKEN=== ${email}");
     print("TOKEN=== ${dio.options.headers["token"]}");
   }
 
@@ -312,7 +315,7 @@ class APIService {
     var queryParams = {
       "customer_id": "$customerId",
       "customertoken": "$token",
-      "orderid" : "$orderId"
+      "orderid": "$orderId"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
@@ -328,10 +331,27 @@ class APIService {
     return response;
   }
 
-   //myorder detail///
+  //myorder detail///
   Future<Response> getTermsConditions() async {
     var url = APIClient.getTermsAndCondition;
     Response response = await dio.get(url);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //chane password///
+  Future<Response> changePassword(
+      {String currentPassword, String password}) async {
+    var url = APIClient.changePassword;
+    var queryParams = {
+      "email": "$email",
+      "currentPassword": currentPassword,
+      "newPassword": "$password",
+      "CustomerId": "$customerId",
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }

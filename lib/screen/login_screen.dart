@@ -194,6 +194,7 @@ class LoginScreenState extends State<LoginScreen> {
               } else {
                 APIService().getBearerToken(loginResponse.data.token);
                 //save user to prefs.
+                Preferences.save(PrefKey.password, _passwordController.text);
                 Preferences.save(PrefKey.token, loginResponse.data.token);
                 Preferences.save(PrefKey.id, loginResponse.data.customerId);
                 Preferences.save(

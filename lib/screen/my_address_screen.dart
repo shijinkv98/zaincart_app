@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
 import 'package:zaincart_app/screen/add_address_screen.dart';
+import 'package:zaincart_app/screen/change_password_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
@@ -87,7 +87,10 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
             ),
             Row(
               children: [
-                Image.asset(Constants.ic_account,height: 100.0,),
+                Image.asset(
+                  Constants.ic_account,
+                  height: 100.0,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -100,11 +103,19 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                     ZCText(
                       text: phone,
                     ),
-                    SizedBox(height: 5.0,),
-                    InkWell(onTap: () {}, child: ZCText(
-                                text: "Change Password",
-                                color: Constants.zc_orange,
-                              )),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  ChangePasswordScreen()));
+                        },
+                        child: ZCText(
+                          text: "Change Password",
+                          color: Constants.zc_orange,
+                        )),
                   ],
                 )
               ],
