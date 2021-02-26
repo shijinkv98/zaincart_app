@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
-import 'package:zaincart_app/screen/add_address_screen.dart';
+import 'package:zaincart_app/screen/account/add_address_screen.dart';
 import 'package:zaincart_app/screen/change_password_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -66,11 +66,11 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                   ))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Row(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ZCText(
@@ -82,10 +82,16 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                 )
               ],
             ),
-            Divider(
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+            child: Divider(
               thickness: 1.0,
             ),
-            Row(
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0,right: 20.0),
+            child: Row(
               children: [
                 Image.asset(
                   Constants.ic_account,
@@ -120,14 +126,15 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                 )
               ],
             ),
-            Divider(
-              thickness: 1.0,
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: addressList.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return Column(
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: addressList.length,
+                itemBuilder: (BuildContext ctxt, int index) {
+                  return Container(
+                    color: index%2 == 0 ? Colors.white:Colors.grey[200],
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
@@ -152,6 +159,9 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                             )
                           ],
                         ),
+                        Divider(
+                          thickness: 1.0,
+                        ),
                         SizedBox(
                           height: 5.0,
                         ),
@@ -165,15 +175,13 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                         ZCText(
                           text: addressList[index].telephone,
                         ),
-                        Divider(
-                          thickness: 1.0,
-                        ),
+                        
                       ],
-                    );
-                  }),
-            ),
-          ],
-        ),
+                    ),
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }

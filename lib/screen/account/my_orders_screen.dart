@@ -68,7 +68,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 10.0),
+            padding: const EdgeInsets.only(right: 10.0, top: 10.0),
             child: Align(
               alignment: Alignment.centerRight,
               child: ZCText(

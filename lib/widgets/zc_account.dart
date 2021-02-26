@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/screen/login_screen.dart';
-import 'package:zaincart_app/screen/my_address_screen.dart';
+import 'package:zaincart_app/screen/account/my_address_screen.dart';
 import 'package:zaincart_app/screen/account/my_orders_screen.dart';
 import 'package:zaincart_app/screen/register_screen.dart';
 import 'package:zaincart_app/screen/wishlist_screen.dart';
