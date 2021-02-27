@@ -73,7 +73,7 @@ class AboutUsScreenState extends State<AboutUsScreen> {
                               }
                               return null;
                             },
-                            textStyle: TextStyle(fontSize: 14),
+                            textStyle: TextStyle(fontSize: kFontSize),
                             webView: true,
                           ),
                   )),
