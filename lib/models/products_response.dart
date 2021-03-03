@@ -1,4 +1,3 @@
- 
 class ProductsResponse {
   int success;
   String error;
@@ -171,6 +170,7 @@ class Product {
   String productSpPrice;
   String productOffer;
   String productImage;
+  int rating;
 
   Product(
       {this.productWishlisted,
@@ -179,6 +179,7 @@ class Product {
       this.productType,
       this.productName,
       this.productPrice,
+      this.rating,
       this.productSpPrice,
       this.productOffer,
       this.productImage});
@@ -190,6 +191,7 @@ class Product {
     productType = json['product_type'];
     productName = json['product_name'];
     productPrice = json['product_price'];
+    rating = json['rating'];
     productSpPrice = json['product_sp_price'];
     productOffer = json['product_offer'];
     productImage = json['product_image'];

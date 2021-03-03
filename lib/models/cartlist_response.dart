@@ -66,7 +66,7 @@ class CartProduct {
   String produtName;
   int quantity;
   String productPrice;
-  Null preOrderStatus;
+  int rating;
   String image;
 
   CartProduct(
@@ -77,7 +77,7 @@ class CartProduct {
       this.produtName,
       this.quantity,
       this.productPrice,
-      this.preOrderStatus,
+      this.rating,
       this.image});
 
   CartProduct.fromJson(Map<String, dynamic> json) {
@@ -88,7 +88,7 @@ class CartProduct {
     produtName = json['produt_name'];
     quantity = json['quantity'];
     productPrice = json['product_price'];
-    preOrderStatus = json['pre_order_status'];
+    rating = json['rating'];
     image = json['image'];
   }
 
@@ -101,7 +101,7 @@ class CartProduct {
     data['produt_name'] = this.produtName;
     data['quantity'] = this.quantity;
     data['product_price'] = this.productPrice;
-    data['pre_order_status'] = this.preOrderStatus;
+    data['rating'] = this.rating;
     data['image'] = this.image;
     return data;
   }

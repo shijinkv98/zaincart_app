@@ -123,7 +123,7 @@ class ZCProductItem extends StatelessWidget {
                 height: 5.0,
               ),
               RatingBar.builder(
-                initialRating: 3,
+                initialRating: product.rating.toDouble(),
                 minRating: 1,
                 itemSize: 10.0,
                 direction: Axis.horizontal,
