@@ -6,22 +6,20 @@ import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
 import 'package:zaincart_app/widgets/zc_product_item.dart';
-import 'package:zaincart_app/widgets/zc_search_field.dart';
+import 'package:zaincart_app/widgets/zc_text.dart';
 
-class ProductSearchScreen extends StatefulWidget {
+class CategoryScreen extends StatefulWidget {
   final String selectedCategory;
-  final String searchKey;
-  ProductSearchScreen({this.selectedCategory, this.searchKey});
+  CategoryScreen({this.selectedCategory});
   @override
   State<StatefulWidget> createState() {
-    return _ProductSearchScreenState();
+    return _CategoryScreenState();
   }
 }
 
-class _ProductSearchScreenState extends State<ProductSearchScreen> {
+class _CategoryScreenState extends State<CategoryScreen> {
   bool isLoading = false;
   var selectedCategory = ValueNotifier("Category");
-  TextEditingController _searchController = new TextEditingController();
 
   @override
   void initState() {
@@ -35,7 +33,7 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
       appBar: AppBar(
-        title: ZCAppBarTitle("SEARCH"),
+        title: ZCAppBarTitle("CATEGORY"),
         backgroundColor: Colors.white,
         leading: Builder(
             builder: (BuildContext context) => Padding(
@@ -61,40 +59,45 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
       body: Consumer<HomeBloc>(
           builder: (context, homeBloc, child) => Column(
                 children: [
+                  // Container(
+                  //   color: Colors.grey[200],
+                  //   child: Padding(
+                  //       padding: const EdgeInsets.only(
+                  //           left: 10.0, right: 10.0, bottom: 10.0),
+                  //       child: ValueListenableBuilder(
+                  //           valueListenable: selectedCategory,
+                  //           builder: (context, selected, child) =>
+                  //               Container())),
+                  // ),
+
                   Container(
-                    color: Colors.grey[200],
-                    child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, bottom: 10.0),
-                        child: ValueListenableBuilder(
-                            valueListenable: selectedCategory,
-                            builder: (context, selected, child) =>
-                                new ZCSearchField(
-                                  hintText: "Search",
-                                  selectedItem: selected,
-                                  controller: _searchController,
-                                  readOnly: false,
-                                  items: homeBloc.categories
-                                      .map((e) => e.categoryName)
-                                      .toList(),
-                                  onChanged: (value) {},
-                                  onSearchTap: (searchKey) {
-                                    print(searchKey);
-                                    homeBloc.productSearch(searchKey: searchKey, context: context);
-                                  },
-                                  onCategorySelected: (category) {
-                                    selectedCategory.value = category;
-                                    var categoryId = homeBloc.categories
-                                        .where((element) =>
-                                            element.categoryName == category)
-                                        .first
-                                        .categoryId;
-                                    homeBloc.getProductsByCategory(
-                                        context: context,
-                                        categoryId: categoryId,
-                                        pageNo: "1");
-                                  },
-                                ))),
+                    height: 50,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: 10,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return Container(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: ZCText(
+                                    text: "kulup",
+                                    fontSize: kHeadingFontSize,
+                                    semiBold: true,
+                                    color: Constants.zc_orange,
+                                  ),
+                                );
+                              }),
+                        ),
+                        Container(
+                          width: 50,
+                          child: ZCText(
+                            text: "FIlter",
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: homeBloc.isLoading

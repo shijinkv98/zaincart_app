@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zaincart_app/screen/menu/about_us_screen.dart';
 import 'package:zaincart_app/screen/menu/contact_screen.dart';
 import 'package:zaincart_app/screen/menu/terms_conditions_screen.dart';
+import 'package:zaincart_app/screen/product_search_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -33,20 +34,26 @@ class ZCMenu extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        Constants.ic_category,
-                        scale: 7.0,
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      ZCText(
-                        text: "Categories",
-                        color: Constants.zc_font_grey,
-                      ),
-                    ],
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => ProductSearchScreen()));
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          Constants.ic_category,
+                          scale: 7.0,
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        ZCText(
+                          text: "Categories",
+                          color: Constants.zc_font_grey,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Divider(
@@ -131,12 +138,13 @@ class ZCMenu extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: InkWell(onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) =>
                               ContactDetailScreen()));
-                  },
-                                      child: Row(
+                    },
+                    child: Row(
                       children: [
                         Image.asset(
                           Constants.ic_contact,
