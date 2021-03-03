@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/screen/category_screen.dart';
 import 'package:zaincart_app/screen/grocery_screen.dart';
 import 'package:zaincart_app/screen/product_search_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
@@ -111,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             MaterialPageRoute(
                                                 builder:
                                                     (BuildContext context) =>
-                                                        ProductSearchScreen(
-                                                          selectedCategory:
-                                                              value,
+                                                        CategoryScreen(
+                                                          categoryId:
+                                                              homeBloc.homeData.searchCategory.where((e) => e.categoryName == value).first.categoryId,
                                                         )));
                                       },
                                     ))

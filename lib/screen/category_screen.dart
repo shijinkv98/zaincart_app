@@ -9,8 +9,8 @@ import 'package:zaincart_app/widgets/zc_product_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final String selectedCategory;
-  CategoryScreen({this.selectedCategory});
+  final String categoryId;
+  CategoryScreen({this.categoryId});
   @override
   State<StatefulWidget> createState() {
     return _CategoryScreenState();
@@ -19,16 +19,17 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   bool isLoading = false;
-  var selectedCategory = ValueNotifier("Category");
+  var subCategory = ValueNotifier("");
 
   @override
   void initState() {
-    selectedCategory.value = widget.selectedCategory;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeBloc>(context, listen: false).getProductsByCategory(
+        context: context, categoryId: widget.categoryId, pageNo: "1");
     return Scaffold(
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
@@ -75,20 +76,65 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: ListView.builder(
-                              itemCount: 10,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (BuildContext ctxt, int index) {
-                                return Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: ZCText(
-                                    text: "kulup",
-                                    fontSize: kHeadingFontSize,
-                                    semiBold: true,
-                                    color: Constants.zc_orange,
-                                  ),
-                                );
-                              }),
+                          child: ValueListenableBuilder(
+                              valueListenable: subCategory,
+                              builder: (context, selected, child) => Padding(
+                                    padding: EdgeInsets.only(right: 10.0),
+                                    child: ListView.builder(
+                                        itemCount: homeBloc.categories
+                                            .where((e) =>
+                                                e.categoryId ==
+                                                widget.categoryId)
+                                            .first
+                                            .subcategory
+                                            .length,
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder:
+                                            (BuildContext ctxt, int index) {
+                                          return InkWell(
+                                            onTap: () {
+                                              subCategory.value = homeBloc
+                                                  .categories
+                                                  .where((e) =>
+                                                      e.categoryId ==
+                                                      widget.categoryId)
+                                                  .first
+                                                  .subcategory[index]
+                                                  .categoryId;
+                                              homeBloc.getProductsByCategory(
+                                                  context: context,
+                                                  categoryId: subCategory.value,
+                                                  pageNo: "1");
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: ZCText(
+                                                text: homeBloc.categories
+                                                    .where((e) =>
+                                                        e.categoryId ==
+                                                        widget.categoryId)
+                                                    .first
+                                                    .subcategory[index]
+                                                    .categoryName,
+                                                fontSize: kHeadingFontSize,
+                                                semiBold: true,
+                                                underline: subCategory.value ==
+                                                        homeBloc.categories
+                                                            .where((e) =>
+                                                                e.categoryId ==
+                                                                widget
+                                                                    .categoryId)
+                                                            .first
+                                                            .subcategory[index]
+                                                            .categoryId
+                                                    ? true
+                                                    : false,
+                                                color: Constants.zc_orange,
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                  )),
                         ),
                         Container(
                           width: 50,
