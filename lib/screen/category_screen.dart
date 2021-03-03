@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/screen/filter_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
@@ -149,10 +150,26 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         }),
                                   )),
                         ),
-                        Container(
-                          width: 55,
-                          child: ZCText(
-                            text: "FIlter",
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    FilterScreen()));
+                          },
+                          child: Container(
+                            width: 70,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  Constants.ic_filter,
+                                  height: 20.0,
+                                  width: 20.0,
+                                ),
+                                ZCText(
+                                  text: "FIlter",
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],

@@ -53,6 +53,7 @@ flutter:
     - assets/ic_wishlist.png
     - assets/ic_account.png
     - assets/splash.png
+    - assets/ic_filter.png
     
 
   # fonts:

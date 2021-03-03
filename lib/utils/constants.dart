@@ -28,6 +28,7 @@ class Constants {
   static const ic_wishlist = 'assets/ic_wishlist.png';
   static const ic_account = 'assets/ic_account.png';
   static const splash = 'assets/splash.png';
+  static const ic_filter = 'assets/ic_filter.png';
 
   //colors..
 
