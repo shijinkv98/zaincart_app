@@ -60,17 +60,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
       body: Consumer<HomeBloc>(
           builder: (context, homeBloc, child) => Column(
                 children: [
-                  // Container(
-                  //   color: Colors.grey[200],
-                  //   child: Padding(
-                  //       padding: const EdgeInsets.only(
-                  //           left: 10.0, right: 10.0, bottom: 10.0),
-                  //       child: ValueListenableBuilder(
-                  //           valueListenable: selectedCategory,
-                  //           builder: (context, selected, child) =>
-                  //               Container())),
-                  // ),
-
                   Container(
                     height: 50,
                     child: Row(
@@ -107,29 +96,53 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   pageNo: "1");
                                             },
                                             child: Container(
-                                              padding: EdgeInsets.all(10.0),
-                                              child: ZCText(
-                                                text: homeBloc.categories
-                                                    .where((e) =>
-                                                        e.categoryId ==
-                                                        widget.categoryId)
-                                                    .first
-                                                    .subcategory[index]
-                                                    .categoryName,
-                                                fontSize: kHeadingFontSize,
-                                                semiBold: true,
-                                                underline: subCategory.value ==
-                                                        homeBloc.categories
-                                                            .where((e) =>
-                                                                e.categoryId ==
-                                                                widget
-                                                                    .categoryId)
-                                                            .first
-                                                            .subcategory[index]
-                                                            .categoryId
-                                                    ? true
-                                                    : false,
-                                                color: Constants.zc_orange,
+                                              padding: EdgeInsets.only(
+                                                  left: 10.0,
+                                                  right: 10.0,
+                                                  top: 10.0),
+                                              child: Column(
+                                                children: [
+                                                  ZCText(
+                                                    text: homeBloc.categories
+                                                        .where((e) =>
+                                                            e.categoryId ==
+                                                            widget.categoryId)
+                                                        .first
+                                                        .subcategory[index]
+                                                        .categoryName,
+                                                    fontSize: kHeadingFontSize,
+                                                    color:
+                                                        Constants.zc_font_grey,
+                                                  ),
+                                                  subCategory.value ==
+                                                          homeBloc.categories
+                                                              .where((e) =>
+                                                                  e.categoryId ==
+                                                                  widget
+                                                                      .categoryId)
+                                                              .first
+                                                              .subcategory[
+                                                                  index]
+                                                              .categoryId
+                                                      ? Container(
+                                                          height: 5.0,
+                                                          color: Constants
+                                                              .zc_orange,
+                                                          width: homeBloc
+                                                                  .categories
+                                                                  .where((e) =>
+                                                                      e.categoryId ==
+                                                                      widget
+                                                                          .categoryId)
+                                                                  .first
+                                                                  .subcategory[
+                                                                      index]
+                                                                  .categoryName
+                                                                  .length *
+                                                              11.toDouble(),
+                                                        )
+                                                      : new Container()
+                                                ],
                                               ),
                                             ),
                                           );
@@ -137,13 +150,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   )),
                         ),
                         Container(
-                          width: 50,
+                          width: 55,
                           child: ZCText(
                             text: "FIlter",
                           ),
                         )
                       ],
                     ),
+                  ),
+                  Divider(
+                    thickness: 1.0,
                   ),
                   Expanded(
                     child: homeBloc.isLoading
