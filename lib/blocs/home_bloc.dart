@@ -146,16 +146,13 @@ class HomeBloc extends ChangeNotifier {
     });
   }
 
-  productSearch(
-      {BuildContext context, String searchKey}) {
+  productSearch({BuildContext context, String searchKey}) {
     categoryProducts.clear();
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         isLoading = true;
         notifyListeners();
-        APIService()
-            .productSearch(searchKey)
-            .then((response) {
+        APIService().productSearch(searchKey).then((response) {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
@@ -239,6 +236,33 @@ class HomeBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               AlertUtils.showToast(myOrderResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
+  cancelOrder(BuildContext context, String orderId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().cancelOrder(orderId).then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            Response myOrderResponse = Response.fromJson(response.data);
+            if (myOrderResponse.success == 1) {
+              AlertUtils.showToast(
+                  "Your order has been cancelled successfully.", context);
+              Navigator.of(context).pop();
+            } else if (myOrderResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast("Sorry, We cant cancel your order right now.", context);
             }
           } else {
             AlertUtils.showToast("Something went wrong", context);

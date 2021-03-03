@@ -53,6 +53,7 @@ class ZCTextFormField extends StatelessWidget {
           keyboardType: textInputType,
           focusNode: focusNode,
           maxLength: maxLength,
+          maxLines: null,
           onChanged: (text) {
             showSubHint.value = text.isEmpty ? true : false;
             if (onChanged != null) {

@@ -40,4 +40,7 @@ class APIClient {
   static final getTermsAndCondition = Base_URL + "getermsandcondition";
   static final changePassword = Base_URL + "passwordchange";
   static final productSearch = Base_URL + "productsearch";
+  static cancelOrder(String orderId) {
+    return Base_URL + "orders/$orderId/cancel";
+  }
 }
