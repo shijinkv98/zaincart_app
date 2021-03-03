@@ -63,24 +63,55 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
           child: ValueListenableBuilder(
               valueListenable: details,
               builder: (context, detail, child) => SingleChildScrollView(
-                    child: detail== null
+                    child: detail == null
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
                         : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ZCText(text: details.value.mail, fontSize: kFieldFontSize,),
-                            SizedBox(height: 10.0,),
-                            ZCText(text: details.value.address, fontSize: kFieldFontSize),
-                            SizedBox(height: 10.0,),
-                            ZCText(text: details.value.mobile, fontSize: kFieldFontSize),
-                            SizedBox(height: 10.0,),
-                            ZCText(text: details.value.phone, fontSize: kFieldFontSize),
-                            SizedBox(height: 10.0,),
-                            ZCText(text: details.value.workingtime, fontSize: kFieldFontSize),
-                          ],
-                        ),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ZCText(
+                                  text: details.value.address,
+                                  fontSize: kFieldFontSize),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              Row(
+                                children: [
+                                  ZCText(
+                                      text: details.value.phone,
+                                      fontSize: kFieldFontSize),
+                                  ZCText(
+                                    text: ", ",
+                                  ),
+                                  ZCText(
+                                      text: details.value.mobile,
+                                      fontSize: kFieldFontSize),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              ZCText(
+                                text: details.value.mail,
+                                fontSize: kFieldFontSize,
+                              ),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              ZCText(
+                                text: "Hours of Operation",
+                                semiBold: true,
+                                fontSize: kFieldFontSize,
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              ZCText(
+                                  text: details.value.workingtime,
+                                  fontSize: kFieldFontSize),
+                            ],
+                          ),
                   )),
         ));
   }
