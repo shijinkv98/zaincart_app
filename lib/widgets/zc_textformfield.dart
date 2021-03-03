@@ -18,6 +18,7 @@ class ZCTextFormField extends StatelessWidget {
       this.focusNode,
       this.textCapitalization = TextCapitalization.none,
       this.enabled = true,
+      this.maxLines = 1,
       this.onChanged});
 
   final String hintText;
@@ -35,6 +36,7 @@ class ZCTextFormField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final bool enabled;
   final ValueChanged<String> onChanged;
+  final int maxLines;
 
   var showSubHint = ValueNotifier(true);
 
@@ -53,7 +55,7 @@ class ZCTextFormField extends StatelessWidget {
           keyboardType: textInputType,
           focusNode: focusNode,
           maxLength: maxLength,
-          maxLines: null,
+          maxLines: maxLines,
           onChanged: (text) {
             showSubHint.value = text.isEmpty ? true : false;
             if (onChanged != null) {

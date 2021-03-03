@@ -66,6 +66,7 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
                 ZCTextFormField(
                   hintText: "Any cancellation reason?",
                   controller: _reasonController,
+                  maxLines: null,
                 ),
                 SizedBox(height: 30.0),
                 Row(
