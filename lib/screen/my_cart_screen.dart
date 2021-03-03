@@ -10,6 +10,9 @@ import 'package:zaincart_app/widgets/zc_mycart_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class MyCartScreen extends StatefulWidget {
+  final bool enableBack;
+
+  MyCartScreen({this.enableBack = false});
   @override
   State<StatefulWidget> createState() {
     return _MyCartScreenState();
@@ -29,13 +32,21 @@ class _MyCartScreenState extends State<MyCartScreen> {
         leading: Builder(
             builder: (BuildContext context) => Padding(
                   padding: EdgeInsets.only(left: 0.0),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Constants.zc_font_black,
-                    ),
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                  ),
+                  child: widget.enableBack
+                      ? IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Constants.zc_font_black,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        )
+                      : IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Constants.zc_font_black,
+                          ),
+                          onPressed: () => Scaffold.of(context).openDrawer(),
+                        ),
                 )),
         actions: <Widget>[
           Builder(
@@ -65,49 +76,53 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               })
                           : new Container(),
                     ),
-                    cartBloc.cartResponse != null ? new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: new Container(
-                            height: 40.0,
-                            color: Constants.zc_yellow,
-                            child: Center(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ZCText(
-                                  text: "Total",
-                                  color: Constants.zc_orange_dark,
-                                  fontSize: 11.0,
+                    cartBloc.cartResponse != null
+                        ? new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: new Container(
+                                  height: 40.0,
+                                  color: Constants.zc_yellow,
+                                  child: Center(
+                                      child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ZCText(
+                                        text: "Total",
+                                        color: Constants.zc_orange_dark,
+                                        fontSize: 11.0,
+                                      ),
+                                      ZCText(
+                                        text: cartBloc.cartResponse.cartInfo
+                                            .cartTotalAmount,
+                                        semiBold: true,
+                                      ),
+                                    ],
+                                  )),
                                 ),
-                                ZCText(
-                                  text: cartBloc.cartResponse.cartInfo.cartTotalAmount,
-                                  semiBold: true,
+                              ),
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    cartBloc.placeOrder(context);
+                                  },
+                                  child: new Container(
+                                    height: 40.0,
+                                    color: Constants.zc_orange_dark,
+                                    child: Center(
+                                        child: ZCText(
+                                      text: "Place Order",
+                                      semiBold: true,
+                                      color: Colors.white,
+                                    )),
+                                  ),
                                 ),
-                              ],
-                            )),
-                          ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              cartBloc.placeOrder(context);
-                            },
-                            child: new Container(
-                              height: 40.0,
-                              color: Constants.zc_orange_dark,
-                              child: Center(
-                                  child: ZCText(
-                                text: "Place Order",
-                                semiBold: true,
-                                color: Colors.white,
-                              )),
-                            ),
-                          ),
-                        )
-                      ],
-                    ) : new Container()
+                              )
+                            ],
+                          )
+                        : new Container()
                   ],
                 ),
               )),
