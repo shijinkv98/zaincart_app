@@ -43,4 +43,6 @@ class APIClient {
   static cancelOrder(String orderId) {
     return Base_URL + "orders/$orderId/cancel";
   }
+
+  static final contactDetails = Base_URL + "contactdetails";
 }
