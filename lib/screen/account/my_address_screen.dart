@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
+import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/screen/account/add_address_screen.dart';
 import 'package:zaincart_app/screen/change_password_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
@@ -66,123 +67,168 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                   ))
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: isLoading
+          ? Center(child: new CircularProgressIndicator())
+          : Column(
               children: [
-                ZCText(
-                  text: "Contact",
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ZCText(
+                        text: "Contact",
+                      ),
+                      ZCText(
+                        text: "Edit",
+                        color: Constants.zc_orange,
+                      )
+                    ],
+                  ),
                 ),
-                ZCText(
-                  text: "Edit",
-                  color: Constants.zc_orange,
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-            child: Divider(
-              thickness: 1.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-            child: Row(
-              children: [
-                Image.asset(
-                  Constants.ic_account,
-                  height: 100.0,
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: Divider(
+                    thickness: 1.0,
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ZCText(
-                      text: name,
-                    ),
-                    ZCText(
-                      text: email,
-                    ),
-                    ZCText(
-                      text: phone,
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  ChangePasswordScreen()));
-                        },
-                        child: ZCText(
-                          text: "Change Password",
-                          color: Constants.zc_orange,
-                        )),
-                  ],
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: addressList.length,
-                itemBuilder: (BuildContext ctxt, int index) {
-                  return Container(
-                    color: index%2 == 0 ? Colors.white:Colors.grey[200],
-                    padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ZCText(
-                              text: "Shipping Address",
-                              semiBold: true,
-                            ),
-                            InkWell(
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        Constants.ic_account,
+                        height: 100.0,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ZCText(
+                            text: name,
+                          ),
+                          ZCText(
+                            text: email,
+                          ),
+                          ZCText(
+                            text: phone,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          InkWell(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        AddAddressScreen(
-                                          address: addressList[index],
-                                        )));
+                                        ChangePasswordScreen()));
                               },
                               child: ZCText(
-                                text: "Edit",
+                                text: "Change Password",
                                 color: Constants.zc_orange,
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: addressList.length,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return Container(
+                          color:
+                              index % 2 == 0 ? Colors.white : Colors.grey[200],
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 20.0, top: 20.0, bottom: 20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ZCText(
+                                    text: "Shipping Address",
+                                    semiBold: true,
+                                  ),
+                                  Row(
+                                    children: [
+                                      addressList[index].defaultshipping == 1
+                                          ? Container(
+                                              height: 5.0,
+                                              width: 20.0,
+                                              color: Colors.greenAccent,
+                                            )
+                                          : new Container(),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      AddAddressScreen(
+                                                        address:
+                                                            addressList[index],
+                                                      )));
+                                        },
+                                        child: ZCText(
+                                          text: "Edit",
+                                          color: Constants.zc_font_grey,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      InkWell(
+                                        onTap: () => deleteAddress(
+                                            addressList[index].addressId),
+                                        child: ZCText(
+                                          text: "Delete",
+                                          color: Constants.zc_font_grey,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                            )
-                          ],
-                        ),
-                        Divider(
-                          thickness: 1.0,
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        ZCText(
-                          text: addressList[index].firstname +
-                              addressList[index].lastname,
-                        ),
-                        ZCText(
-                          text: addressList[index].street,
-                        ),
-                        ZCText(
-                          text: addressList[index].telephone,
-                        ),
-                        
-                      ],
-                    ),
-                  );
-                }),
-          ),
-        ],
-      ),
+                              Divider(
+                                thickness: 1.0,
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              ZCText(
+                                text: addressList[index].firstname +
+                                    addressList[index].lastname,
+                              ),
+                              ZCText(
+                                text: addressList[index].street,
+                              ),
+                              ZCText(
+                                text: addressList[index].telephone,
+                              ),
+                              addressList[index].defaultshipping != 1
+                                  ? Align(
+                                      alignment: Alignment.centerRight,
+                                      child: InkWell(
+                                        onTap: () => defaultAddress(
+                                            addressList[index].addressId),
+                                        child: ZCText(
+                                          text: "Make it default",
+                                          color: Constants.zc_font_grey,
+                                        ),
+                                      ),
+                                    )
+                                  : new Container(),
+                            ],
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            ),
     );
   }
 
@@ -210,6 +256,63 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
               setState(() {
                 addressList = addressResponse.data.addressList;
               });
+            } else if (addressResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(addressResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  deleteAddress(String addressId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        setState(() {
+          isLoading = true;
+        });
+        APIService().deleteAddress(addressId).then((response) {
+          setState(() {
+            isLoading = false;
+          });
+          if (response.statusCode == 200) {
+            Response addressResponse = Response.fromJson(response.data);
+            if (addressResponse.success == 1) {
+              AlertUtils.showToast("Deleted successfully", context);
+              getAddressList();
+            } else if (addressResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(addressResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  defaultAddress(String addressId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        setState(() {
+          isLoading = true;
+        });
+        APIService().setDefaultAddress(addressId).then((response) {
+          setState(() {
+            isLoading = false;
+          });
+          if (response.statusCode == 200) {
+            Response addressResponse = Response.fromJson(response.data);
+            if (addressResponse.success == 1) {
+              AlertUtils.showToast(
+                  "Default address added successfully", context);
+              getAddressList();
             } else if (addressResponse.success == 3) {
               kMoveToLogin(context);
             } else {

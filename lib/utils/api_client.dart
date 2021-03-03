@@ -45,4 +45,6 @@ class APIClient {
   }
 
   static final contactDetails = Base_URL + "contactdetails";
+  static final deleteAddresses = Base_URL + "deleteaddresses";
+  static final setDefaultAddress = Base_URL + "setdefalutaddress";
 }

@@ -389,4 +389,34 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //cancel order///
+  Future<Response> deleteAddress(String addressId) async {
+    var url = APIClient.deleteAddresses;
+    var queryParams = {
+      "customerId": "$customerId",
+      "customertoken": "$token",
+      "addressid" :"$addressId"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //set default address///
+  Future<Response> setDefaultAddress(String addressId) async {
+    var url = APIClient.setDefaultAddress;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "addressid" :"$addressId",
+      "defaultbilling" : 1,
+      "defaultshipping" : 1,
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
