@@ -84,9 +84,9 @@ class ZCSearchField extends StatelessWidget {
                   maxLength: maxLength,
                   controller: controller,
                   keyboardType: textInputType,
-                  readOnly: true,
+                  readOnly: readOnly,
                   focusNode: focusNode,
-                  onTap: () => onSearchTap(""),
+                  onTap: readOnly ? () => onSearchTap(""): null,
                   onSubmitted: (value) => onSearchTap(controller.text),
                   onChanged: (value) => onChanged(value),
                   decoration: InputDecoration(

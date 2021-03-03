@@ -353,4 +353,18 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //product search///
+  Future<Response> productSearch(String searchKey) async {
+    var url = APIClient.productSearch;
+    var queryParams = {
+      "searchkey": "$searchKey",
+      "Customer_id": "$customerId",
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }

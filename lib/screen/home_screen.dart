@@ -94,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: new ZCSearchField(
                                       hintText: "Search",
+                                      readOnly: true,
                                       controller: _searchController,
                                       items: homeBloc.homeData.searchCategory
                                           .map((e) => e.categoryName)

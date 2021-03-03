@@ -39,4 +39,5 @@ class APIClient {
   static final getAbout = Base_URL + "getabout";
   static final getTermsAndCondition = Base_URL + "getermsandcondition";
   static final changePassword = Base_URL + "passwordchange";
+  static final productSearch = Base_URL + "productsearch";
 }

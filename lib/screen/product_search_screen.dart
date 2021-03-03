@@ -21,6 +21,7 @@ class ProductSearchScreen extends StatefulWidget {
 class _ProductSearchScreenState extends State<ProductSearchScreen> {
   bool isLoading = false;
   var selectedCategory = ValueNotifier("Category");
+  TextEditingController _searchController = new TextEditingController();
 
   @override
   void initState() {
@@ -72,10 +73,16 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                                 new ZCSearchField(
                                   hintText: "Search",
                                   selectedItem: selected,
+                                  controller: _searchController,
+                                  readOnly: false,
                                   items: homeBloc.categories
                                       .map((e) => e.categoryName)
                                       .toList(),
                                   onChanged: (value) {},
+                                  onSearchTap: (searchKey) {
+                                    print(searchKey);
+                                    homeBloc.productSearch(searchKey: searchKey, context: context);
+                                  },
                                   onCategorySelected: (category) {
                                     selectedCategory.value = category;
                                     var categoryId = homeBloc.categories
