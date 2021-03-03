@@ -4,7 +4,6 @@ import 'package:zaincart_app/screen/login_screen.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
-import 'package:zaincart_app/widgets/zc_logo.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -45,10 +44,15 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double divHeight = MediaQuery.of(context).size.height;
+    final double divWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Center(
-        child: Container(
-          child: ZCLogo(),
+      body: Container(
+        child: Image.asset(
+          Constants.splash,
+          fit: BoxFit.cover,
+          height: divHeight,
+          width: divWidth,
         ),
       ),
     );
