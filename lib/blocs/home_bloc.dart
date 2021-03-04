@@ -30,6 +30,7 @@ class HomeBloc extends ChangeNotifier {
   List<Product> categoryProducts = new List<Product>();
   List<OrderDetail> myOrderList = new List<OrderDetail>();
   String selectedCategoryId;
+  String selectedSubCategoryId;
 
   bool isLoading = false;
 

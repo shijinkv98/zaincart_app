@@ -18,7 +18,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   bool isLoading = false;
-  var subCategory = ValueNotifier("");
+  //var subCategory = ValueNotifier("");
 
   @override
   void initState() {
@@ -67,9 +67,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: ValueListenableBuilder(
-                              valueListenable: subCategory,
-                              builder: (context, selected, child) => Padding(
+                          child:  Padding(
                                     padding: EdgeInsets.only(right: 10.0),
                                     child: ListView.builder(
                                         itemCount: homeBloc.categories
@@ -84,18 +82,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             (BuildContext ctxt, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              subCategory.value = homeBloc
-                                                  .categories
-                                                  .where((e) =>
-                                                      e.categoryId ==
-                                                      homeBloc
-                                                          .selectedCategoryId)
-                                                  .first
-                                                  .subcategory[index]
-                                                  .categoryId;
+                                              homeBloc.selectedSubCategoryId =
+                                                  homeBloc.categories
+                                                      .where((e) =>
+                                                          e.categoryId ==
+                                                          homeBloc
+                                                              .selectedCategoryId)
+                                                      .first
+                                                      .subcategory[index]
+                                                      .categoryId;
+                                              
                                               homeBloc.getProductsByCategory(
                                                   context: context,
-                                                  categoryId: subCategory.value,
+                                                  categoryId: homeBloc.selectedSubCategoryId,
                                                   pageNo: "1");
                                             },
                                             child: Container(
@@ -117,7 +116,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     color:
                                                         Constants.zc_font_grey,
                                                   ),
-                                                  subCategory.value ==
+                                                  homeBloc.selectedSubCategoryId ==
                                                           homeBloc.categories
                                                               .where((e) =>
                                                                   e.categoryId ==
@@ -151,7 +150,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           );
                                         }),
                                   )),
-                        ),
+                        
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
