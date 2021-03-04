@@ -29,6 +29,7 @@ class HomeBloc extends ChangeNotifier {
   List<Category> categories = new List<Category>();
   List<Product> categoryProducts = new List<Product>();
   List<OrderDetail> myOrderList = new List<OrderDetail>();
+  String selectedCategoryId;
 
   bool isLoading = false;
 
@@ -262,7 +263,8 @@ class HomeBloc extends ChangeNotifier {
             } else if (myOrderResponse.success == 3) {
               kMoveToLogin(context);
             } else {
-              AlertUtils.showToast("Sorry, We cant cancel your order right now.", context);
+              AlertUtils.showToast(
+                  "Sorry, We cant cancel your order right now.", context);
             }
           } else {
             AlertUtils.showToast("Something went wrong", context);

@@ -10,8 +10,6 @@ import 'package:zaincart_app/widgets/zc_product_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final String categoryId;
-  CategoryScreen({this.categoryId});
   @override
   State<StatefulWidget> createState() {
     return _CategoryScreenState();
@@ -30,7 +28,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     Provider.of<HomeBloc>(context, listen: false).getProductsByCategory(
-        context: context, categoryId: widget.categoryId, pageNo: "1");
+        context: context,
+        categoryId:
+            Provider.of<HomeBloc>(context, listen: false).selectedCategoryId,
+        pageNo: "1");
     return Scaffold(
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
@@ -74,7 +75,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         itemCount: homeBloc.categories
                                             .where((e) =>
                                                 e.categoryId ==
-                                                widget.categoryId)
+                                                homeBloc.selectedCategoryId)
                                             .first
                                             .subcategory
                                             .length,
@@ -87,7 +88,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   .categories
                                                   .where((e) =>
                                                       e.categoryId ==
-                                                      widget.categoryId)
+                                                      homeBloc
+                                                          .selectedCategoryId)
                                                   .first
                                                   .subcategory[index]
                                                   .categoryId;
@@ -107,11 +109,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     text: homeBloc.categories
                                                         .where((e) =>
                                                             e.categoryId ==
-                                                            widget.categoryId)
+                                                            homeBloc
+                                                                .selectedCategoryId)
                                                         .first
                                                         .subcategory[index]
                                                         .categoryName,
-                                                    
                                                     color:
                                                         Constants.zc_font_grey,
                                                   ),
@@ -119,8 +121,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                           homeBloc.categories
                                                               .where((e) =>
                                                                   e.categoryId ==
-                                                                  widget
-                                                                      .categoryId)
+                                                                  homeBloc
+                                                                      .selectedCategoryId)
                                                               .first
                                                               .subcategory[
                                                                   index]
@@ -133,8 +135,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                   .categories
                                                                   .where((e) =>
                                                                       e.categoryId ==
-                                                                      widget
-                                                                          .categoryId)
+                                                                      homeBloc
+                                                                          .selectedCategoryId)
                                                                   .first
                                                                   .subcategory[
                                                                       index]

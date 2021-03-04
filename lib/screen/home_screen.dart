@@ -108,14 +108,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ProductSearchScreen()));
                                       },
                                       onCategorySelected: (value) {
+                                        homeBloc.selectedCategoryId = homeBloc
+                                            .homeData.searchCategory
+                                            .where(
+                                                (e) => e.categoryName == value)
+                                            .first
+                                            .categoryId;
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder:
                                                     (BuildContext context) =>
-                                                        CategoryScreen(
-                                                          categoryId:
-                                                              homeBloc.homeData.searchCategory.where((e) => e.categoryName == value).first.categoryId,
-                                                        )));
+                                                        CategoryScreen()));
                                       },
                                     ))
                                 : new Container(),

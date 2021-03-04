@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/widgets/zc_appbar_title.dart';
-import 'package:zaincart_app/widgets/zc_button.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
-import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
 class FilterScreen extends StatefulWidget {
-  final String orderId;
-
-  FilterScreen({this.orderId});
+  
   @override
   State<StatefulWidget> createState() {
     return _FilterScreenState();
@@ -21,6 +15,7 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   bool isLoading = false;
   TextEditingController _reasonController = new TextEditingController();
+  var priceRange = ValueNotifier(0.0);
 
   @override
   Widget build(BuildContext context) {
@@ -50,48 +45,62 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
       body: Consumer<HomeBloc>(
           builder: (context, homeBloc, child) => Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ExpansionTile(
-                title: ZCText(
-                  text:"Grocery",
-                  color: Constants.zc_orange,
-                  
-                ),
-                children: <Widget>[
-                  ZCText(text: "Pulses(4)",),
-                  ZCText(text: "Rice&Flour(7)",),
-                  ZCText(text: "DryFruits & Nuts(5)",),
-                  ZCText(text: "Salt & Sugar(2)",),
-
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ExpansionTile(
+                    title: ZCText(
+                      text: homeBloc.categories
+                        .where((e) => e.categoryId == homeBloc.selectedCategoryId)
+                        .first.categoryName,
+                      color: Constants.zc_orange,
+                    ),
+                    children: homeBloc.categories
+                        .where((e) => e.categoryId == homeBloc.selectedCategoryId)
+                        .first
+                        .subcategory
+                        .map((e) => Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: ZCText(
+                                text: e.categoryName,
+                                textAlign: TextAlign.left,
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                  ExpansionTile(
+                    title: ZCText(
+                      text: "Price",
+                      semiBold: true,
+                    ),
+                    children: <Widget>[
+                      ValueListenableBuilder(
+                          valueListenable: priceRange,
+                          builder: (context, range, child) => Slider(
+                                value: range,
+                                onChanged: (price) {
+                                  print(price);
+                                  priceRange.value = price;
+                                },
+                                min: 0.0,
+                                max: 40.0,
+                                label: range.toString(),
+                              )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  ExpansionTile(
+                    title: ZCText(
+                      text: "Category",
+                      color: Constants.zc_orange,
+                    ),
+                    children: <Widget>[],
+                  ),
                 ],
-              ),
-              ExpansionTile(
-                title: ZCText(
-                  text:"Price",
-                  semiBold: true,
-                  
-                ),
-                children: <Widget>[
-                 
-                ],
-              ),
-SizedBox(height: 30.0,),
-              ExpansionTile(
-                title: ZCText(
-                  text:"Category",
-                  color: Constants.zc_orange,
-                  
-                ),
-                children: <Widget>[
-                  
-
-                ],
-              ),
-            ],
-          ))),
+              ))),
     );
   }
 }
