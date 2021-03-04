@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/screen/grocery_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -97,7 +98,9 @@ class _FilterScreenState extends State<FilterScreen> {
                             valueListenable: priceRange,
                             builder: (context, range, child) => Column(
                                   children: [
-                                    ZCText(text: "QAR: ${range.toInt().toString()}",),
+                                    ZCText(
+                                      text: "QAR: ${range.toInt().toString()}",
+                                    ),
                                     SliderTheme(
                                       data: SliderTheme.of(context).copyWith(
                                         valueIndicatorColor: Colors.blue,
@@ -143,30 +146,67 @@ class _FilterScreenState extends State<FilterScreen> {
                     SizedBox(
                       height: 30.0,
                     ),
-                    ExpansionTile(
-                      title: ZCText(
-                        text: "Category",
-                        color: Constants.zc_orange,
-                      ),
-                      children: homeBloc.categories
-                          .map((e) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.network(
-                                  e.image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ))
-                          .toList(),
+                    ZCText(
+                      text: "Category",
+                      color: Constants.zc_orange,
                     ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Container(
+                      height: 280.0,
+                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                      child: homeBloc.homeData.categoryList != null
+                          ? GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: homeBloc.homeData.categoryList.length,
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 15.0),
+                                  child: InkWell(
+                                    onTap: () => onCategoryTap(
+                                        homeBloc.homeData.categoryList[index]
+                                            .categoryName,
+                                        homeBloc.homeData.categoryList[index]
+                                            .categoryId),
+                                    child: Column(children: [
+                                      Container(
+                                          height: 100.0,
+                                          width: 100.0,
+                                          child: Image.network(
+                                            homeBloc.homeData
+                                                .categoryList[index].image,
+                                            fit: BoxFit.cover,
+                                          )),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      ZCText(
+                                        text: homeBloc.homeData
+                                            .categoryList[index].categoryName,
+                                        color: Constants.zc_orange,
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ]),
+                                  ),
+                                );
+                              })
+                          : new Container(),
+                    )
                   ],
                 ))),
       ),
     );
   }
 
+  onCategoryTap(String name, int categoryId) {
+   
+  }
+
   isFiltered() {
-    if (priceRange.value > 0.0){
-      
-    }
+    if (priceRange.value > 0.0) {}
   }
 }
