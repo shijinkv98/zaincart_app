@@ -62,7 +62,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           builder: (context, homeBloc, child) => Column(
                 children: [
                   Container(
-                    height: 50,
+                    height: 35,
                     child: Row(
                       children: [
                         Expanded(
@@ -111,7 +111,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                         .first
                                                         .subcategory[index]
                                                         .categoryName,
-                                                    fontSize: kHeadingFontSize,
+                                                    
                                                     color:
                                                         Constants.zc_font_grey,
                                                   ),
@@ -140,7 +140,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                       index]
                                                                   .categoryName
                                                                   .length *
-                                                              11.toDouble(),
+                                                              7.toDouble(),
                                                         )
                                                       : new Container()
                                                 ],
