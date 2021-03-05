@@ -9,16 +9,13 @@ class APIClient {
   static homeData(String id) {
     return Base_URL + "homepage?Customer_id=$id";
   }
-
   static productDetail({String productId, String customerId}) {
     return Base_URL + "productdetails/$productId?Customer_id=$customerId";
   }
-
   static wishlist({String token, String customerId}) {
     return Base_URL +
         "wishlisitems?customer_id=$customerId&customertoken=$token";
   }
-
   static final mycartList = Base_URL + "cartdisplay";
   static final wishListAdd = Base_URL + "wishlistadd";
   static final addToCart = Base_URL + "customercart";
@@ -32,7 +29,6 @@ class APIClient {
   static productsByCategory({String categoryId, String pageNo}) {
     return Base_URL + "productsbycategory/$categoryId/$pageNo";
   }
-
   static final updateCart = Base_URL + "updateitemscart";
   static final myOrder = Base_URL + "myorder";
   static final myOrderDetail = Base_URL + "myorderdetail";
@@ -43,8 +39,10 @@ class APIClient {
   static cancelOrder(String orderId) {
     return Base_URL + "orders/$orderId/cancel";
   }
-
   static final contactDetails = Base_URL + "contactdetails";
   static final deleteAddresses = Base_URL + "deleteaddresses";
   static final setDefaultAddress = Base_URL + "setdefalutaddress";
+  static filterValues(String categoryId) {
+    return Base_URL + "filtervalues/$categoryId";
+  }
 }

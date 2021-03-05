@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zaincart_app/models/filtervalues_response.dart';
 import 'package:zaincart_app/models/my_order_response.dart';
 import 'package:zaincart_app/models/products_by_category_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
@@ -29,6 +30,7 @@ class HomeBloc extends ChangeNotifier {
   List<Category> categories = new List<Category>();
   List<Product> categoryProducts = new List<Product>();
   List<OrderDetail> myOrderList = new List<OrderDetail>();
+  List<FilterData> filterValues = new List<FilterData>();
   String selectedCategoryId;
   String selectedSubCategoryId;
 
@@ -138,6 +140,7 @@ class HomeBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               categoryProducts = categoryProductsResponse.data.categoryProduct;
+              getFilterValues(context, categoryId);
               notifyListeners();
             }
           } else {
@@ -269,6 +272,29 @@ class HomeBloc extends ChangeNotifier {
             }
           } else {
             AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
+  getFilterValues(BuildContext context, String categoryId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService().getFilterValues(categoryId).then((response) {
+          if (response.statusCode == 200) {
+            FilterValueResponse filterValueResponse =
+                FilterValueResponse.fromJson(response.data);
+            if (filterValueResponse.success == 0) {
+              AlertUtils.showToast(filterValueResponse.error, context);
+            } else if (filterValueResponse.success == 3) {
+              kMoveToLogin(context);
+            } else if (filterValueResponse.success == 1) {
+              filterValues = filterValueResponse.filterValues;
+              notifyListeners();
+            }
+          } else {
+            AlertUtils.showToast("Login Failed", context);
           }
         });
       }

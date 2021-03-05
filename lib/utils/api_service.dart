@@ -419,4 +419,13 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //Contact details///
+  Future<Response> getFilterValues(String categoryId) async {
+    var url = APIClient.filterValues(categoryId);
+    print(url);
+    Response response = await dio.get(url);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
