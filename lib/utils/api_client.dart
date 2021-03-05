@@ -45,4 +45,7 @@ class APIClient {
   static filterValues(String categoryId) {
     return Base_URL + "filtervalues/$categoryId";
   }
+  static filterProducts(String pageNo) {
+    return Base_URL + "getfilterproducts/$pageNo";
+  }
 }

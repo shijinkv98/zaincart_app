@@ -396,7 +396,7 @@ class APIService {
     var queryParams = {
       "customerId": "$customerId",
       "customertoken": "$token",
-      "addressid" :"$addressId"
+      "addressid": "$addressId"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
@@ -410,9 +410,9 @@ class APIService {
     var queryParams = {
       "customer_id": "$customerId",
       "customertoken": "$token",
-      "addressid" :"$addressId",
-      "defaultbilling" : 1,
-      "defaultshipping" : 1,
+      "addressid": "$addressId",
+      "defaultbilling": 1,
+      "defaultshipping": 1,
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
@@ -420,11 +420,26 @@ class APIService {
     return response;
   }
 
-  //Contact details///
+  //filter values///
   Future<Response> getFilterValues(String categoryId) async {
     var url = APIClient.filterValues(categoryId);
     print(url);
     Response response = await dio.get(url);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //filtered products///
+  Future<Response> getFilteredProducts({String category, String values}) async {
+    var url = APIClient.filterProducts("1");
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "category" : "$category",
+      "filter_val" : ["$values"]
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }

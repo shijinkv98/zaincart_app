@@ -300,4 +300,36 @@ class HomeBloc extends ChangeNotifier {
       }
     });
   }
+
+  getFilterProducts(
+      {BuildContext context, String categoryId, String filterVal}) {
+    categoryProducts.clear();
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService()
+            .getFilteredProducts(category: categoryId, values: filterVal)
+            .then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            ProductsByCategoryResponse categoryProductsResponse =
+                ProductsByCategoryResponse.fromJson(response.data);
+            if (categoryProductsResponse.success == 0) {
+              AlertUtils.showToast(categoryProductsResponse.error, context);
+            } else if (categoryProductsResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              categoryProducts = categoryProductsResponse.data.categoryProduct;
+              getFilterValues(context, categoryId);
+              notifyListeners();
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
 }
