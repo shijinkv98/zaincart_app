@@ -302,14 +302,15 @@ class HomeBloc extends ChangeNotifier {
   }
 
   getFilterProducts(
-      {BuildContext context, String categoryId, String filterVal}) {
+      {BuildContext context, String categoryId, String filterVal, String key}) {
     categoryProducts.clear();
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         isLoading = true;
         notifyListeners();
         APIService()
-            .getFilteredProducts(category: categoryId, values: filterVal)
+            .getFilteredProducts(
+                category: categoryId, values: filterVal, key: key)
             .then((response) {
           isLoading = false;
           notifyListeners();

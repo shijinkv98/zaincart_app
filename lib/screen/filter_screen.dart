@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
-import 'package:zaincart_app/screen/grocery_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -64,10 +63,12 @@ class _FilterScreenState extends State<FilterScreen> {
                                             onTap: () {
                                               homeBloc.selectedSubCategoryId =
                                                   value.value;
-                                              homeBloc.getProductsByCategory(
+                                              homeBloc.getFilterProducts(
                                                   context: context,
-                                                  categoryId: value.value,
-                                                  pageNo: "1");
+                                                  categoryId: homeBloc
+                                                      .selectedCategoryId,
+                                                  filterVal: value.value,
+                                                  key: e.key);
                                               Navigator.of(context).pop();
                                             },
                                             child: Padding(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:zaincart_app/models/filtervalues_response.dart';
 import 'package:zaincart_app/utils/api_client.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 
@@ -430,13 +431,21 @@ class APIService {
   }
 
   //filtered products///
-  Future<Response> getFilteredProducts({String category, String values}) async {
+  Future<Response> getFilteredProducts(
+      {String category, String values, String key}) async {
     var url = APIClient.filterProducts("1");
+
+    var ar = [
+      {
+        "key": "$key",
+        "values": ["$values"]
+      }
+    ];
     var queryParams = {
-      "customer_id": "$customerId",
+      "Customer_id": "$customerId",
       "customertoken": "$token",
-      "category" : "$category",
-      "filter_val" : ["$values"]
+      "category": "$category",
+      "filter_val": ar.toString()
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
