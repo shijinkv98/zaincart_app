@@ -105,7 +105,7 @@ class MyCartBloc extends ChangeNotifier {
             .addToCart(productSku: productSku, productQty: productQty)
             .then((response) {
           if (response.statusCode == 200) {
-            Response wishlistResponse = Response.fromJson(response.data);
+            ZCResponse wishlistResponse = ZCResponse.fromJson(response.data);
             if (wishlistResponse.success == 0) {
               AlertUtils.showToast(wishlistResponse.error, context);
             } else if (wishlistResponse.success == 3) {
@@ -133,7 +133,7 @@ class MyCartBloc extends ChangeNotifier {
                 productQty: productQty, cartItemId: cartItemId, cartId: cartId)
             .then((response) {
           if (response.statusCode == 200) {
-            Response wishlistResponse = Response.fromJson(response.data);
+            ZCResponse wishlistResponse = ZCResponse.fromJson(response.data);
             if (wishlistResponse.success == 0) {
               AlertUtils.showToast(wishlistResponse.error, context);
             } else if (wishlistResponse.success == 3) {
@@ -155,7 +155,7 @@ class MyCartBloc extends ChangeNotifier {
       if (isConnected) {
         APIService().removeFromCart(itemId, cartId).then((response) {
           if (response.statusCode == 200) {
-            Response wishlistResponse = Response.fromJson(response.data);
+            ZCResponse wishlistResponse = ZCResponse.fromJson(response.data);
             if (wishlistResponse.success == 0) {
               AlertUtils.showToast(wishlistResponse.error, context);
             } else if (wishlistResponse.success == 3) {

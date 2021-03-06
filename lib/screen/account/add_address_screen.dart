@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/models/address.dart';
-import 'package:zaincart_app/models/response.dart';
-import 'package:zaincart_app/utils/alert_utils.dart';
-import 'package:zaincart_app/utils/api_service.dart';
-import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
@@ -72,7 +70,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       body: ModalProgressHUD(
         inAsyncCall: isLoading,
         child: SingleChildScrollView(
-                  child: Padding(
+          child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(
               key: _formKey,
@@ -197,63 +195,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       _address.defaultbilling = 1;
       _address.defaultshipping = 1;
       _address.saveinaddressbook = "1";
-      widget.address != null ? updateAddress() : addAddress();
+      widget.address != null
+          ? Provider.of<ProfileBloc>(context, listen: false)
+              .updateAddress(context, _address)
+          : Provider.of<ProfileBloc>(context, listen: false)
+              .addAddress(context, _address);
     }
-  }
-
-  addAddress() {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        setState(() {
-          isLoading = true;
-        });
-        APIService().addAddress(_address).then((response) {
-          setState(() {
-            isLoading = false;
-          });
-          if (response.statusCode == 200) {
-            Response addressResponse = Response.fromJson(response.data);
-            if (addressResponse.success == 1) {
-              AlertUtils.showToast("Address successfully added", context);
-              Navigator.of(context).pop();
-            } else if (addressResponse.success == 3) {
-              kMoveToLogin(context);
-            } else {
-              AlertUtils.showToast(addressResponse.error, context);
-            }
-          } else {
-            AlertUtils.showToast("Failed", context);
-          }
-        });
-      }
-    });
-  }
-
-  updateAddress() {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        setState(() {
-          isLoading = true;
-        });
-        APIService().addressUpdate(_address).then((response) {
-          setState(() {
-            isLoading = false;
-          });
-          if (response.statusCode == 200) {
-            Response addressResponse = Response.fromJson(response.data);
-            if (addressResponse.success == 1) {
-              AlertUtils.showToast("Address successfully updated", context);
-              Navigator.of(context).pop();
-            } else if (addressResponse.success == 3) {
-              kMoveToLogin(context);
-            } else {
-              AlertUtils.showToast(addressResponse.error, context);
-            }
-          } else {
-            AlertUtils.showToast("Failed", context);
-          }
-        });
-      }
-    });
   }
 }

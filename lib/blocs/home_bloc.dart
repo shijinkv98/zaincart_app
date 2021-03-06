@@ -45,7 +45,7 @@ class HomeBloc extends ChangeNotifier {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
-            Response loginResponse = Response.fromJson(response.data);
+            ZCResponse loginResponse = ZCResponse.fromJson(response.data);
             if (loginResponse.success == 1) {
               ProductsResponse productsResponse =
                   ProductsResponse.fromJson(response.data);
@@ -264,7 +264,7 @@ class HomeBloc extends ChangeNotifier {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
-            Response myOrderResponse = Response.fromJson(response.data);
+            ZCResponse myOrderResponse = ZCResponse.fromJson(response.data);
             if (myOrderResponse.success == 1) {
               AlertUtils.showToast(
                   "Your order has been cancelled successfully.", context);

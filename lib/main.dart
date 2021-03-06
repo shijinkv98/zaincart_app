@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
+import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/screen/splash_screen.dart';
 
 void main() {
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomeBloc()),
-        ChangeNotifierProvider(create: (_) => MyCartBloc())
+        ChangeNotifierProvider(create: (_) => MyCartBloc()),
+        ChangeNotifierProvider(create: (_) => ProfileBloc())
       ],
       child: MaterialApp(
         home: SplashScreen(),

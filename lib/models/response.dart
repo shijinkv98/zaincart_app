@@ -1,10 +1,10 @@
-class Response {
+class ZCResponse {
   int success;
   String error;
 
-  Response({this.success, this.error});
+  ZCResponse({this.success, this.error});
 
-  Response.fromJson(Map<String, dynamic> json) {
+  ZCResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     error = json['error'];
   }

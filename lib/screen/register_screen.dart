@@ -221,7 +221,7 @@ class SignUpScreenState extends State<SignUpScreen> {
             APIService().signUpUser(_signupData).then((response) {
               setState(() => _isLoading = false);
               if (response.statusCode == 200) {
-                Response _signupResponse = Response.fromJson(response.data);
+                ZCResponse _signupResponse = ZCResponse.fromJson(response.data);
                 if (_signupResponse.success != 1) {
                   AlertUtils.showToast(_signupResponse.error, context);
                 } else {

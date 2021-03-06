@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zaincart_app/models/address.dart';
-import 'package:zaincart_app/models/addressListResponse.dart';
-import 'package:zaincart_app/models/response.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/screen/account/add_address_screen.dart';
 import 'package:zaincart_app/screen/change_password_screen.dart';
-import 'package:zaincart_app/utils/alert_utils.dart';
-import 'package:zaincart_app/utils/api_service.dart';
-import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
@@ -23,18 +19,18 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   var name;
   var email;
   var phone;
-  List<Address> addressList = new List<Address>();
-  bool isLoading = false;
+  
+  
 
   @override
   void initState() {
     getUserInfo();
-    getAddressList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProfileBloc>(context, listen: false).getAddressList(context);
     return Scaffold(
       appBar: AppBar(
         title: ZCAppBarTitle("MY ADDRESS"),
@@ -67,7 +63,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                   ))
         ],
       ),
-      body: isLoading
+      body: Consumer<ProfileBloc>(
+          builder: (context, profileBloc, child) => profileBloc.isLoading
           ? Center(child: new CircularProgressIndicator())
           : Column(
               children: [
@@ -132,7 +129,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: addressList.length,
+                      itemCount: profileBloc.addressList.length,
                       itemBuilder: (BuildContext ctxt, int index) {
                         return Container(
                           color:
@@ -152,7 +149,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                   ),
                                   Row(
                                     children: [
-                                      addressList[index].defaultshipping == 1
+                                      profileBloc.addressList[index].defaultshipping == 1
                                           ? Container(
                                               height: 5.0,
                                               width: 20.0,
@@ -170,7 +167,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                                           context) =>
                                                       AddAddressScreen(
                                                         address:
-                                                            addressList[index],
+                                                            profileBloc.addressList[index],
                                                       )));
                                         },
                                         child: ZCText(
@@ -182,8 +179,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                         width: 10.0,
                                       ),
                                       InkWell(
-                                        onTap: () => deleteAddress(
-                                            addressList[index].addressId),
+                                        onTap: () => profileBloc.deleteAddress(context,
+                                            profileBloc.addressList[index].addressId),
                                         child: ZCText(
                                           text: "Delete",
                                           color: Constants.zc_font_grey,
@@ -200,21 +197,21 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                 height: 5.0,
                               ),
                               ZCText(
-                                text: addressList[index].firstname +
-                                    addressList[index].lastname,
+                                text: profileBloc.addressList[index].firstname +
+                                    profileBloc.addressList[index].lastname,
                               ),
                               ZCText(
-                                text: addressList[index].street,
+                                text: profileBloc.addressList[index].street,
                               ),
                               ZCText(
-                                text: addressList[index].telephone,
+                                text: profileBloc.addressList[index].telephone,
                               ),
-                              addressList[index].defaultshipping != 1
+                              profileBloc.addressList[index].defaultshipping != 1
                                   ? Align(
                                       alignment: Alignment.centerRight,
                                       child: InkWell(
-                                        onTap: () => defaultAddress(
-                                            addressList[index].addressId),
+                                        onTap: () => profileBloc.defaultAddress(context,
+                                            profileBloc.addressList[index].addressId),
                                         child: ZCText(
                                           text: "Make it default",
                                           color: Constants.zc_font_grey,
@@ -229,7 +226,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                 ),
               ],
             ),
-    );
+    ));
   }
 
   void getUserInfo() async {
@@ -237,92 +234,5 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
     email = await Preferences.get(PrefKey.email);
     phone = await Preferences.get(PrefKey.mobileNumber);
     setState(() {});
-  }
-
-  getAddressList() {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        setState(() {
-          isLoading = true;
-        });
-        APIService().addressList().then((response) {
-          setState(() {
-            isLoading = false;
-          });
-          if (response.statusCode == 200) {
-            AddressListResponse addressResponse =
-                AddressListResponse.fromJson(response.data);
-            if (addressResponse.success == 1) {
-              setState(() {
-                addressList = addressResponse.data.addressList;
-              });
-            } else if (addressResponse.success == 3) {
-              kMoveToLogin(context);
-            } else {
-              AlertUtils.showToast(addressResponse.error, context);
-            }
-          } else {
-            AlertUtils.showToast("Failed", context);
-          }
-        });
-      }
-    });
-  }
-
-  deleteAddress(String addressId) {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        setState(() {
-          isLoading = true;
-        });
-        APIService().deleteAddress(addressId).then((response) {
-          setState(() {
-            isLoading = false;
-          });
-          if (response.statusCode == 200) {
-            Response addressResponse = Response.fromJson(response.data);
-            if (addressResponse.success == 1) {
-              AlertUtils.showToast("Deleted successfully", context);
-              getAddressList();
-            } else if (addressResponse.success == 3) {
-              kMoveToLogin(context);
-            } else {
-              AlertUtils.showToast(addressResponse.error, context);
-            }
-          } else {
-            AlertUtils.showToast("Failed", context);
-          }
-        });
-      }
-    });
-  }
-
-  defaultAddress(String addressId) {
-    AppUtils.isConnectedToInternet(context).then((isConnected) {
-      if (isConnected) {
-        setState(() {
-          isLoading = true;
-        });
-        APIService().setDefaultAddress(addressId).then((response) {
-          setState(() {
-            isLoading = false;
-          });
-          if (response.statusCode == 200) {
-            Response addressResponse = Response.fromJson(response.data);
-            if (addressResponse.success == 1) {
-              AlertUtils.showToast(
-                  "Default address added successfully", context);
-              getAddressList();
-            } else if (addressResponse.success == 3) {
-              kMoveToLogin(context);
-            } else {
-              AlertUtils.showToast(addressResponse.error, context);
-            }
-          } else {
-            AlertUtils.showToast("Failed", context);
-          }
-        });
-      }
-    });
   }
 }
