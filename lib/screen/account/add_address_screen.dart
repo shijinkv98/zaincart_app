@@ -71,103 +71,107 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       ),
       body: ModalProgressHUD(
         inAsyncCall: isLoading,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              children: [
-                ZCTextFormField(
-                  hintText: "Firstname",
-                  controller: _firstnameController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ZCTextFormField(
-                  hintText: "Lastname",
-                  controller: _lastnameController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ZCTextFormField(
-                  hintText: "Postcode",
-                  controller: _postcodeController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ZCTextFormField(
-                  hintText: "City",
-                  controller: _cityController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ZCTextFormField(
-                  hintText: "Street",
-                  controller: _streetController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ZCTextFormField(
-                  hintText: "Telephone",
-                  controller: _telephoneController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ZCTextFormField(
-                  hintText: "Country Code",
-                  controller: _countryController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ZCTextFormField(
-                  hintText: "State",
-                  controller: _stateController,
-                  textInputAction: TextInputAction.next,
-                  emptyValidator: true,
-                  emptyValidatorMsg: "Should not be empty",
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 30, right: 30),
-                  child: new ZCButton(
-                    title: widget.address != null
-                        ? "Update Address"
-                        : "Add Address",
-                    onPressed: () => addTapped(),
+        child: SingleChildScrollView(
+                  child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                children: [
+                  ZCTextFormField(
+                    hintText: "Firstname",
+                    controller: _firstnameController,
+                    textInputAction: TextInputAction.next,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  ZCTextFormField(
+                    hintText: "Lastname",
+                    controller: _lastnameController,
+                    textInputAction: TextInputAction.next,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  ZCTextFormField(
+                    hintText: "Postcode",
+                    controller: _postcodeController,
+                    textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.number,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  ZCTextFormField(
+                    hintText: "City",
+                    controller: _cityController,
+                    textInputAction: TextInputAction.next,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  ZCTextFormField(
+                    hintText: "Street",
+                    controller: _streetController,
+                    textInputAction: TextInputAction.next,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  ZCTextFormField(
+                    hintText: "Telephone",
+                    controller: _telephoneController,
+                    textInputAction: TextInputAction.next,
+                    textInputType: TextInputType.phone,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  ZCTextFormField(
+                    hintText: "Country Code",
+                    controller: _countryController,
+                    textInputAction: TextInputAction.next,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  ZCTextFormField(
+                    hintText: "State",
+                    controller: _stateController,
+                    textInputAction: TextInputAction.next,
+                    emptyValidator: true,
+                    emptyValidatorMsg: "Should not be empty",
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 30, right: 30),
+                    child: new ZCButton(
+                      title: widget.address != null
+                          ? "Update Address"
+                          : "Add Address",
+                      onPressed: () => addTapped(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

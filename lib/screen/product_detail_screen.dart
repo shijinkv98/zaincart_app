@@ -39,7 +39,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
     return Scaffold(
       endDrawer: ZCAccount(),
       appBar: AppBar(
-        title: ZCAppBarTitle("GROCERY"),
+        title: ZCAppBarTitle(""),
         leading: Padding(
           padding: EdgeInsets.only(left: 0.0),
           child: IconButton(
