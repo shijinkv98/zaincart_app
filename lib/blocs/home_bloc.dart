@@ -204,7 +204,11 @@ class HomeBloc extends ChangeNotifier {
   wishListRemove(BuildContext context, String productId) {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
+        isLoading = true;
+        notifyListeners();
         APIService().wishlistRemove(productId).then((response) {
+          isLoading = false;
+          notifyListeners();
           if (response.statusCode == 200) {
             WishlistAddResponse wishlistResponse =
                 WishlistAddResponse.fromJson(response.data);
@@ -213,6 +217,7 @@ class HomeBloc extends ChangeNotifier {
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
             } else if (wishlistResponse.success == 1) {
+              getWishlistItems(context);
               AlertUtils.showToast(wishlistResponse.data.message, context);
             }
           } else {
