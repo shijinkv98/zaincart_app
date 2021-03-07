@@ -281,8 +281,8 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   height: 10.0,
                                 ),
                                 RatingBar.builder(
-                                  initialRating: 0,
-                                  minRating: 1,
+                                  initialRating: _productDetail.rating.toDouble(),
+                                  minRating: 5,
                                   itemSize: 15.0,
                                   direction: Axis.horizontal,
                                   allowHalfRating: false,

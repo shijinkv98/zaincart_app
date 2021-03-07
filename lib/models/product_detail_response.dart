@@ -8,13 +8,15 @@ class ProductDetailResponse {
   ProductDetailResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     error = json['error'];
-    productDetail = json['data'] != null ? new ProductDetail.fromJson(json['data']) : null;
+    productDetail =
+        json['data'] != null ? new ProductDetail.fromJson(json['data']) : null;
   }
 }
 
 class ProductDetail {
   int cartCount;
   int wishCount;
+  int rating;
   List<Specifications> specifications;
   String productOptions;
   String childProduct;
@@ -37,6 +39,7 @@ class ProductDetail {
   ProductDetail(
       {this.cartCount,
       this.wishCount,
+      this.rating,
       this.specifications,
       this.productOptions,
       this.childProduct,
@@ -59,6 +62,7 @@ class ProductDetail {
   ProductDetail.fromJson(Map<String, dynamic> json) {
     cartCount = json['cart_count'];
     wishCount = json['wish_count'];
+    rating = json['rating'];
     if (json['specifications'] != null) {
       specifications = new List<Specifications>();
       json['specifications'].forEach((v) {
@@ -88,6 +92,7 @@ class ProductDetail {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['cart_count'] = this.cartCount;
     data['wish_count'] = this.wishCount;
+    data['rating'] = this.rating;
     if (this.specifications != null) {
       data['specifications'] =
           this.specifications.map((v) => v.toJson()).toList();
