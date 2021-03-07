@@ -58,18 +58,20 @@ class ZCSearchField extends StatelessWidget {
             child: ValueListenableBuilder(
                 valueListenable: selectedValue,
                 builder: (context, selected, child) =>
-                    new DropdownButton<String>(
-                      value: selectedItem != null ? selectedItem : selected,
-                      items: items.map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        selectedValue.value = value;
-                        onCategorySelected(value);
-                      },
+                    DropdownButtonHideUnderline(
+                      child: new DropdownButton<String>(
+                        value: selectedItem != null ? selectedItem : selected,
+                        items: items.map((String value) {
+                          return new DropdownMenuItem<String>(
+                            value: value,
+                            child: new Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          selectedValue.value = value;
+                          onCategorySelected(value);
+                        },
+                      ),
                     )),
           ),
           Expanded(
@@ -86,7 +88,7 @@ class ZCSearchField extends StatelessWidget {
                   keyboardType: textInputType,
                   readOnly: readOnly,
                   focusNode: focusNode,
-                  onTap: readOnly ? () => onSearchTap(""): null,
+                  onTap: readOnly ? () => onSearchTap("") : null,
                   onSubmitted: (value) => onSearchTap(controller.text),
                   onChanged: (value) => onChanged(value),
                   decoration: InputDecoration(
