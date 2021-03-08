@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             MaterialPageRoute(
                                                 builder:
                                                     (BuildContext context) =>
-                                                        CategoryScreen()));
+                                                        CategoryScreen(value)));
                                       },
                                     ))
                                 : new Container(),

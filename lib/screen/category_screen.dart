@@ -7,10 +7,11 @@ import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_category_item.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
-import 'package:zaincart_app/widgets/zc_product_item.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class CategoryScreen extends StatefulWidget {
+  final title;
+  CategoryScreen(this.title);
   @override
   State<StatefulWidget> createState() {
     return _CategoryScreenState();
@@ -37,7 +38,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
       appBar: AppBar(
-        title: ZCAppBarTitle("CATEGORY"),
+        title: ZCAppBarTitle(widget.title),
         backgroundColor: Colors.white,
         leading: Builder(
             builder: (BuildContext context) => Padding(
