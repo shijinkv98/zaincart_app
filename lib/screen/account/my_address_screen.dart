@@ -229,8 +229,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                   ZCText(
                                     text: profileBloc.addressList[index].state +
                                         ", " +
-                                        profileBloc
-                                            .addressList[index].countryid +
+                                        profileBloc.countryList.where((element) => element.countryCode == profileBloc
+                                            .addressList[index].countryid).first.countryName +
                                         ", " +
                                         profileBloc.addressList[index].postcode,
                                   ),

@@ -134,6 +134,7 @@ class ProfileBloc extends ChangeNotifier {
             ZCResponse addressResponse = ZCResponse.fromJson(response.data);
             if (addressResponse.success == 1) {
               AlertUtils.showToast("Address successfully updated", context);
+              getAddressList(context);
               Navigator.of(context).pop();
             } else if (addressResponse.success == 3) {
               kMoveToLogin(context);
