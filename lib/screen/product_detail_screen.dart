@@ -2,11 +2,11 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/product_detail_response.dart';
+import 'package:zaincart_app/models/product_review_response.dart';
 import 'package:zaincart_app/screen/add_review_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -26,10 +26,12 @@ class ProductDetailScreen extends StatefulWidget {
 class ProductDetailState extends State<ProductDetailScreen> {
   bool isLoading = false;
   ProductDetail _productDetail;
+  List<Review> reviewList = List<Review>();
 
   @override
   void initState() {
     getProductDetail(widget.productId);
+    getProductReview(widget.productId);
     super.initState();
   }
 
@@ -310,7 +312,8 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                             builder: (BuildContext context) =>
                                                 AddReviewScreen(
                                                   rating: rating,
-                                                  productId: _productDetail.productId,
+                                                  productId:
+                                                      _productDetail.productId,
                                                 )));
                                   },
                                 ),
@@ -326,6 +329,82 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                 SizedBox(
                                   height: 10.0,
                                 ),
+                                Column(
+                                  children: reviewList
+                                      .map((review) => Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    ZCText(
+                                                      text: review.title,
+                                                      semiBold: true,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10.0,
+                                                    ),
+                                                    RatingBar.builder(
+                                                      initialRating: review
+                                                          .rating
+                                                          .toDouble(),
+                                                      itemSize: 10.0,
+                                                      direction:
+                                                          Axis.horizontal,
+                                                      allowHalfRating: false,
+                                                      itemCount: 5,
+                                                      itemPadding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 1.0),
+                                                      itemBuilder:
+                                                          (context, _) => Icon(
+                                                        Icons.star,
+                                                        color:
+                                                            Constants.zc_orange,
+                                                        size: 10.0,
+                                                      ),
+                                                      onRatingUpdate:
+                                                          (double value) {},
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 5.0),
+                                                Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: ZCText(
+                                                      text: review.detail,
+                                                    )),
+                                                Divider(
+                                                  thickness: 1.0,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    ZCText(
+                                                      text: review.nickname,
+                                                      color: Constants
+                                                          .zc_font_light_grey,
+                                                    ),
+                                                    ZCText(
+                                                      text: review
+                                                          .createdDateTime,
+                                                      color: Constants
+                                                          .zc_font_light_grey,
+                                                      fontSize: kSmallFontSize,
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ))
+                                      .toList(),
+                                )
                               ],
                             ),
                           ),
@@ -352,6 +431,32 @@ class ProductDetailState extends State<ProductDetailScreen> {
               setState(() {
                 _productDetail = productDetailResponse.productDetail;
               });
+            }
+          } else {
+            AlertUtils.showToast("Login Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  getProductReview(String productId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        setState(() => isLoading = true);
+        APIService().getPrductReview(productId).then((response) {
+          setState(() => isLoading = false);
+          if (response.statusCode == 200) {
+            ProductReviewResponse productReviewResponse =
+                ProductReviewResponse.fromJson(response.data);
+            if (productReviewResponse.success == 1) {
+              setState(() {
+                reviewList = productReviewResponse.reviewList;
+              });
+            } else if (productReviewResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(productReviewResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Login Failed", context);

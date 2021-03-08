@@ -521,4 +521,17 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //get product review///
+  Future<Response> getPrductReview(String productId) async {
+   var url = APIClient.getReviews;
+    var queryParams = {
+      "productId": "$productId",
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
