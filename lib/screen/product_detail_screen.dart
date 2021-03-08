@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/product_detail_response.dart';
+import 'package:zaincart_app/screen/add_review_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
@@ -157,7 +158,8 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   height: 10.0,
                                 ),
                                 RatingBar.builder(
-                                  initialRating: 3,
+                                  initialRating:
+                                      _productDetail.rating.toDouble(),
                                   minRating: 1,
                                   itemSize: 15.0,
                                   direction: Axis.horizontal,
@@ -211,43 +213,41 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 5.0, right: 5.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Image.asset(
-                                            Constants.ic_add_to_cart,
-                                            height: 23.0,
-                                            width: 23.0,
-                                          ),
-                                          ZCText(
-                                            text: "Add to Cart",
-                                            fontSize: kSmallFontSize,
-                                          ),
-                                          ZCText(
-                                            text: "|",
-                                            fontSize: kFontSize,
-                                            color: Colors.white,
-                                          ),
-                                          InkWell(
-                                            child: Icon(
+                                      child: InkWell(
+                                        onTap: () {
+                                          Provider.of<MyCartBloc>(context,
+                                                  listen: false)
+                                              .addToCart(
+                                                  context: context,
+                                                  productSku:
+                                                      _productDetail.productSku,
+                                                  productQty: 1.toString());
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Image.asset(
+                                              Constants.ic_add_to_cart,
+                                              height: 23.0,
+                                              width: 23.0,
+                                            ),
+                                            ZCText(
+                                              text: "Add to Cart",
+                                              fontSize: kSmallFontSize,
+                                            ),
+                                            ZCText(
+                                              text: "|",
+                                              fontSize: kFontSize,
+                                              color: Colors.white,
+                                            ),
+                                            Icon(
                                               Icons.add,
                                               color: Constants.zc_orange,
                                               //size: 10.0,
-                                            ),
-                                            onTap: () {
-                                              print(
-                                                  "Add to cart button clicked.....");
-                                              Provider.of<MyCartBloc>(context,
-                                                      listen: false)
-                                                  .addToCart(
-                                                      context: context,
-                                                      productSku: _productDetail
-                                                          .productSku,
-                                                      productQty: 1.toString());
-                                            },
-                                          )
-                                        ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -269,7 +269,16 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   textStyle: TextStyle(fontSize: kFontSize),
                                 ),
                                 SizedBox(
-                                  height: 20.0,
+                                  height: 10.0,
+                                ),
+                                HtmlWidget(
+                                  _productDetail.productShortDescription != null
+                                      ? _productDetail.productShortDescription
+                                      : "",
+                                  textStyle: TextStyle(fontSize: kFontSize),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
                                 ),
                                 ZCText(
                                   text: "Your Rating",
@@ -281,8 +290,8 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   height: 10.0,
                                 ),
                                 RatingBar.builder(
-                                  initialRating: _productDetail.rating.toDouble(),
-                                  minRating: 5,
+                                  initialRating: 0,
+                                  
                                   itemSize: 15.0,
                                   direction: Axis.horizontal,
                                   allowHalfRating: false,
@@ -296,6 +305,12 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   ),
                                   onRatingUpdate: (rating) {
                                     print(rating);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                AddReviewScreen(
+                                                  rating: rating,
+                                                )));
                                   },
                                 ),
                                 SizedBox(
@@ -309,12 +324,6 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                 ),
                                 SizedBox(
                                   height: 10.0,
-                                ),
-                                HtmlWidget(
-                                  _productDetail.productShortDescription != null
-                                      ? _productDetail.productShortDescription
-                                      : "",
-                                  textStyle: TextStyle(fontSize: kFontSize),
                                 ),
                               ],
                             ),
