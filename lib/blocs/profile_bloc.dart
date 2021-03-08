@@ -3,6 +3,7 @@ import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
 import 'package:zaincart_app/models/countries_response.dart';
 import 'package:zaincart_app/models/response.dart';
+import 'package:zaincart_app/models/wishlistAddResponse.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
@@ -224,6 +225,44 @@ class ProfileBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               AlertUtils.showToast(countriesResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  addReview(
+      {BuildContext context,
+      String produtId,
+      double rating,
+      String title,
+      String detail}) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService()
+            .addReview(
+                produtId: produtId,
+                rating: rating,
+                title: title,
+                detail: detail)
+            .then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            WishlistAddResponse addReviewResponse =
+                WishlistAddResponse.fromJson(response.data);
+            if (addReviewResponse.success == 1) {
+              AlertUtils.showToast(addReviewResponse.data.message, context);
+              Navigator.of(context).pop();
+            } else if (addReviewResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(addReviewResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Failed", context);

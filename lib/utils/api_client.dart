@@ -59,4 +59,5 @@ class APIClient {
   static final updateProfile = Base_URL + "updateprofile";
   static final logout = Base_URL + "customerlogout";
   static final countries = Base_URL + "countrylist";
+  static final addReview = Base_URL + "Addreviewproduct";
 }

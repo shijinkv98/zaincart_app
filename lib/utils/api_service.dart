@@ -462,7 +462,8 @@ class APIService {
   }
 
   //update profile///
-  Future<Response> updateProfile({String email, String firstName, String lastName}) async {
+  Future<Response> updateProfile(
+      {String email, String firstName, String lastName}) async {
     var url = APIClient.updateProfile;
     var queryParams = {
       "CustomerId": "$customerId",
@@ -477,7 +478,7 @@ class APIService {
     return response;
   }
 
-   //logout///
+  //logout///
   Future<Response> logout() async {
     var url = APIClient.logout;
     var queryParams = {
@@ -498,6 +499,25 @@ class APIService {
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //add review///
+  Future<Response> addReview(
+      {String produtId, double rating, String title, String detail}) async {
+    var url = APIClient.addReview;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "productId": "$produtId",
+      "nickname": await Preferences.get(PrefKey.firstName),
+      "rating": "${rating.toInt()}",
+      "title": "$title",
+      "detail": "$detail"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }

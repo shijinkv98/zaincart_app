@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
@@ -11,8 +12,9 @@ import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
 class AddReviewScreen extends StatefulWidget {
   final double rating;
+  final String productId;
 
-  AddReviewScreen({this.rating});
+  AddReviewScreen({this.rating, this.productId});
   @override
   State<StatefulWidget> createState() {
     return _AddReviewScreenState();
@@ -23,6 +25,13 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   bool isLoading = false;
   TextEditingController _titleController = new TextEditingController();
   TextEditingController _descriptionController = new TextEditingController();
+  double _rating = 0;
+
+  @override
+  void initState() {
+    _rating = widget.rating;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +71,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     height: 20.0,
                   ),
                   RatingBar.builder(
-                    initialRating: widget.rating,
+                    initialRating: _rating,
                     itemSize: 15.0,
+                    minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: false,
                     itemCount: 5,
@@ -75,6 +85,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     ),
                     onRatingUpdate: (rating) {
                       print(rating);
+                      setState(() {
+                        _rating = rating;
+                      });
                     },
                   ),
                   SizedBox(height: 30.0),
@@ -82,7 +95,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   ZCTextFormField(
                     hintText: "Title",
                     controller: _titleController,
-                    
                   ),
                   SizedBox(
                     height: 20.0,
@@ -99,7 +111,15 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                       Expanded(
                           child: ZCButton(
                         title: "SUBMIT",
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ProfileBloc>(context, listen: false)
+                              .addReview(
+                                  context: context,
+                                  title: _titleController.text,
+                                  detail: _descriptionController.text,
+                                  produtId: widget.productId,
+                                  rating: _rating);
+                        },
                       )),
                       SizedBox(
                         width: 10.0,

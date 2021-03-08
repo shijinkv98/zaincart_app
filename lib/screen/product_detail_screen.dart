@@ -291,7 +291,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                 ),
                                 RatingBar.builder(
                                   initialRating: 0,
-                                  
+                                  minRating: 1,
                                   itemSize: 15.0,
                                   direction: Axis.horizontal,
                                   allowHalfRating: false,
@@ -310,6 +310,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                             builder: (BuildContext context) =>
                                                 AddReviewScreen(
                                                   rating: rating,
+                                                  productId: _productDetail.productId,
                                                 )));
                                   },
                                 ),
