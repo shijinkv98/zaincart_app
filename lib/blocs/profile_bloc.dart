@@ -177,4 +177,30 @@ class ProfileBloc extends ChangeNotifier {
       }
     });
   }
+
+  logout(BuildContext context) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().logout().then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            ZCResponse addressResponse = ZCResponse.fromJson(response.data);
+            if (addressResponse.success == 1) {
+              AlertUtils.showToast("You have sucessfully logged out", context);
+              Preferences.clearPreference();
+            } else if (addressResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(addressResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
 }

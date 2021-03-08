@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/screen/login_screen.dart';
 import 'package:zaincart_app/screen/account/my_address_screen.dart';
 import 'package:zaincart_app/screen/account/my_orders_screen.dart';
@@ -38,6 +40,8 @@ class ZCAccount extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
                   child: InkWell(
                     onTap: () {
+                      Provider.of<ProfileBloc>(context, listen: false)
+                          .logout(context);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) => LoginScreen()));
                     },
@@ -51,7 +55,7 @@ class ZCAccount extends StatelessWidget {
                           width: 8.0,
                         ),
                         ZCText(
-                          text: "Sign in",
+                          text: "Signout",
                           color: Constants.zc_font_grey,
                         ),
                       ],
@@ -125,11 +129,14 @@ class ZCAccount extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: InkWell(onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => MyCartScreen(enableBack: true,)));
-                  },
-                                      child: Row(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => MyCartScreen(
+                                enableBack: true,
+                              )));
+                    },
+                    child: Row(
                       children: [
                         Image.asset(
                           Constants.ic_checkout,

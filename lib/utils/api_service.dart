@@ -468,4 +468,17 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+   //logout///
+  Future<Response> logout() async {
+    var url = APIClient.logout;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
