@@ -38,6 +38,7 @@ class APIClient {
   static final myOrderDetail = Base_URL + "myorderdetail";
   static final getAbout = Base_URL + "getabout";
   static final getTermsAndCondition = Base_URL + "getermsandcondition";
+  static final getPolicy = Base_URL + "getpolicy";
   static final changePassword = Base_URL + "passwordchange";
   static final productSearch = Base_URL + "productsearch";
   static cancelOrder(String orderId) {

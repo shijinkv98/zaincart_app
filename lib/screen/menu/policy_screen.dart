@@ -10,17 +10,17 @@ import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
 
-class TermsAndConditionsScreen extends StatefulWidget {
+class PolicyScreen extends StatefulWidget {
   @override
-  TermsAndConditionsScreenState createState() => TermsAndConditionsScreenState();
+  PolicyScreenState createState() => PolicyScreenState();
 }
 
-class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
+class PolicyScreenState extends State<PolicyScreen> {
   var aboutUsContent = ValueNotifier("");
 
   @override
   void initState() {
-    getTermsConditions();
+    getpolicy();
     super.initState();
   }
 
@@ -33,7 +33,7 @@ class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
         drawer: ZCMenu(),
         endDrawer: ZCAccount(),
         appBar: AppBar(
-          title: ZCAppBarTitle("T&C"),
+          title: ZCAppBarTitle("POLICIES"),
           backgroundColor: Colors.white,
           leading: Builder(
               builder: (BuildContext context) => Padding(
@@ -80,10 +80,10 @@ class TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
         ));
   }
 
-  getTermsConditions() {
+  getpolicy() {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
-        APIService().getTermsConditions().then((response) {
+        APIService().getPloicy().then((response) {
           if (response.statusCode == 200) {
             AboutUsResponse aboutUsResponse =
                 AboutUsResponse.fromJson(response.data);

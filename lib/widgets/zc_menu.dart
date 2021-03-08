@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/screen/menu/about_us_screen.dart';
 import 'package:zaincart_app/screen/menu/contact_screen.dart';
+import 'package:zaincart_app/screen/menu/policy_screen.dart';
 import 'package:zaincart_app/screen/menu/terms_conditions_screen.dart';
 import 'package:zaincart_app/screen/product_search_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
@@ -165,29 +166,29 @@ class ZCMenu extends StatelessWidget {
                   thickness: 0.5,
                   color: Constants.zc_font_light_grey,
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        Constants.ic_faq,
-                        scale: 7.0,
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      ZCText(
-                        text: "Faq",
-                        color: Constants.zc_font_grey,
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(
-                  thickness: 0.5,
-                  color: Constants.zc_font_light_grey,
-                ),
+                // Padding(
+                //   padding:
+                //       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
+                //   child: Row(
+                //     children: [
+                //       Image.asset(
+                //         Constants.ic_faq,
+                //         scale: 7.0,
+                //       ),
+                //       SizedBox(
+                //         width: 8.0,
+                //       ),
+                //       ZCText(
+                //         text: "Faq",
+                //         color: Constants.zc_font_grey,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Divider(
+                //   thickness: 0.5,
+                //   color: Constants.zc_font_light_grey,
+                // ),
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
@@ -221,20 +222,26 @@ class ZCMenu extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.policy,
-                        color: Constants.zc_font_light_grey,
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      ZCText(
-                        text: "Policies",
-                        color: Constants.zc_font_grey,
-                      ),
-                    ],
+                  child: InkWell( onTap: () {
+                     Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              PolicyScreen()));
+                  },
+                                      child: Row(
+                      children: [
+                        Icon(
+                          Icons.policy,
+                          color: Constants.zc_font_light_grey,
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        ZCText(
+                          text: "Policies",
+                          color: Constants.zc_font_grey,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Divider(

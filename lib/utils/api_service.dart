@@ -338,6 +338,14 @@ class APIService {
     return response;
   }
 
+  //myorder detail///
+  Future<Response> getPloicy() async {
+    var url = APIClient.getPolicy;
+    Response response = await dio.get(url);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
   //chane password///
   Future<Response> changePassword(
       {String currentPassword, String password}) async {
