@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
 import 'package:zaincart_app/models/countries_response.dart';
+import 'package:zaincart_app/models/notification_response.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/models/wishlistAddResponse.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
@@ -13,6 +14,7 @@ import 'package:zaincart_app/utils/preferences.dart';
 class ProfileBloc extends ChangeNotifier {
   List<Address> addressList = new List<Address>();
   List<Country> countryList = new List<Country>();
+  List<NotificationData> notificationList = new List<NotificationData>();
   bool isLoading = false;
 
   getAddressList(BuildContext context) {
@@ -264,6 +266,33 @@ class ProfileBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               AlertUtils.showToast(addReviewResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  getNotificationList(BuildContext context) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().notificationList().then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            NotificationResponse notificationResponse =
+                NotificationResponse.fromJson(response.data);
+            if (notificationResponse.success == 1) {
+              notificationList = notificationResponse.data.notification;
+              notifyListeners();
+            } else if (notificationResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(notificationResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Failed", context);

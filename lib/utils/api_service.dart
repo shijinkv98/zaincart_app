@@ -534,4 +534,17 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //notification list///
+  Future<Response> notificationList() async {
+    var url = APIClient.notificationList;
+    var queryParams = {
+      "CustomerId": "$customerId",
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }

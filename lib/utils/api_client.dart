@@ -61,4 +61,5 @@ class APIClient {
   static final countries = Base_URL + "countrylist";
   static final addReview = Base_URL + "Addreviewproduct";
   static final getReviews = Base_URL + "productreview";
+  static final notificationList = Base_URL + "notificationlist";
 }
