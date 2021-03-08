@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/screen/account/add_address_screen.dart';
+import 'package:zaincart_app/screen/account/profile_screen.dart';
 import 'package:zaincart_app/screen/change_password_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/utils/preferences.dart';
@@ -74,9 +75,16 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                           ZCText(
                             text: "Contact",
                           ),
-                          ZCText(
-                            text: "Edit",
-                            color: Constants.zc_orange,
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ProfileScreen()));
+                            },
+                            child: ZCText(
+                              text: "Edit",
+                              color: Constants.zc_orange,
+                            ),
                           )
                         ],
                       ),

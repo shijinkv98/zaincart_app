@@ -452,4 +452,20 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //update profile///
+  Future<Response> updateProfile({String email, String firstName, String lastName}) async {
+    var url = APIClient.updateProfile;
+    var queryParams = {
+      "CustomerId": "$customerId",
+      "customertoken": "$token",
+      "email": "$email",
+      "firstname": "$firstName",
+      "lastname": "$lastName",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }

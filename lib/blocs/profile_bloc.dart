@@ -6,6 +6,7 @@ import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/utils/preferences.dart';
 
 class ProfileBloc extends ChangeNotifier {
   List<Address> addressList = new List<Address>();
@@ -125,11 +126,44 @@ class ProfileBloc extends ChangeNotifier {
         notifyListeners();
         APIService().addressUpdate(_address).then((response) {
           isLoading = false;
-        notifyListeners();
+          notifyListeners();
           if (response.statusCode == 200) {
             ZCResponse addressResponse = ZCResponse.fromJson(response.data);
             if (addressResponse.success == 1) {
               AlertUtils.showToast("Address successfully updated", context);
+              Navigator.of(context).pop();
+            } else if (addressResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(addressResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  updateProfile(
+      {BuildContext context, String email, String firstName, String lastName}) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService()
+            .updateProfile(
+                email: email, firstName: firstName, lastName: lastName)
+            .then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            ZCResponse addressResponse = ZCResponse.fromJson(response.data);
+            if (addressResponse.success == 1) {
+              AlertUtils.showToast("Profile successfully added", context);
+              Preferences.save(PrefKey.firstName, firstName);
+              Preferences.save(PrefKey.lastName, lastName);
+              Preferences.save(PrefKey.email, email);
               Navigator.of(context).pop();
             } else if (addressResponse.success == 3) {
               kMoveToLogin(context);
