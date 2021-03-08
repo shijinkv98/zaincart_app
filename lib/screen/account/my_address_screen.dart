@@ -30,6 +30,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   @override
   Widget build(BuildContext context) {
     Provider.of<ProfileBloc>(context, listen: false).getAddressList(context);
+    Provider.of<ProfileBloc>(context, listen: false).getCountries(context);
     return Scaffold(
         appBar: AppBar(
           title: ZCAppBarTitle("MY ADDRESS"),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
+import 'package:zaincart_app/models/countries_response.dart';
 import 'package:zaincart_app/models/response.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -10,6 +11,7 @@ import 'package:zaincart_app/utils/preferences.dart';
 
 class ProfileBloc extends ChangeNotifier {
   List<Address> addressList = new List<Address>();
+  List<Country> countryList = new List<Country>();
   bool isLoading = false;
 
   getAddressList(BuildContext context) {
@@ -195,6 +197,33 @@ class ProfileBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               AlertUtils.showToast(addressResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  getCountries(BuildContext context) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().getCountries(context).then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            CountriesResponse countriesResponse =
+                CountriesResponse.fromJson(response.data);
+            if (countriesResponse.success == 1) {
+              countryList = countriesResponse.countryList;
+              notifyListeners();
+            } else if (countriesResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(countriesResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Failed", context);

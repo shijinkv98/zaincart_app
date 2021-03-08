@@ -489,4 +489,16 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //countries///
+  Future<Response> getCountries(dynamic address) async {
+    var url = APIClient.countries;
+    var queryParams = {
+      "customertoken": "$token",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.get(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
