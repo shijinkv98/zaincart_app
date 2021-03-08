@@ -15,6 +15,7 @@ class LoginResponse {
 class Data {
   String customerId;
   String customerName;
+  String customerLastName;
   String customerEmail;
   String token;
   String phone;
@@ -23,6 +24,7 @@ class Data {
   Data(
       {this.customerId,
       this.customerName,
+      this.customerLastName,
       this.customerEmail,
       this.token,
       this.phone,
@@ -31,6 +33,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     customerId = json['customer_id'];
     customerName = json['customer_name'];
+    customerLastName = json['customer_lat'];
     customerEmail = json['customer_email'];
     token = json['token'];
     phone = json['phone'];

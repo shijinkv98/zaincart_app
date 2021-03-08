@@ -16,6 +16,18 @@ class ProfileBloc extends ChangeNotifier {
   List<Country> countryList = new List<Country>();
   List<NotificationData> notificationList = new List<NotificationData>();
   bool isLoading = false;
+  var firstName;
+  var lastName;
+  var email;
+  var phone;
+
+  void getUserInfo() async {
+    firstName = await Preferences.get(PrefKey.firstName);
+    lastName = await Preferences.get(PrefKey.lastName);
+    email = await Preferences.get(PrefKey.email);
+    phone = await Preferences.get(PrefKey.mobileNumber);
+    notifyListeners();
+  }
 
   getAddressList(BuildContext context) {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
@@ -170,6 +182,7 @@ class ProfileBloc extends ChangeNotifier {
               Preferences.save(PrefKey.firstName, firstName);
               Preferences.save(PrefKey.lastName, lastName);
               Preferences.save(PrefKey.email, email);
+              getUserInfo();
               Navigator.of(context).pop();
             } else if (addressResponse.success == 3) {
               kMoveToLogin(context);

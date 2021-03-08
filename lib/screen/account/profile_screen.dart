@@ -51,7 +51,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 )),
       ),
-      body: ModalProgressHUD(
+      body: Consumer<ProfileBloc>(
+          builder: (context, profileBloc, child) => ModalProgressHUD(
         inAsyncCall: isLoading,
         child: SingleChildScrollView(
           child: Padding(
@@ -107,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ),
-      ),
+      )),
     );
   }
 

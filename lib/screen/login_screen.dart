@@ -200,6 +200,8 @@ class LoginScreenState extends State<LoginScreen> {
                 Preferences.save(
                     PrefKey.firstName, loginResponse.data.customerName);
                 Preferences.save(
+                    PrefKey.lastName, loginResponse.data.customerLastName);
+                Preferences.save(
                     PrefKey.email, loginResponse.data.customerEmail);
                 Preferences.save(
                     PrefKey.mobileNumber, loginResponse.data.phone);

@@ -17,13 +17,9 @@ class MyAddressScreen extends StatefulWidget {
 }
 
 class _MyAddressScreenState extends State<MyAddressScreen> {
-  var name;
-  var email;
-  var phone;
-
   @override
   void initState() {
-    getUserInfo();
+    Provider.of<ProfileBloc>(context, listen: false).getUserInfo();
     super.initState();
   }
 
@@ -79,8 +75,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                           InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                ProfileScreen()));
+                                  builder: (BuildContext context) =>
+                                      ProfileScreen()));
                             },
                             child: ZCText(
                               text: "Edit",
@@ -108,13 +104,14 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ZCText(
-                                text: name,
+                                text:
+                                    "${profileBloc.firstName} ${profileBloc.lastName}",
                               ),
                               ZCText(
-                                text: email,
+                                text: profileBloc.email,
                               ),
                               ZCText(
-                                text: phone,
+                                text: profileBloc.phone,
                               ),
                               SizedBox(
                                 height: 5.0,
@@ -229,8 +226,13 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                                   ZCText(
                                     text: profileBloc.addressList[index].state +
                                         ", " +
-                                        profileBloc.countryList.where((element) => element.countryCode == profileBloc
-                                            .addressList[index].countryid).first.countryName +
+                                        profileBloc.countryList
+                                            .where((element) =>
+                                                element.countryCode ==
+                                                profileBloc.addressList[index]
+                                                    .countryid)
+                                            .first
+                                            .countryName +
                                         ", " +
                                         profileBloc.addressList[index].postcode,
                                   ),
@@ -265,12 +267,5 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                   ],
                 ),
         ));
-  }
-
-  void getUserInfo() async {
-    name = await Preferences.get(PrefKey.firstName);
-    email = await Preferences.get(PrefKey.email);
-    phone = await Preferences.get(PrefKey.mobileNumber);
-    setState(() {});
   }
 }
