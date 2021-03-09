@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zaincart_app/screen/home.dart';
 import 'package:zaincart_app/screen/home_controller.dart';
 import 'package:zaincart_app/screen/login_screen.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -25,7 +26,7 @@ class SplashScreenState extends State<SplashScreen> {
                   print("BEARER TOKEN +++ $bearerToken");
                   APIService().updateBearerToken(bearerToken);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => HomeController()));
+                      builder: (BuildContext context) => Home()));
                 } else {
                   kMoveToLogin(context);
                 }
