@@ -107,15 +107,25 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   radius: 18,
                                   child: IconButton(
                                     padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.favorite_border_outlined),
-                                    color: Constants.zc_font_black,
+                                    icon: _productDetail.productWishlisted
+                                        ? Icon(
+                                            Icons.favorite,
+                                            color: Constants.zc_orange_dark,
+                                          )
+                                        : Icon(Icons.favorite_border_outlined),
+                                    color: _productDetail.productWishlisted
+                                        ? Constants.zc_orange_dark
+                                        : Colors.grey,
                                     onPressed: () {
-                                      print(
-                                          "Add to faviorate button clicked.....");
-                                      Provider.of<HomeBloc>(context,
-                                              listen: false)
-                                          .wishListAdd(context,
-                                              _productDetail.productId);
+                                      _productDetail.productWishlisted
+                                          ? Provider.of<HomeBloc>(context,
+                                                  listen: false)
+                                              .wishListRemove(context,
+                                                  _productDetail.productId)
+                                          : Provider.of<HomeBloc>(context,
+                                                  listen: false)
+                                              .wishListAdd(context,
+                                                  _productDetail.productId);
                                     },
                                   ),
                                 ))

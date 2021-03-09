@@ -191,7 +191,7 @@ class Product {
     productType = json['product_type'];
     productName = json['product_name'];
     productPrice = json['product_price'];
-    rating = json['rating'];
+    rating = json['rating'].toInt();
     productSpPrice = json['product_sp_price'];
     productOffer = json['product_offer'];
     productImage = json['product_image'];
