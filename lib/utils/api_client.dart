@@ -52,9 +52,7 @@ class APIClient {
     return Base_URL + "filtervalues/$categoryId";
   }
 
-  static filterProducts(String pageNo) {
-    return Base_URL + "getfilterproducts/$pageNo";
-  }
+  static final filterProducts =  Base_URL + "getfilterproducts";
 
   static final updateProfile = Base_URL + "updateprofile";
   static final logout = Base_URL + "customerlogout";

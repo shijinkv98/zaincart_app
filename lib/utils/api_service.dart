@@ -441,7 +441,7 @@ class APIService {
   //filtered products///
   Future<Response> getFilteredProducts(
       {String category, String values, String key}) async {
-    var url = APIClient.filterProducts("1");
+    var url = APIClient.filterProducts;
 
     var ar = [
       {
@@ -450,13 +450,19 @@ class APIService {
       }
     ];
     var queryParams = {
-      "Customer_id": "$customerId",
-      "customertoken": "$token",
-      "category": "$category",
-      "filter_val": ar.toString()
+      "data": {
+        "Customer_id": "$customerId",
+        "customertoken": "$token",
+        "category": "$category",
+        "filter_val": ar.toString(),
+        "page_no": "1",
+      }
     };
     print("URL:::" + url + "$queryParams");
-    Response response = await dio.post(url, queryParameters: queryParams);
+    var uri =
+        '$url?data={ "Customer_id": "$customerId", "page_no": "1", "customertoken": "$token", "category": "$category", "filter_val": [{ "key": "$key", "values": [ "$values" ]}]}';
+
+    Response response = await dio.post(uri);
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
@@ -524,7 +530,7 @@ class APIService {
 
   //get product review///
   Future<Response> getPrductReview(String productId) async {
-   var url = APIClient.getReviews;
+    var url = APIClient.getReviews;
     var queryParams = {
       "productId": "$productId",
       "customertoken": "$token",

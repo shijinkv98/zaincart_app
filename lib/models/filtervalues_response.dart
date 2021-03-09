@@ -83,3 +83,62 @@ class Values {
     return data;
   }
 }
+
+class FilterInput {
+  String customerId;
+  String pageNo;
+  String customertoken;
+  String category;
+  List<FilterVal> filterVal;
+
+  FilterInput(
+      {this.customerId,
+      this.pageNo,
+      this.customertoken,
+      this.category,
+      this.filterVal});
+
+  FilterInput.fromJson(Map<String, dynamic> json) {
+    customerId = json['Customer_id'];
+    pageNo = json['page_no'];
+    customertoken = json['customertoken'];
+    category = json['category'];
+    if (json['filter_val'] != null) {
+      filterVal = new List<FilterVal>();
+      json['filter_val'].forEach((v) {
+        filterVal.add(new FilterVal.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Customer_id'] = this.customerId;
+    data['page_no'] = this.pageNo;
+    data['customertoken'] = this.customertoken;
+    data['category'] = this.category;
+    if (this.filterVal != null) {
+      data['filter_val'] = this.filterVal.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class FilterVal {
+  String key;
+  List<String> values;
+
+  FilterVal({this.key, this.values});
+
+  FilterVal.fromJson(Map<String, dynamic> json) {
+    key = json['key'];
+    values = json['values'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['key'] = this.key;
+    data['values'] = this.values;
+    return data;
+  }
+}
