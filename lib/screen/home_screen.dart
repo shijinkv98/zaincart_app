@@ -68,19 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                           height: 150.0,
                           width: divWidth,
-                          child: Carousel(
+                          child: homeBloc.homeData.slider != null ?Carousel(
                             dotBgColor: Colors.transparent,
                             dotSize: 5.0,
                             dotSpacing: 15.0,
-                            images: [
-                              NetworkImage(
-                                  'https://www.thespruceeats.com/thmb/ZnWDXm0VjfY2wy25ocFqZccy5YY=/2164x1217/smart/filters:no_upscale()/freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.jpg'),
-                              NetworkImage(
-                                  'https://d12man5gwydfvl.cloudfront.net/wp-content/uploads/2020/09/Fresh-vegetables-at-the-chiller-940x667.jpg'),
-                              NetworkImage(
-                                  'https://previews.123rf.com/images/serezniy/serezniy1110/serezniy111000508/10817587-fresh-vegetables-in-basket-on-wooden-table-on-green-background.jpg'),
-                            ],
-                          )),
+                            images: homeBloc.homeData.slider.map((e) => NetworkImage(e.file)).toList(),
+                          ): new Center(child: CircularProgressIndicator(),)),
                       Container(
                         height: 240.0,
                         decoration: BoxDecoration(

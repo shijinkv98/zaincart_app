@@ -85,6 +85,7 @@ class MyCartBloc extends ChangeNotifier {
             if (cartResponse.success == 1) {
               orderData = orderResponse.orderData;
               AlertUtils.showToast("Order Placed Successfully", context);
+              getMyCartList(context);
             } else if (cartResponse.success == 3) {
               kMoveToLogin(context);
             } else {
