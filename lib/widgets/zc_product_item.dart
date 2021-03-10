@@ -36,7 +36,7 @@ class ZCProductItem extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 80,
+                height: 50,
                 child: Stack(
                   children: [
                     product.productOffer != null

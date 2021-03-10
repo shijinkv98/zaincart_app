@@ -12,7 +12,7 @@ class ZCProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.0,
+      height: 220.0,
       child: Column(
         children: [
           new ZCText(
