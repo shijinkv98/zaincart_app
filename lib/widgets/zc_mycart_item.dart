@@ -89,13 +89,13 @@ class ZCMyCartItem extends StatelessWidget {
                               child: Center(
                                   child: FlatButton(
                                 onPressed: () {
-                                  itemCount.value = cartProduct.quantity + 1;
-
-                                  _onQuantityUpdate(
-                                      context, itemCount.value, cartProduct);
+                                  if (cartProduct.quantity > 0) {
+                                    _onQuantityUpdate(context,
+                                        cartProduct.quantity - 1, cartProduct);
+                                  }
                                 },
                                 child: ZCText(
-                                  text: "+",
+                                  text: "-",
                                   color: Constants.zc_orange_dark,
                                   semiBold: true,
                                 ),
@@ -114,8 +114,7 @@ class ZCMyCartItem extends StatelessWidget {
                                   valueListenable: itemCount,
                                   builder: (context, count, child) => Center(
                                           child: ZCText(
-                                        text: (count + cartProduct.quantity)
-                                            .toString(),
+                                        text: (cartProduct.quantity).toString(),
                                         fontSize: kSmallFontSize,
                                       ))),
                             ),
@@ -125,16 +124,11 @@ class ZCMyCartItem extends StatelessWidget {
                                 child: Center(
                                     child: FlatButton(
                                   onPressed: () {
-                                    if (cartProduct.quantity > 0) {
-                                      itemCount.value =
-                                          cartProduct.quantity - 1;
-
-                                      _onQuantityUpdate(context,
-                                          itemCount.value, cartProduct);
-                                    }
+                                    _onQuantityUpdate(context,
+                                        cartProduct.quantity + 1, cartProduct);
                                   },
                                   child: ZCText(
-                                    text: "-",
+                                    text: "+",
                                     color: Constants.zc_orange_dark,
                                     semiBold: true,
                                   ),
