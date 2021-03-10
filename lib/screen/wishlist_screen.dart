@@ -23,7 +23,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //Provider.of<HomeBloc>(context, listen: false).getWishlistItems(context);
+    Provider.of<HomeBloc>(context, listen: false).getWishlistItems(context);
     return Scaffold(
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
