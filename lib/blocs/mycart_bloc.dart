@@ -107,12 +107,13 @@ class MyCartBloc extends ChangeNotifier {
             .then((response) {
           if (response.statusCode == 200) {
             ZCResponse wishlistResponse = ZCResponse.fromJson(response.data);
-            if (wishlistResponse.success == 0) {
-              AlertUtils.showToast(wishlistResponse.error, context);
+            if (wishlistResponse.success == 1) {
+              AlertUtils.showToast("Added to Cart", context);
+              getMyCartList(context);
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
             } else {
-              AlertUtils.showToast("Added to Cart", context);
+              AlertUtils.showToast(wishlistResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Something went wrong", context);

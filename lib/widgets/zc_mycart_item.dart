@@ -47,7 +47,8 @@ class ZCMyCartItem extends StatelessWidget {
                             color: Constants.zc_orange,
                             semiBold: true,
                             maxLines: 2,
-                            fontSize: kFieldFontSize,
+                            fontSize: 16.0,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         SizedBox(
