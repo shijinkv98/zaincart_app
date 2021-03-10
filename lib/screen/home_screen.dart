@@ -9,6 +9,7 @@ import 'package:zaincart_app/screen/product_search_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
+import 'package:zaincart_app/widgets/zc_network_image.dart';
 import 'package:zaincart_app/widgets/zc_products_list.dart';
 import 'package:zaincart_app/widgets/zc_search_field.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
@@ -68,12 +69,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                           height: 150.0,
                           width: divWidth,
-                          child: homeBloc.homeData.slider != null ?Carousel(
-                            dotBgColor: Colors.transparent,
-                            dotSize: 5.0,
-                            dotSpacing: 15.0,
-                            images: homeBloc.homeData.slider.map((e) => NetworkImage(e.file)).toList(),
-                          ): new Center(child: CircularProgressIndicator(),)),
+                          child: homeBloc.homeData.slider != null
+                              ? Carousel(
+                                  dotBgColor: Colors.transparent,
+                                  dotSize: 5.0,
+                                  dotSpacing: 15.0,
+                                  images: homeBloc.homeData.slider
+                                      .map((e) => ZCNetworkImage(e.file))
+                                      .toList(),
+                                )
+                              : new Center(
+                                  child: CircularProgressIndicator(),
+                                )),
                       Container(
                         height: 240.0,
                         decoration: BoxDecoration(
@@ -153,13 +160,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Container(
                                                   height: 80.0,
                                                   width: 80.0,
-                                                  child: Image.network(
-                                                    homeBloc
-                                                        .homeData
-                                                        .categoryList[index]
-                                                        .image,
-                                                    fit: BoxFit.cover,
-                                                  )),
+                                                  child: ZCNetworkImage(homeBloc
+                                                      .homeData
+                                                      .categoryList[index]
+                                                      .image)),
                                               SizedBox(
                                                 height: 5.0,
                                               ),
@@ -251,12 +255,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                 ],
                               ),
-                              Container(
-                                height: 80.0,
-                                width: 190.0,
-                                child: Image.network(
-                                  "https://thumbs.dreamstime.com/b/refer-friend-concept-social-media-refer-friend-concept-social-media-businessman-using-mobile-phone-app-to-refer-176615312.jpg",
-                                  fit: BoxFit.contain,
+                              Expanded(
+                                child: Container(
+                                  height: 80.0,
+                                  // width: 190.0,
+                                  child: ZCNetworkImage(
+                                      "https://thumbs.dreamstime.com/b/refer-friend-concept-social-media-refer-friend-concept-social-media-businessman-using-mobile-phone-app-to-refer-176615312.jpg"),
                                 ),
                               )
                             ],

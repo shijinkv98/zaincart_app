@@ -6,6 +6,7 @@ import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/widgets/zc_network_image.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ZCCategoryItem extends StatelessWidget {
@@ -30,9 +31,8 @@ class ZCCategoryItem extends StatelessWidget {
                   Container(
                       height: 90.0,
                       width: 130.0,
-                      child: Image.network(
+                      child: ZCNetworkImage(
                         product.productImage,
-                        fit: BoxFit.contain,
                       )),
                   Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

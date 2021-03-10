@@ -5,6 +5,7 @@ import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/cartlist_response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/widgets/zc_network_image.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ZCMyCartItem extends StatelessWidget {
@@ -15,7 +16,6 @@ class ZCMyCartItem extends StatelessWidget {
 
   var isFavorite = ValueNotifier(false);
 
-  
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -27,13 +27,12 @@ class ZCMyCartItem extends StatelessWidget {
           children: [
             Container(
               child: Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                       height: 90.0,
                       width: 130.0,
-                      child: Image.network(
+                      child: ZCNetworkImage(
                         cartProduct.image,
                         fit: BoxFit.contain,
                       )),
@@ -90,10 +89,10 @@ class ZCMyCartItem extends StatelessWidget {
                               child: Center(
                                   child: FlatButton(
                                 onPressed: () {
-                                  itemCount.value = cartProduct.quantity+1;
+                                  itemCount.value = cartProduct.quantity + 1;
 
-                                  _onQuantityUpdate(context,
-                                      itemCount.value, cartProduct);
+                                  _onQuantityUpdate(
+                                      context, itemCount.value, cartProduct);
                                 },
                                 child: ZCText(
                                   text: "+",
@@ -115,8 +114,7 @@ class ZCMyCartItem extends StatelessWidget {
                                   valueListenable: itemCount,
                                   builder: (context, count, child) => Center(
                                           child: ZCText(
-                                        text: (count +
-                                                cartProduct.quantity)
+                                        text: (count + cartProduct.quantity)
                                             .toString(),
                                         fontSize: kSmallFontSize,
                                       ))),
@@ -128,12 +126,11 @@ class ZCMyCartItem extends StatelessWidget {
                                     child: FlatButton(
                                   onPressed: () {
                                     if (cartProduct.quantity > 0) {
-                                      itemCount.value = cartProduct.quantity - 1;
+                                      itemCount.value =
+                                          cartProduct.quantity - 1;
 
-                                      _onQuantityUpdate(
-                                          context,
-                                          itemCount.value,
-                                          cartProduct);
+                                      _onQuantityUpdate(context,
+                                          itemCount.value, cartProduct);
                                     }
                                   },
                                   child: ZCText(

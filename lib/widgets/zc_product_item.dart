@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -102,9 +103,17 @@ class ZCProductItem extends StatelessWidget {
                           height: 79.0,
                           width: 130.0,
                           margin: EdgeInsets.only(top: 10.0),
-                          child: Image.network(
-                            product.productImage,
+                          child: CachedNetworkImage(
+                            imageUrl: product.productImage,
                             fit: BoxFit.contain,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    Center(
+                                      child: CircularProgressIndicator(
+                                          value: downloadProgress.progress),
+                                    ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           )),
                     ),
                   ],
