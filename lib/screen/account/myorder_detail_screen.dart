@@ -75,29 +75,54 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
                 ),
                 SizedBox(height: 10.0,),
                 Container(
-                  height: 30.0,
+                  height: 40.0,
+                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ZCText(
-                        text: "Product Name",
-                        color: Constants.zc_font_light_grey,
+                      SizedBox(
+                        width: 80.0,
+                        child: ZCText(
+                          text: "Product Name",
+                          color: Constants.zc_font_light_grey,
+                          maxLines: 2,
+                          fontSize: kSmallFontSize,
+                        ),
                       ),
-                      ZCText(
-                        text: "SKU",
-                        color: Constants.zc_font_light_grey,
+                      SizedBox(
+                        width: 80.0,
+                        child: ZCText(
+                          text: "SKU",
+                          color: Constants.zc_font_light_grey,
+                          fontSize: kSmallFontSize,
+                        ),
                       ),
-                      ZCText(
-                        text: "Quantity",
-                        color: Constants.zc_font_light_grey,
+                      SizedBox(
+                        width: 55.0,
+                        child: ZCText(
+                          text: "Quantity",
+                          color: Constants.zc_font_light_grey,
+                          fontSize: kSmallFontSize,
+                          maxLines: 2,
+                        ),
                       ),
-                      ZCText(
-                        text: "Price",
-                        color: Constants.zc_font_light_grey,
+                      SizedBox(
+                        width: 50.0,
+                        child: ZCText(
+                          text: "Price",
+                          color: Constants.zc_font_light_grey,
+                          fontSize: kSmallFontSize,
+                          maxLines: 2,
+                        ),
                       ),
-                      ZCText(
-                        text: "SubTotal",
-                        color: Constants.zc_font_light_grey,
+                      SizedBox(
+                        width: 55.0,
+                        child: ZCText(
+                          text: "SubTotal",
+                          color: Constants.zc_font_light_grey,
+                          fontSize: kSmallFontSize,
+                          maxLines: 2,
+                        ),
                       )
                     ],
                   ),
@@ -152,11 +177,17 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
               text: product.qty.toString(),
             ),
           ),
-          ZCText(
-            text: product.price.toString(),
+          Container(
+            width: 50.0,
+            child: ZCText(
+              text: product.price.toStringAsFixed(2),
+            ),
           ),
-          ZCText(
-            text: "${product.price * product.qty}",
+          Container(
+            width: 50.0,
+            child: ZCText(
+              text: "${(product.price * product.qty).toStringAsFixed(2)}",
+            ),
           )
         ],
       ),
