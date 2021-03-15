@@ -151,6 +151,23 @@ class LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                             SizedBox(
+                              height: 30.0,
+                            ),
+                            ZCButton(
+                              title: "SKIP LOGIN",
+                              border: true,
+                              color: Colors.white,
+                              width: 130.0,
+                              height: 30.0,
+                              titleColor: Colors.black,
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            HomeController()));
+                              },
+                            ),
+                            SizedBox(
                               height: 50.0,
                             ),
                           ],

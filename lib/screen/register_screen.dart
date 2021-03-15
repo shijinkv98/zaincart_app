@@ -28,6 +28,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   var _email_controller = new TextEditingController();
   var _phone_controller = new TextEditingController();
   var _password_controller = new TextEditingController();
+  var _confirm_password_controller = new TextEditingController();
 
   SignupData _signupData = new SignupData();
   bool _isLoading = false;
@@ -47,28 +48,28 @@ class SignUpScreenState extends State<SignUpScreen> {
       child: Container(
           constraints: BoxConstraints.expand(),
           color: Colors.orange[100],
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                new Container(
-                  height: divHeight / 3,
-                  child: Center(child: ZCLogo()),
-                ),
-                new Container(
-                  height: divHeight - divHeight / 3,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(32),
-                          topLeft: Radius.circular(32))),
-                  child: Form(
-                    key: _formKey,
-                    autovalidateMode: _autovalidate
-                        ? AutovalidateMode.onUserInteraction
-                        : AutovalidateMode.disabled,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: _edgePadding, right: _edgePadding),
+          child: Column(
+            children: <Widget>[
+              new Container(
+                height: divHeight / 3,
+                child: Center(child: ZCLogo()),
+              ),
+              new Container(
+                height: divHeight - divHeight / 3,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(32),
+                        topLeft: Radius.circular(32))),
+                child: Form(
+                  key: _formKey,
+                  autovalidateMode: _autovalidate
+                      ? AutovalidateMode.onUserInteraction
+                      : AutovalidateMode.disabled,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: _edgePadding, right: _edgePadding),
+                    child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -159,6 +160,28 @@ class SignUpScreenState extends State<SignUpScreen> {
                           new SizedBox(
                             height: 20.0,
                           ),
+                          new Container(
+                            child: ZCTextFormField(
+                              hintText: "Confirm Password",
+                              controller: _confirm_password_controller,
+                              obscureText: true,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Required";
+                                } else if (value.length < 6) {
+                                  return "Please enter atleast 6 characters";
+                                } else if (value != _password_controller.text) {
+                                  return "Passwords are not matching";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              textInputAction: TextInputAction.next,
+                            ),
+                          ),
+                          new SizedBox(
+                            height: 20.0,
+                          ),
                           SizedBox(
                             height: 40.0,
                             child: new ZCButton(
@@ -190,13 +213,16 @@ class SignUpScreenState extends State<SignUpScreen> {
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: 50.0,
+                          ),
                         ],
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           )),
     ));
   }

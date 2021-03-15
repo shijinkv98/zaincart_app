@@ -39,6 +39,19 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               decoration: BoxDecoration(color: Constants.zc_yellow),
               child: ListView(
                 children: <Widget>[
+                  FlatButton(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.arrow_back_ios,
+                          color: Constants.zc_font_black,
+                          size: 15.0,
+                        ),
+                        ZCText(text: "Back to login",)
+                      ],
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
                   new Container(
                     height: divHeight / 3,
                     child: Center(child: ZCLogo()),
