@@ -19,6 +19,7 @@ class ZCTextFormField extends StatelessWidget {
       this.textCapitalization = TextCapitalization.none,
       this.enabled = true,
       this.maxLines = 1,
+      this.showRevealIcon = false,
       this.onChanged});
 
   final String hintText;
@@ -37,44 +38,61 @@ class ZCTextFormField extends StatelessWidget {
   final bool enabled;
   final ValueChanged<String> onChanged;
   final int maxLines;
+  final bool showRevealIcon;
 
   var showSubHint = ValueNotifier(true);
+  var showPassword = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     showSubHint.value = controller.text.isEmpty ? true : false;
     return Stack(
       children: <Widget>[
-        TextFormField(
-          obscureText: obscureText,
-          enabled: enabled,
-          autocorrect: textInputType == TextInputType.emailAddress ?? false,
-          textInputAction: textInputAction,
-          onFieldSubmitted: onFieldSubmitted,
-          textCapitalization: textCapitalization,
-          keyboardType: textInputType,
-          focusNode: focusNode,
-          maxLength: maxLength,
-          maxLines: maxLines,
-          onChanged: (text) {
-            showSubHint.value = text.isEmpty ? true : false;
-            if (onChanged != null) {
-              onChanged(text);
-            }
-          },
-          decoration: InputDecoration(
-              hintText: hintText,
-              contentPadding: EdgeInsets.only(left: 10.0),
-              enabledBorder: new UnderlineInputBorder(
-                  borderSide: new BorderSide(
-                      color: Constants.zc_font_grey, width: 1.0)),
-              hintStyle: TextStyle(
-                  fontFamily: Constants.segoe_font,
-                  fontSize: kFieldFontSize,
-                  letterSpacing: 0.85)),
-          controller: controller,
-          validator: emptyValidator ? _validateField : validator,
-        ),
+        ValueListenableBuilder(
+            valueListenable: showPassword,
+            builder: (context, show, child) => TextFormField(
+                  obscureText: show ? false : obscureText,
+                  enabled: enabled,
+                  autocorrect:
+                      textInputType == TextInputType.emailAddress ?? false,
+                  textInputAction: textInputAction,
+                  onFieldSubmitted: onFieldSubmitted,
+                  textCapitalization: textCapitalization,
+                  keyboardType: textInputType,
+                  focusNode: focusNode,
+                  maxLength: maxLength,
+                  maxLines: maxLines,
+                  onChanged: (text) {
+                    showSubHint.value = text.isEmpty ? true : false;
+                    if (onChanged != null) {
+                      onChanged(text);
+                    }
+                  },
+                  decoration: InputDecoration(
+                      hintText: hintText,
+                      suffixIcon: showRevealIcon
+                          ? IconButton(
+                              icon: show
+                                  ? Image.asset(Constants.ic_show,height: 20.0, width: 20.0,)
+                                  : Image.asset(Constants.ic_hide,height: 20.0, width: 20.0),
+                              onPressed: () {
+                                show == true
+                                    ? showPassword.value = false
+                                    : showPassword.value = true;
+                              },
+                            )
+                          : null,
+                      contentPadding: EdgeInsets.only(left: 10.0, top: showRevealIcon? 15.0: 0.0),
+                      enabledBorder: new UnderlineInputBorder(
+                          borderSide: new BorderSide(
+                              color: Constants.zc_font_grey, width: 1.0)),
+                      hintStyle: TextStyle(
+                          fontFamily: Constants.segoe_font,
+                          fontSize: kFieldFontSize,
+                          letterSpacing: 0.85)),
+                  controller: controller,
+                  validator: emptyValidator ? _validateField : validator,
+                )),
         ValueListenableBuilder(
             valueListenable: showSubHint,
             builder: (context, value, child) => value

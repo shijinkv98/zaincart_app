@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/screen/account/add_address_screen.dart';
 import 'package:zaincart_app/screen/account/profile_screen.dart';
-import 'package:zaincart_app/screen/change_password_screen.dart';
+import 'package:zaincart_app/screen/account/change_password_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';

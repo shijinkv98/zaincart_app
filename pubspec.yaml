@@ -55,6 +55,8 @@ flutter:
     - assets/ic_account.png
     - assets/splash.png
     - assets/ic_filter.png
+    - assets/ic_show.png
+    - assets/ic_hide.png
     
 
   # fonts:

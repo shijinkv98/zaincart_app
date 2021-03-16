@@ -145,6 +145,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                               hintText: "Password",
                               controller: _password_controller,
                               obscureText: true,
+                              showRevealIcon: true,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Required";
@@ -165,6 +166,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                               hintText: "Confirm Password",
                               controller: _confirm_password_controller,
                               obscureText: true,
+                              showRevealIcon: true,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Required";

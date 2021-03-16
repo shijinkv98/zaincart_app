@@ -112,6 +112,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     child: ZCTextFormField(
                       hintText: "New Password",
                       controller: _newPasswordController,
+                      showRevealIcon: true,
                       textInputAction: TextInputAction.next,
                       obscureText: true,
                       validator: (text) {
@@ -136,6 +137,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     child: ZCTextFormField(
                       hintText: "Confirm Password",
                       controller: _confirmpasswordController,
+                      showRevealIcon: true,
                       obscureText: true,
                       validator: (text) {
                         if (text.isEmpty) {

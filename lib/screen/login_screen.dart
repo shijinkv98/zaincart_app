@@ -98,6 +98,7 @@ class LoginScreenState extends State<LoginScreen> {
                               child: ZCTextFormField(
                                 hintText: "Password",
                                 controller: _passwordController,
+                                showRevealIcon: true,
                                 obscureText: true,
                                 validator: (text) {
                                   if (text.isEmpty) {
