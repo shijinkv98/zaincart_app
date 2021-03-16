@@ -39,7 +39,7 @@ class ZCCategoryItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 230.0,
+                          width: 200.0,
                           child: ZCText(
                             text: product.productName,
                             color: Constants.zc_orange,
@@ -79,52 +79,36 @@ class ZCCategoryItem extends StatelessWidget {
                           height: 10.0,
                         ),
                         Container(
-                          width: 200,
+                          width: 130,
                           padding: EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
-                              color: Constants.zc_yellow,
+                              color: Constants.zc_orange,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20.0))),
-                          child: Center(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 0.0, right: 0.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Image.asset(
-                                    Constants.ic_add_to_cart,
-                                    height: 23.0,
-                                    width: 23.0,
-                                  ),
-                                  ZCText(
-                                    text: "Add to Cart",
-                                    fontSize: kSmallFontSize,
-                                  ),
-                                  ZCText(
-                                    text: "|",
-                                    fontSize: kFontSize,
-                                    color: Colors.white,
-                                  ),
-                                  InkWell(
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Constants.zc_orange,
-                                      //size: 10.0,
-                                    ),
-                                    onTap: () {
-                                      print("Add to cart button clicked.....");
-                                      Provider.of<MyCartBloc>(context,
-                                              listen: false)
-                                          .addToCart(
-                                              context: context,
-                                              productSku: product.productSku,
-                                              productQty: 1.toString());
-                                    },
-                                  )
-                                ],
-                              ),
+                          child: InkWell(onTap: () {
+                            Provider.of<MyCartBloc>(context,
+                                            listen: false)
+                                        .addToCart(
+                                            context: context,
+                                            productSku: product.productSku,
+                                            productQty: 1.toString());
+                          },
+                                                          child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  Constants.ic_add_to_cart,
+                                  height: 23.0,
+                                  width: 23.0,
+                                ),
+                                SizedBox(width: 5.0),
+                                ZCText(
+                                  text: "Add to Cart",
+                                  fontSize: kSmallFontSize,
+                                  color: Colors.white,
+                                ),
+                              ],
                             ),
                           ),
                         )

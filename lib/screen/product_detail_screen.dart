@@ -215,7 +215,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   width: 180,
                                   padding: EdgeInsets.all(5.0),
                                   decoration: BoxDecoration(
-                                      color: Colors.orange[100],
+                                      color: Constants.zc_orange,
                                       borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(20),
                                           bottomRight: Radius.circular(20),
@@ -237,27 +237,22 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                         },
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Image.asset(
                                               Constants.ic_add_to_cart,
                                               height: 23.0,
                                               width: 23.0,
                                             ),
+                                            SizedBox(
+                                              width: 5.0,
+                                            ),
                                             ZCText(
                                               text: "Add to Cart",
                                               fontSize: kSmallFontSize,
-                                            ),
-                                            ZCText(
-                                              text: "|",
-                                              fontSize: kFontSize,
                                               color: Colors.white,
                                             ),
-                                            Icon(
-                                              Icons.add,
-                                              color: Constants.zc_orange,
-                                              //size: 10.0,
-                                            )
+                                    
                                           ],
                                         ),
                                       ),

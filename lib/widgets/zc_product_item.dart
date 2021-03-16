@@ -177,27 +177,19 @@ class ZCProductItem extends StatelessWidget {
                         productQty: 1.toString());
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
                         Constants.ic_add_to_cart,
                         height: 23.0,
                         width: 23.0,
                       ),
+                      SizedBox(width: 5.0,),
                       ZCText(
                         text: "Add to Cart",
                         fontSize: kSmallFontSize,
                       ),
-                      ZCText(
-                        text: "|",
-                        fontSize: kFontSize,
-                        color: Colors.white,
-                      ),
-                      Icon(
-                        Icons.add,
-                        color: Constants.zc_orange,
-                        //size: 10.0,
-                      )
+                      
                     ],
                   ),
                 ),
