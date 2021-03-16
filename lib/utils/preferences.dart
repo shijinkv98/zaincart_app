@@ -52,7 +52,7 @@ enum PrefKey {
   firstName,
   lastName,
   mobileNumber,
-  avatar,
+  avatar
 }
 
 extension PrefKeysToString on PrefKey {

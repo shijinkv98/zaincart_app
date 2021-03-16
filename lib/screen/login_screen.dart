@@ -161,6 +161,7 @@ class LoginScreenState extends State<LoginScreen> {
                               height: 30.0,
                               titleColor: Colors.black,
                               onPressed: () {
+                                Preferences.saveBool(PrefKey.loginStatus, false);
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>

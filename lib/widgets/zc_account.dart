@@ -8,6 +8,7 @@ import 'package:zaincart_app/screen/my_cart_screen.dart';
 import 'package:zaincart_app/screen/register_screen.dart';
 import 'package:zaincart_app/screen/wishlist_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
+import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ZCAccount extends StatelessWidget {
@@ -66,35 +67,46 @@ class ZCAccount extends StatelessWidget {
                   thickness: 0.5,
                   color: Constants.zc_font_light_grey,
                 ),
-                // Padding(
-                //   padding:
-                //       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                //   child: InkWell(
-                //     onTap: () {
-                //       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //           builder: (BuildContext context) => SignUpScreen()));
-                //     },
-                //     child: Row(
-                //       children: [
-                //         Image.asset(
-                //           Constants.ic_register,
-                //           scale: 7.0,
-                //         ),
-                //         SizedBox(
-                //           width: 8.0,
-                //         ),
-                //         ZCText(
-                //           text: "Register",
-                //           color: Constants.zc_font_grey,
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                // Divider(
-                //   thickness: 0.5,
-                //   color: Constants.zc_font_light_grey,
-                // ),
+                Consumer<ProfileBloc>(
+                    builder: (context, profileBloc, child) =>
+                        !profileBloc.isGuest
+                            ? Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10.0, top: 5.0, bottom: 5.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        SignUpScreen()));
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            Constants.ic_register,
+                                            scale: 7.0,
+                                          ),
+                                          SizedBox(
+                                            width: 8.0,
+                                          ),
+                                          ZCText(
+                                            text: "Register",
+                                            color: Constants.zc_font_grey,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Divider(
+                                    thickness: 0.5,
+                                    color: Constants.zc_font_light_grey,
+                                  ),
+                                ],
+                              )
+                            : new Container()),
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
@@ -268,5 +280,10 @@ class ZCAccount extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<bool> isGuestUser() async {
+    var result = await Preferences.getBool(PrefKey.loginStatus);
+    return result;
   }
 }

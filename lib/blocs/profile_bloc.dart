@@ -20,12 +20,14 @@ class ProfileBloc extends ChangeNotifier {
   var lastName;
   var email;
   var phone;
+  var isGuest;
 
   void getUserInfo() async {
     firstName = await Preferences.get(PrefKey.firstName);
     lastName = await Preferences.get(PrefKey.lastName);
     email = await Preferences.get(PrefKey.email);
     phone = await Preferences.get(PrefKey.mobileNumber);
+    isGuest = await Preferences.getBool(PrefKey.loginStatus);
     notifyListeners();
   }
 

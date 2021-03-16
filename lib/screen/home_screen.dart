@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/screen/category_screen.dart';
 import 'package:zaincart_app/screen/grocery_screen.dart';
 import 'package:zaincart_app/screen/product_search_screen.dart';
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final double divWidth = MediaQuery.of(context).size.width;
     Provider.of<HomeBloc>(context, listen: false).getHomeData(context);
     Provider.of<HomeBloc>(context, listen: false).getRootCategories(context);
+    Provider.of<ProfileBloc>(context, listen: false).getUserInfo();
     return Scaffold(
       drawer: ZCMenu(),
       endDrawer: ZCAccount(),
