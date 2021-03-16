@@ -5,7 +5,6 @@ import 'package:zaincart_app/screen/account/add_address_screen.dart';
 import 'package:zaincart_app/screen/account/profile_screen.dart';
 import 'package:zaincart_app/screen/change_password_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
-import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -29,7 +28,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
     Provider.of<ProfileBloc>(context, listen: false).getCountries(context);
     return Scaffold(
         appBar: AppBar(
-          title: ZCAppBarTitle("MY ADDRESS"),
+          title: ZCAppBarTitle("MY ACCOUNT"),
           backgroundColor: Colors.white,
           leading: Builder(
               builder: (BuildContext context) => Padding(

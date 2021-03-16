@@ -263,7 +263,7 @@ class ZCAccount extends StatelessWidget {
                           width: 8.0,
                         ),
                         ZCText(
-                          text: "My Address",
+                          text: "My Account",
                           color: Constants.zc_font_grey,
                         ),
                       ],
