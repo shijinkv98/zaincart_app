@@ -22,6 +22,7 @@ dependencies:
   provider: ^4.3.3
   flutter_widget_from_html: ^0.5.2
   cached_network_image: ^2.5.1
+  configurable_expansion_tile: ^1.0.0
 
 dev_dependencies:
   flutter_test:
