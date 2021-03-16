@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/cartlist_response.dart';
 import 'package:zaincart_app/screen/product_detail_screen.dart';
@@ -41,7 +42,7 @@ class ZCMyCartItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 230.0,
+                          width: 215.0,
                           child: ZCText(
                             text: cartProduct.produtName,
                             color: Constants.zc_orange,
@@ -141,52 +142,62 @@ class ZCMyCartItem extends StatelessWidget {
                                       topRight: Radius.circular(20),
                                     ))),
                           ],
-                        )
+                        ),
                       ]),
-                  // Row(
-                  //   children: [
-                  //     CircleAvatar(
-                  //       backgroundColor: Constants.zc_orange_dark,
-                  //       radius: 12,
-                  //       child: ZCText(
-                  //         text: "5%",
-                  //         color: Colors.white,
-                  //         fontSize: 10,
-                  //       ),
-                  //     ),
-                  //     SizedBox(
-                  //       width: 3.0,
-                  //     ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(right: 5.0),
-                  //       child: CircleAvatar(
-                  //         backgroundColor: Colors.white,
-                  //         radius: 10,
-                  //         child: ValueListenableBuilder(
-                  //             valueListenable: isFavorite,
-                  //             builder: (context, isFav, child) => IconButton(
-                  //                   padding: EdgeInsets.zero,
-                  //                   icon: isFav
-                  //                       ? Icon(
-                  //                           Icons.favorite,
-                  //                           color: Constants.zc_orange_dark,
-                  //                         )
-                  //                       : Icon(Icons.favorite_border_outlined),
-                  //                   color: Colors.grey,
-                  //                   onPressed: () {
-                  //                     if (isFavorite.value == true) {
-                  //                       isFavorite.value = false;
-                  //                     } else {
-                  //                       isFavorite.value = true;
-                  //                     }
-                  //                     print(
-                  //                         "Add to faviorate button clicked.....");
-                  //                   },
-                  //                 )),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  Row(
+                    children: [
+                      // product.productOffer != null
+                      //     ? CircleAvatar(
+                      //         backgroundColor: Constants.zc_orange_dark,
+                      //         radius: 12,
+                      //         child: ZCText(
+                      //           text: cartProduct.productOffer,
+                      //           color: Colors.white,
+                      //           fontSize: 10,
+                      //         ),
+                      //       )
+                      //     : new Container(),
+                      // SizedBox(
+                      //   width: 3.0,
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 10,
+                          child: ValueListenableBuilder(
+                              valueListenable: isFavorite,
+                              builder: (context, isFav, child) => IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: isFav
+                                        ? Icon(
+                                            Icons.favorite,
+                                            color: Constants.zc_orange_dark,
+                                          )
+                                        : Icon(Icons.favorite_border_outlined),
+                                    color: Colors.grey,
+                                    onPressed: () {
+                                      if (isFavorite.value == true) {
+                                        isFavorite.value = false;
+                                        Provider.of<HomeBloc>(context,
+                                                listen: false)
+                                            .wishListRemove(
+                                                context, cartProduct.productId);
+                                      } else {
+                                        isFavorite.value = true;
+                                        Provider.of<HomeBloc>(context,
+                                                listen: false)
+                                            .wishListAdd(
+                                                context, cartProduct.productId);
+                                      }
+                                      print(
+                                          "Add to faviorate button clicked.....");
+                                    },
+                                  )),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -195,7 +206,7 @@ class ZCMyCartItem extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   print(
-                      "remove from wish list ${cartProduct.cartItemId} - ${cartId}");
+                      "remove from cart list ${cartProduct.cartItemId} - ${cartId}");
                   Provider.of<MyCartBloc>(context, listen: false)
                       .removeFromCart(
                           context: context,
