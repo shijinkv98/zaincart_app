@@ -7,7 +7,6 @@ import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_menu.dart';
 import 'package:zaincart_app/widgets/zc_product_item.dart';
-import 'package:zaincart_app/widgets/zc_text.dart';
 
 class WishlistScreen extends StatefulWidget {
   final bool isEnableBack;
