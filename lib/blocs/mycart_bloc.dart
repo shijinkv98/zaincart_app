@@ -3,6 +3,7 @@ import 'package:zaincart_app/models/cartlist_response.dart';
 import 'package:zaincart_app/models/create_order_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
+import 'package:zaincart_app/screen/order_success_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
 import 'package:zaincart_app/utils/app_utils.dart';
@@ -58,7 +59,10 @@ class MyCartBloc extends ChangeNotifier {
     });
   }
 
-  placeOrder(BuildContext context) async {
+  placeOrder(
+      {BuildContext context,
+      String paymentMethod,
+      String shippingMethod}) async {
     AppUtils.isConnectedToInternet(context).then((isConnected) async {
       if (isConnected) {
         isLoading = true;
@@ -66,9 +70,9 @@ class MyCartBloc extends ChangeNotifier {
         var orderDataInput = {
           "date": DateTime.now().toString(),
           "email": await Preferences.get(PrefKey.email),
-          "payment_method": "cashondelivery",
+          "payment_method": paymentMethod,
           "currency_id": "QAR",
-          "shipping_method": "flatrate_flatrate",
+          "shipping_method": shippingMethod,
           "time": "12"
         };
         APIService()
@@ -86,6 +90,10 @@ class MyCartBloc extends ChangeNotifier {
               orderData = orderResponse.orderData;
               AlertUtils.showToast("Order Placed Successfully", context);
               getMyCartList(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => OrderSuccessScreen(
+                        orderResponse.orderData.orderId,
+                      )));
             } else if (cartResponse.success == 3) {
               kMoveToLogin(context);
             } else {

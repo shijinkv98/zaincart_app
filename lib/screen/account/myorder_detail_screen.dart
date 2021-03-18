@@ -161,14 +161,14 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
             width: 80,
             child: ZCText(
               text: product.name,
-              maxLines: 5,
+              maxLines: 10,
             ),
           ),
           Container(
             width: 80.0,
             child: ZCText(
               text: product.sku,
-              maxLines: 5,
+              maxLines: 10,
             ),
           ),
           Container(

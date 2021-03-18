@@ -52,7 +52,7 @@ class APIClient {
     return Base_URL + "filtervalues/$categoryId";
   }
 
-  static final filterProducts =  Base_URL + "getfilterproducts";
+  static final filterProducts = Base_URL + "getfilterproducts";
 
   static final updateProfile = Base_URL + "updateprofile";
   static final logout = Base_URL + "customerlogout";
@@ -60,4 +60,5 @@ class APIClient {
   static final addReview = Base_URL + "Addreviewproduct";
   static final getReviews = Base_URL + "productreview";
   static final notificationList = Base_URL + "notificationlist";
+  static final checkoutDetails = Base_URL + "checkoutdetails";
 }

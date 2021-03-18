@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zaincart_app/models/address.dart';
 import 'package:zaincart_app/models/addressListResponse.dart';
+import 'package:zaincart_app/models/checkout_detail_response.dart';
 import 'package:zaincart_app/models/countries_response.dart';
 import 'package:zaincart_app/models/notification_response.dart';
 import 'package:zaincart_app/models/response.dart';
@@ -15,6 +16,7 @@ class ProfileBloc extends ChangeNotifier {
   List<Address> addressList = new List<Address>();
   List<Country> countryList = new List<Country>();
   List<NotificationData> notificationList = new List<NotificationData>();
+  CheckoutData checkoutData;
   bool isLoading = false;
   var firstName;
   var lastName;
@@ -308,6 +310,33 @@ class ProfileBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               AlertUtils.showToast(notificationResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
+
+  getCheckoutDetails(BuildContext context) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().getCheckoutDetails(context).then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            CheckoutDetailsResponse checkoutDetailResponse =
+                CheckoutDetailsResponse.fromJson(response.data);
+            if (checkoutDetailResponse.success == 1) {
+              checkoutData = checkoutDetailResponse.checkoutData;
+              notifyListeners();
+            } else if (checkoutDetailResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(checkoutDetailResponse.error, context);
             }
           } else {
             AlertUtils.showToast("Failed", context);

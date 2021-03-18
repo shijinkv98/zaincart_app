@@ -553,4 +553,17 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //checkoutdetails///
+  Future<Response> getCheckoutDetails(dynamic address) async {
+    var url = APIClient.checkoutDetails;
+    var queryParams = {
+      "customertoken": "$token",
+      "CustomerId" : "$customerId"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
