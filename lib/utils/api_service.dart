@@ -566,4 +566,20 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //ContactUs///
+  Future<Response> contactUs(
+      {String email, String name, String phone, String message}) async {
+    var url = APIClient.contactus;
+    var queryParams = {
+      "customeremail": "$email",
+      "firstname": "$name",
+      "mobileno": "$phone",
+      "message": "$message",
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }

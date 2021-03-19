@@ -5,6 +5,7 @@ import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/screen/grocery_screen.dart';
 import 'package:zaincart_app/screen/menu/about_us_screen.dart';
 import 'package:zaincart_app/screen/menu/contact_screen.dart';
+import 'package:zaincart_app/screen/menu/feedback_screen.dart';
 import 'package:zaincart_app/screen/menu/policy_screen.dart';
 import 'package:zaincart_app/screen/menu/terms_conditions_screen.dart';
 import 'package:zaincart_app/screen/notification_list_screen.dart';
@@ -91,7 +92,6 @@ class ZCMenu extends StatelessWidget {
                                     .toList()),
                           ),
                         ),
-
                         Divider(
                           thickness: 0.5,
                           color: Constants.zc_font_light_grey,
@@ -209,29 +209,36 @@ class ZCMenu extends StatelessWidget {
                           thickness: 0.5,
                           color: Constants.zc_font_light_grey,
                         ),
-                        // Padding(
-                        //   padding:
-                        //       const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                        //   child: Row(
-                        //     children: [
-                        //       Image.asset(
-                        //         Constants.ic_faq,
-                        //         scale: 7.0,
-                        //       ),
-                        //       SizedBox(
-                        //         width: 8.0,
-                        //       ),
-                        //       ZCText(
-                        //         text: "Faq",
-                        //         color: Constants.zc_font_grey,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Divider(
-                        //   thickness: 0.5,
-                        //   color: Constants.zc_font_light_grey,
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, top: 5.0, bottom: 5.0),
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      FeedbackScreen()));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.message_outlined,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 8.0,
+                                ),
+                                ZCText(
+                                  text: "Suggestions and Feedback",
+                                  color: Constants.zc_font_grey,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          thickness: 0.5,
+                          color: Constants.zc_font_light_grey,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                               left: 10.0, top: 5.0, bottom: 5.0),

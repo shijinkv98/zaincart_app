@@ -345,4 +345,34 @@ class ProfileBloc extends ChangeNotifier {
       }
     });
   }
+
+  contactUs(
+      {BuildContext context, String email, String name, String phone, String message}) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService()
+            .contactUs(
+                email: email, name: name, phone: phone, message: message)
+            .then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            WishlistAddResponse feedbackResponse = WishlistAddResponse.fromJson(response.data);
+            if (feedbackResponse.success == 1) {
+              AlertUtils.showToast(feedbackResponse.data.message, context);
+              Navigator.of(context).pop();
+            } else if (feedbackResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(feedbackResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Failed", context);
+          }
+        });
+      }
+    });
+  }
 }
