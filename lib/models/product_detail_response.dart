@@ -1,3 +1,4 @@
+import 'package:zaincart_app/models/product_review_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
 
 class ProductDetailResponse {
@@ -21,7 +22,7 @@ class ProductDetail {
   List<ProductOptions> productOptions;
   List<ChildProduct> childProduct;
   List<Product> relatedProduct;
-  List<Null> reviews;
+  List<Review> reviews;
   bool productWishlisted;
   int rating;
   String productId;
@@ -91,12 +92,12 @@ class ProductDetail {
         relatedProduct.add(new Product.fromJson(v));
       });
     }
-    // if (json['reviews'] != null) {
-    //   reviews = new List<Null>();
-    //   json['reviews'].forEach((v) {
-    //     reviews.add(new Null.fromJson(v));
-    //   });
-    // }
+    if (json['reviews'] != null) {
+      reviews = new List<Review>();
+      json['reviews'].forEach((v) {
+        reviews.add(new Review.fromJson(v));
+      });
+    }
     productWishlisted = json['product_wishlisted'];
     rating = json['rating'];
     productId = json['product_id'];

@@ -502,10 +502,10 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                 SizedBox(
                                   height: 10.0,
                                 ),
-                                ZCProductsList(
+                                _productDetail.relatedProduct.isNotEmpty ? ZCProductsList(
                                   title: "RELATED PRODUCTS",
                                   productList: _productDetail.relatedProduct,
-                                )
+                                ) : new Container()
                               ],
                             ),
                           ),
