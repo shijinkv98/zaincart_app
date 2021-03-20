@@ -3,6 +3,7 @@ import 'package:zaincart_app/models/cartlist_response.dart';
 import 'package:zaincart_app/models/create_order_response.dart';
 import 'package:zaincart_app/models/products_response.dart';
 import 'package:zaincart_app/models/response.dart';
+import 'package:zaincart_app/screen/my_cart_screen.dart';
 import 'package:zaincart_app/screen/order_success_screen.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
 import 'package:zaincart_app/utils/api_service.dart';
@@ -189,5 +190,29 @@ class MyCartBloc extends ChangeNotifier {
     }
     totalAmount = total;
     notifyListeners();
+  }
+
+  buyNowProduct({BuildContext context, String productSku, String productQty}) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        APIService()
+            .buyNowProduct(productSku: productSku, qty: productQty)
+            .then((response) {
+          if (response.statusCode == 200) {
+            ZCResponse wishlistResponse = ZCResponse.fromJson(response.data);
+            if (wishlistResponse.success == 1) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => MyCartScreen()));
+            } else if (wishlistResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(wishlistResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
   }
 }

@@ -14,6 +14,7 @@ import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
+import 'package:zaincart_app/widgets/zc_button.dart';
 import 'package:zaincart_app/widgets/zc_products_list.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -257,52 +258,95 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                       )
                                     : new Container(),
                                 SizedBox(height: 10.0),
-                                Container(
-                                  width: 180,
-                                  padding: EdgeInsets.all(5.0),
-                                  decoration: BoxDecoration(
-                                      color: Constants.zc_orange,
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(20),
-                                          bottomRight: Radius.circular(20),
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20))),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0, right: 5.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Provider.of<MyCartBloc>(context,
-                                                  listen: false)
-                                              .addToCart(
-                                                  context: context,
-                                                  productSku:
-                                                      _productDetail.productSku,
-                                                  productQty: 1.toString());
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              Constants.ic_add_to_cart,
-                                              height: 23.0,
-                                              width: 23.0,
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 130,
+                                      padding: EdgeInsets.all(5.0),
+                                      decoration: BoxDecoration(
+                                          color: Constants.zc_orange,
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(20),
+                                              bottomRight: Radius.circular(20),
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20))),
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Provider.of<MyCartBloc>(context,
+                                                      listen: false)
+                                                  .addToCart(
+                                                      context: context,
+                                                      productSku: _productDetail
+                                                          .productSku,
+                                                      productQty: 1.toString());
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  Constants.ic_add_to_cart,
+                                                  height: 23.0,
+                                                  width: 23.0,
+                                                ),
+                                                SizedBox(
+                                                  width: 5.0,
+                                                ),
+                                                ZCText(
+                                                  text: "Add to Cart",
+                                                  fontSize: kSmallFontSize,
+                                                  color: Colors.white,
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(
-                                              width: 5.0,
-                                            ),
-                                            ZCText(
-                                              text: "Add to Cart",
-                                              fontSize: kSmallFontSize,
-                                              color: Colors.white,
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      width: 20.0,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Provider.of<MyCartBloc>(context,
+                                                      listen: false)
+                                                  .buyNowProduct(
+                                                      context: context,
+                                                      productSku: _productDetail
+                                                          .productSku,
+                                                      productQty: 1.toString());
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height: 30.0,
+                                        padding: EdgeInsets.all(5.0),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Constants.zc_font_grey),
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(20),
+                                                bottomRight:
+                                                    Radius.circular(20),
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20))),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, right: 5.0),
+                                            child: ZCText(
+                                              text: "Buy Now",
+                                              fontSize: kSmallFontSize,
+                                              color: Constants.zc_font_grey,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
                                   height: 10.0,
@@ -455,8 +499,13 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                           ))
                                       .toList(),
                                 ),
-                                SizedBox(height: 10.0,),
-                                ZCProductsList(title: "RELATED PRODUCTS", productList: _productDetail.relatedProduct,)
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                ZCProductsList(
+                                  title: "RELATED PRODUCTS",
+                                  productList: _productDetail.relatedProduct,
+                                )
                               ],
                             ),
                           ),

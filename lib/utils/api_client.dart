@@ -62,4 +62,5 @@ class APIClient {
   static final notificationList = Base_URL + "notificationlist";
   static final checkoutDetails = Base_URL + "checkoutdetails";
   static final contactus = Base_URL + "contactus";
+  static final buynow = Base_URL + "buynow";
 }

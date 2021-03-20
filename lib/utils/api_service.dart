@@ -581,4 +581,20 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //Buy now///
+  Future<Response> buyNowProduct(
+      {String productSku, String qty}) async {
+    var url = APIClient.buynow;
+   var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "Product_sku" : "$productSku",
+      "Product_qty" : "$qty"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }
