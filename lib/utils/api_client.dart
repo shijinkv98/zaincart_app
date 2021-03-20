@@ -63,4 +63,5 @@ class APIClient {
   static final checkoutDetails = Base_URL + "checkoutdetails";
   static final contactus = Base_URL + "contactus";
   static final buynow = Base_URL + "buynow";
+  static final reorder = Base_URL + "reorder";
 }

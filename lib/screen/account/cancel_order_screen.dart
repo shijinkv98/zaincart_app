@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
@@ -76,7 +77,7 @@ class _CancelOrderScreenState extends State<CancelOrderScreen> {
                         child: ZCButton(
                       title: "CANCEL",
                       onPressed: () {
-                        Provider.of<HomeBloc>(context, listen: false)
+                        Provider.of<MyCartBloc>(context, listen: false)
                             .cancelOrder(context, widget.orderId);
                       },
                     )),

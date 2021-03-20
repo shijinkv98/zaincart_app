@@ -597,4 +597,18 @@ class APIService {
     print("RESPONSE:::" + response.data.toString());
     return response;
   }
+
+  //cancel order///
+  Future<Response> reOrder(String orderId) async {
+    var url = APIClient.reorder;
+    var queryParams = {
+      "customer_id": "$customerId",
+      "customertoken": "$token",
+      "orderid" : "$orderId"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
 }

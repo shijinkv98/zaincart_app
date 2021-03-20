@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/my_order_response.dart';
 import 'package:zaincart_app/models/myorder_detail_response.dart';
 import 'package:zaincart_app/utils/alert_utils.dart';
@@ -62,92 +65,135 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
             ? new Center(
                 child: CircularProgressIndicator(),
               )
-            : new Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: ZCText(
-                      text: "Order Id: ${widget.orderId} ",
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.0,),
-                Container(
-                  height: 40.0,
-                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 80.0,
-                        child: ZCText(
-                          text: "Product Name",
-                          color: Constants.zc_font_light_grey,
-                          maxLines: 2,
-                          fontSize: kSmallFontSize,
-                        ),
+            : Consumer<MyCartBloc>(
+                builder: (context, cartBloc, child) => ModalProgressHUD(
+                      inAsyncCall: cartBloc.isLoading,
+                      child: new Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ZCText(
+                                  text: "Order Id: ${widget.orderId} ",
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        cartBloc.cancelOrder(
+                                            context, widget.orderId);
+                                      },
+                                      child: ZCText(
+                                        text: "Cancel Order",
+                                        color: Constants.zc_orange,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.all(8.0),
+                                      height: 15.0,
+                                      width: 2.0,
+                                      color: Constants.zc_orange,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        cartBloc.reOrder(
+                                            context, widget.orderId);
+                                      },
+                                      child: ZCText(
+                                          text: "Reorder",
+                                          color: Constants.zc_orange),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Container(
+                            height: 40.0,
+                            padding:
+                                const EdgeInsets.only(left: 5.0, right: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  width: 80.0,
+                                  child: ZCText(
+                                    text: "Product Name",
+                                    color: Constants.zc_font_light_grey,
+                                    maxLines: 2,
+                                    fontSize: kSmallFontSize,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 80.0,
+                                  child: ZCText(
+                                    text: "SKU",
+                                    color: Constants.zc_font_light_grey,
+                                    fontSize: kSmallFontSize,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 55.0,
+                                  child: ZCText(
+                                    text: "Quantity",
+                                    color: Constants.zc_font_light_grey,
+                                    fontSize: kSmallFontSize,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50.0,
+                                  child: ZCText(
+                                    text: "Price",
+                                    color: Constants.zc_font_light_grey,
+                                    fontSize: kSmallFontSize,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 55.0,
+                                  child: ZCText(
+                                    text: "SubTotal",
+                                    color: Constants.zc_font_light_grey,
+                                    fontSize: kSmallFontSize,
+                                    maxLines: 2,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          orderDetail.value.products != null
+                              ? ValueListenableBuilder(
+                                  valueListenable: orderDetail,
+                                  builder: (context, detail, child) => Expanded(
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            itemCount:
+                                                detail.products.length + 1,
+                                            itemBuilder:
+                                                (BuildContext ctxt, int index) {
+                                              if (index ==
+                                                  orderDetail
+                                                      .value.products.length) {
+                                                return bottomWidget();
+                                              } else {
+                                                return orderWidget(
+                                                    detail.products[index],
+                                                    index);
+                                              }
+                                            }),
+                                      ))
+                              : new Container(),
+                        ],
                       ),
-                      SizedBox(
-                        width: 80.0,
-                        child: ZCText(
-                          text: "SKU",
-                          color: Constants.zc_font_light_grey,
-                          fontSize: kSmallFontSize,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 55.0,
-                        child: ZCText(
-                          text: "Quantity",
-                          color: Constants.zc_font_light_grey,
-                          fontSize: kSmallFontSize,
-                          maxLines: 2,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 50.0,
-                        child: ZCText(
-                          text: "Price",
-                          color: Constants.zc_font_light_grey,
-                          fontSize: kSmallFontSize,
-                          maxLines: 2,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 55.0,
-                        child: ZCText(
-                          text: "SubTotal",
-                          color: Constants.zc_font_light_grey,
-                          fontSize: kSmallFontSize,
-                          maxLines: 2,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                orderDetail.value.products != null
-                    ? ValueListenableBuilder(
-                        valueListenable: orderDetail,
-                        builder: (context, detail, child) => Expanded(
-                              child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: detail.products.length + 1,
-                                  itemBuilder:
-                                      (BuildContext ctxt, int index) {
-                                    if (index ==
-                                        orderDetail.value.products.length) {
-                                      return bottomWidget();
-                                    } else {
-                                      return orderWidget(
-                                          detail.products[index], index);
-                                    }
-                                  }),
-                            ))
-                    : new Container(),
-              ],
-            ));
+                    )));
   }
 
   Widget orderWidget(OrderProduct product, int index) {
@@ -196,7 +242,6 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
 
   bottomWidget() {
     return Column(
-      
       children: [
         Container(
           color: Constants.zc_yellow,
@@ -252,18 +297,23 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
                 text: "Shipping Address",
                 semiBold: true,
               ),
-              Divider(thickness: 1.0,),
+              Divider(
+                thickness: 1.0,
+              ),
               ZCText(
                 text: orderDetail.value.shippingAddress.name,
               ),
               ZCText(
-                text: "${orderDetail.value.shippingAddress.city}, ${orderDetail.value.shippingAddress.street.first}",
+                text:
+                    "${orderDetail.value.shippingAddress.city}, ${orderDetail.value.shippingAddress.street.first}",
               ),
               ZCText(
-                text: "${orderDetail.value.shippingAddress.country}, ${orderDetail.value.shippingAddress.postcode}",
+                text:
+                    "${orderDetail.value.shippingAddress.country}, ${orderDetail.value.shippingAddress.postcode}",
               ),
               ZCText(
-                text: "${orderDetail.value.shippingAddress.country}, T: ${orderDetail.value.shippingAddress.telephone}",
+                text:
+                    "${orderDetail.value.shippingAddress.country}, T: ${orderDetail.value.shippingAddress.telephone}",
               ),
             ],
           ),
@@ -277,18 +327,23 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
                 text: "Billing Address",
                 semiBold: true,
               ),
-              Divider(thickness: 1.0,),
+              Divider(
+                thickness: 1.0,
+              ),
               ZCText(
                 text: orderDetail.value.shippingAddress.name,
               ),
               ZCText(
-                text: "${orderDetail.value.billingAddress.city}, ${orderDetail.value.billingAddress.street.first}",
+                text:
+                    "${orderDetail.value.billingAddress.city}, ${orderDetail.value.billingAddress.street.first}",
               ),
               ZCText(
-                text: "${orderDetail.value.billingAddress.country}, ${orderDetail.value.billingAddress.postcode}",
+                text:
+                    "${orderDetail.value.billingAddress.country}, ${orderDetail.value.billingAddress.postcode}",
               ),
               ZCText(
-                text: "${orderDetail.value.billingAddress.country}, T: ${orderDetail.value.billingAddress.telephone}",
+                text:
+                    "${orderDetail.value.billingAddress.country}, T: ${orderDetail.value.billingAddress.telephone}",
               ),
             ],
           ),
@@ -303,7 +358,9 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
                 text: "Payment Method",
                 semiBold: true,
               ),
-              Divider(thickness: 1.0,),
+              Divider(
+                thickness: 1.0,
+              ),
               ZCText(
                 text: orderDetail.value.paymentMethod,
               ),
@@ -319,7 +376,9 @@ class _MyOrderDetialScreenState extends State<MyOrderDetialScreen> {
                 text: "Shipping Method",
                 semiBold: true,
               ),
-              Divider(thickness: 1.0,),
+              Divider(
+                thickness: 1.0,
+              ),
               ZCText(
                 text: orderDetail.value.shippingMethod,
               ),

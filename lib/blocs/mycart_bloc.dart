@@ -192,6 +192,34 @@ class MyCartBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  cancelOrder(BuildContext context, String orderId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().cancelOrder(orderId).then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            ZCResponse myOrderResponse = ZCResponse.fromJson(response.data);
+            if (myOrderResponse.success == 1) {
+              AlertUtils.showToast(
+                  "Your order has been cancelled successfully.", context);
+              Navigator.of(context).pop();
+            } else if (myOrderResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast(
+                  "Sorry, We cant cancel your order right now.", context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
   buyNowProduct({BuildContext context, String productSku, String productQty}) {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
@@ -207,6 +235,32 @@ class MyCartBloc extends ChangeNotifier {
               kMoveToLogin(context);
             } else {
               AlertUtils.showToast(wishlistResponse.error, context);
+            }
+          } else {
+            AlertUtils.showToast("Something went wrong", context);
+          }
+        });
+      }
+    });
+  }
+
+  reOrder(BuildContext context, String orderId) {
+    AppUtils.isConnectedToInternet(context).then((isConnected) {
+      if (isConnected) {
+        isLoading = true;
+        notifyListeners();
+        APIService().reOrder(orderId).then((response) {
+          isLoading = false;
+          notifyListeners();
+          if (response.statusCode == 200) {
+            ZCResponse myOrderResponse = ZCResponse.fromJson(response.data);
+            if (myOrderResponse.success == 1) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => MyCartScreen()));
+            } else if (myOrderResponse.success == 3) {
+              kMoveToLogin(context);
+            } else {
+              AlertUtils.showToast("Sorry, Something went wrong.", context);
             }
           } else {
             AlertUtils.showToast("Something went wrong", context);
