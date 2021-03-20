@@ -1,5 +1,5 @@
 class APIClient {
-  static final Base_URL = "http://zaincart.com/rest/V1/";
+  static final Base_URL = "https://zaincart.com/rest/V1/";
 
   static final signup = Base_URL + "customerreg";
   static final login = Base_URL + "customerlogin";

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:zaincart_app/models/filtervalues_response.dart';
 import 'package:zaincart_app/utils/api_client.dart';
 import 'package:zaincart_app/utils/preferences.dart';
 

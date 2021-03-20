@@ -14,6 +14,7 @@ import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
+import 'package:zaincart_app/widgets/zc_products_list.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -211,6 +212,51 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   fontSize: kFontSize,
                                 ),
                                 SizedBox(height: 10.0),
+                                _productDetail.specifications != null
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          new ZCText(
+                                            text: "Varients",
+                                            color: Colors.black54,
+                                            semiBold: true,
+                                            fontSize: kFontSize,
+                                          ),
+                                          SizedBox(height: 8.0),
+                                          Container(
+                                            child: Column(
+                                              children: _productDetail
+                                                  .specifications
+                                                  .map((spec) => Column(
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              ZCText(
+                                                                text:
+                                                                    spec.label,
+                                                              ),
+                                                              ZCText(
+                                                                text: " : ",
+                                                              ),
+                                                              ZCText(
+                                                                text:
+                                                                    spec.value,
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Divider(
+                                                            thickness: 1.0,
+                                                          )
+                                                        ],
+                                                      ))
+                                                  .toList(),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    : new Container(),
+                                SizedBox(height: 10.0),
                                 Container(
                                   width: 180,
                                   padding: EdgeInsets.all(5.0),
@@ -252,7 +298,6 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                               fontSize: kSmallFontSize,
                                               color: Colors.white,
                                             ),
-                                    
                                           ],
                                         ),
                                       ),
@@ -409,7 +454,9 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                             ),
                                           ))
                                       .toList(),
-                                )
+                                ),
+                                SizedBox(height: 10.0,),
+                                ZCProductsList(title: "RELATED PRODUCTS", productList: _productDetail.relatedProduct,)
                               ],
                             ),
                           ),
