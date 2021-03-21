@@ -1,27 +1,48 @@
 class ProductReviewResponse {
   int success;
   String error;
-  List<Review> reviewList;
+  ReviewData reviewData;
 
-  ProductReviewResponse({this.success, this.error, this.reviewList});
+  ProductReviewResponse({this.success, this.error, this.reviewData});
 
   ProductReviewResponse.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     error = json['error'];
-    if (json['data'] != null) {
-      reviewList = new List<Review>();
-      json['data'].forEach((v) {
-        reviewList.add(new Review.fromJson(v));
-      });
-    }
+    reviewData = json['data'] != null ? new ReviewData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
     data['error'] = this.error;
-    if (this.reviewList != null) {
-      data['data'] = this.reviewList.map((v) => v.toJson()).toList();
+    if (this.reviewData != null) {
+      data['data'] = this.reviewData.toJson();
+    }
+    return data;
+  }
+}
+
+class ReviewData {
+  int rating;
+  List<Review> list;
+
+  ReviewData({this.rating, this.list});
+
+  ReviewData.fromJson(Map<String, dynamic> json) {
+    rating = json['rating'];
+    if (json['list'] != null) {
+      list = new List<Review>();
+      json['list'].forEach((v) {
+        list.add(new Review.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['rating'] = this.rating;
+    if (this.list != null) {
+      data['list'] = this.list.map((v) => v.toJson()).toList();
     }
     return data;
   }

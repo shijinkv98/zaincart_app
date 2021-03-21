@@ -31,6 +31,8 @@ class Constants {
   static const ic_filter = 'assets/ic_filter.png';
   static const ic_show = 'assets/ic_show.png';
   static const ic_hide = 'assets/ic_hide.png';
+  static const ic_cart_white = 'assets/ic_cart_white.png';
+  static const ic_feedback = 'assets/ic_feedback.png';
 
   //colors..
 

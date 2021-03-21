@@ -9,7 +9,6 @@ import 'package:zaincart_app/screen/menu/feedback_screen.dart';
 import 'package:zaincart_app/screen/menu/policy_screen.dart';
 import 'package:zaincart_app/screen/menu/terms_conditions_screen.dart';
 import 'package:zaincart_app/screen/notification_list_screen.dart';
-import 'package:zaincart_app/screen/product_search_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -220,9 +219,9 @@ class ZCMenu extends StatelessWidget {
                             },
                             child: Row(
                               children: [
-                                Icon(
-                                  Icons.message_outlined,
-                                  color: Colors.grey,
+                                Image.asset(
+                                  Constants.ic_feedback,
+                                  scale: 7.0,
                                 ),
                                 SizedBox(
                                   width: 8.0,

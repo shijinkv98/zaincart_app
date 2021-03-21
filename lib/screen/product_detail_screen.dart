@@ -14,7 +14,6 @@ import 'package:zaincart_app/utils/app_utils.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
-import 'package:zaincart_app/widgets/zc_button.dart';
 import 'package:zaincart_app/widgets/zc_products_list.dart';
 import 'package:zaincart_app/widgets/zc_text.dart';
 
@@ -225,33 +224,39 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                             fontSize: kFontSize,
                                           ),
                                           SizedBox(height: 8.0),
-                                          Container(
-                                            child: Column(
-                                              children: _productDetail
-                                                  .specifications
-                                                  .map((spec) => Column(
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              ZCText(
-                                                                text:
-                                                                    spec.label,
-                                                              ),
-                                                              ZCText(
-                                                                text: " : ",
-                                                              ),
-                                                              ZCText(
-                                                                text:
-                                                                    spec.value,
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Divider(
-                                                            thickness: 1.0,
-                                                          )
-                                                        ],
-                                                      ))
-                                                  .toList(),
+                                          InkWell(
+                                            onTap: () =>
+                                                _showBottomSheet(context),
+                                            child: Container(
+                                              child: Column(
+                                                children: _productDetail
+                                                    .specifications
+                                                    .map((spec) => Column(
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                ZCText(
+                                                                  text: spec
+                                                                      .label,
+                                                                ),
+                                                                ZCText(
+                                                                  text: " : ",
+                                                                ),
+                                                                ZCText(
+                                                                  text: spec
+                                                                      .value,
+                                                                ),
+                                                                Expanded(child: new Container()),
+                                                                Icon(Icons.keyboard_arrow_down_outlined)
+                                                              ],
+                                                            ),
+                                                            Divider(
+                                                              thickness: 1.0,
+                                                            )
+                                                          ],
+                                                        ))
+                                                    .toList(),
+                                              ),
                                             ),
                                           )
                                         ],
@@ -289,7 +294,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
-                                                  Constants.ic_add_to_cart,
+                                                  Constants.ic_cart_white,
                                                   height: 23.0,
                                                   width: 23.0,
                                                 ),
@@ -313,12 +318,12 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                     InkWell(
                                       onTap: () {
                                         Provider.of<MyCartBloc>(context,
-                                                      listen: false)
-                                                  .buyNowProduct(
-                                                      context: context,
-                                                      productSku: _productDetail
-                                                          .productSku,
-                                                      productQty: 1.toString());
+                                                listen: false)
+                                            .buyNowProduct(
+                                                context: context,
+                                                productSku:
+                                                    _productDetail.productSku,
+                                                productQty: 1.toString());
                                       },
                                       child: Container(
                                         width: 100,
@@ -425,87 +430,95 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                 ),
                                 Column(
                                   children: reviewList
-                                      .map((review) => Container(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    ZCText(
-                                                      text: review.title,
-                                                      semiBold: true,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10.0,
-                                                    ),
-                                                    RatingBar.builder(
-                                                      initialRating: review
-                                                          .rating
-                                                          .toDouble(),
-                                                      itemSize: 10.0,
-                                                      direction:
-                                                          Axis.horizontal,
-                                                      allowHalfRating: false,
-                                                      itemCount: 5,
-                                                      itemPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 1.0),
-                                                      itemBuilder:
-                                                          (context, _) => Icon(
-                                                        Icons.star,
-                                                        color:
-                                                            Constants.zc_orange,
-                                                        size: 10.0,
+                                      .map((review) => Padding(
+                                        padding: const EdgeInsets.only(bottom: 10.0),
+                                        child: Container(
+                                          color: Colors.grey[100],
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      ZCText(
+                                                        text: review.title,
+                                                        semiBold: true,
                                                       ),
-                                                      onRatingUpdate:
-                                                          (double value) {},
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(height: 5.0),
-                                                Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: ZCText(
-                                                      text: review.detail,
-                                                    )),
-                                                Divider(
-                                                  thickness: 1.0,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    ZCText(
-                                                      text: review.nickname,
-                                                      color: Constants
-                                                          .zc_font_light_grey,
-                                                    ),
-                                                    ZCText(
-                                                      text: review
-                                                          .createdDateTime,
-                                                      color: Constants
-                                                          .zc_font_light_grey,
-                                                      fontSize: kSmallFontSize,
-                                                    )
-                                                  ],
-                                                )
-                                              ],
+                                                      SizedBox(
+                                                        width: 10.0,
+                                                      ),
+                                                      RatingBar.builder(
+                                                        initialRating: review
+                                                            .rating
+                                                            .toDouble(),
+                                                        itemSize: 10.0,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        allowHalfRating: false,
+                                                        itemCount: 5,
+                                                        itemPadding:
+                                                            EdgeInsets.symmetric(
+                                                                horizontal: 1.0),
+                                                        itemBuilder:
+                                                            (context, _) => Icon(
+                                                          Icons.star,
+                                                          color:
+                                                              Constants.zc_orange,
+                                                          size: 10.0,
+                                                        ),
+                                                        onRatingUpdate:
+                                                            (double value) {},
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 5.0),
+                                                  Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: ZCText(
+                                                        text: review.detail,
+                                                      )),
+                                                  Divider(
+                                                    thickness: 1.0,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      ZCText(
+                                                        text: review.nickname,
+                                                        color: Constants
+                                                            .zc_font_light_grey,
+                                                      ),
+                                                      ZCText(
+                                                        text: review
+                                                            .createdDateTime,
+                                                        color: Constants
+                                                            .zc_font_light_grey,
+                                                        fontSize: kSmallFontSize,
+                                                      )
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 10.0,)
+                                                ],
+                                              ),
                                             ),
-                                          ))
+                                      ))
                                       .toList(),
                                 ),
                                 SizedBox(
                                   height: 10.0,
                                 ),
-                                _productDetail.relatedProduct.isNotEmpty ? ZCProductsList(
-                                  title: "RELATED PRODUCTS",
-                                  productList: _productDetail.relatedProduct,
-                                ) : new Container()
+                                _productDetail.relatedProduct.isNotEmpty
+                                    ? ZCProductsList(
+                                        title: "RELATED PRODUCTS",
+                                        productList:
+                                            _productDetail.relatedProduct,
+                                      )
+                                    : new Container()
                               ],
                             ),
                           ),
@@ -517,7 +530,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
     );
   }
 
-  getProductDetail(String productId) {
+  getProductDetail(String productId, ) {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         setState(() => isLoading = true);
@@ -552,7 +565,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
                 ProductReviewResponse.fromJson(response.data);
             if (productReviewResponse.success == 1) {
               setState(() {
-                reviewList = productReviewResponse.reviewList;
+                reviewList = productReviewResponse.reviewData.list;
               });
             } else if (productReviewResponse.success == 3) {
               kMoveToLogin(context);
@@ -565,5 +578,27 @@ class ProductDetailState extends State<ProductDetailScreen> {
         });
       }
     });
+  }
+
+  _showBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                height: 300,
+                child: Center(
+                  child: Column(
+                    
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Column(children: _productDetail.productOptions.map((option) => Column(children: [
+                        ZCText(text: option.label,)
+                      ])).toList(),)
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
   }
 }
