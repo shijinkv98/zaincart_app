@@ -31,7 +31,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
 
   @override
   void initState() {
-    getProductDetail(widget.productId);
+    getProductDetail("454");
     getProductReview(widget.productId);
     super.initState();
   }
@@ -212,19 +212,23 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   fontSize: kFontSize,
                                 ),
                                 SizedBox(height: 10.0),
-                                _productDetail.specifications != null
-                                    ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          new ZCText(
-                                            text: "Varients",
-                                            color: Colors.black54,
-                                            semiBold: true,
-                                            fontSize: kFontSize,
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          InkWell(
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        _showBottomSheet(context);
+                                      },
+                                      child: new ZCText(
+                                        text: "Varients",
+                                        color: Colors.black54,
+                                        semiBold: true,
+                                        fontSize: kFontSize,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    _productDetail.specifications != null
+                                        ? InkWell(
                                             onTap: () =>
                                                 _showBottomSheet(context),
                                             child: Container(
@@ -246,8 +250,11 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                                                   text: spec
                                                                       .value,
                                                                 ),
-                                                                Expanded(child: new Container()),
-                                                                Icon(Icons.keyboard_arrow_down_outlined)
+                                                                Expanded(
+                                                                    child:
+                                                                        new Container()),
+                                                                Icon(Icons
+                                                                    .keyboard_arrow_down_outlined)
                                                               ],
                                                             ),
                                                             Divider(
@@ -259,9 +266,9 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                               ),
                                             ),
                                           )
-                                        ],
-                                      )
-                                    : new Container(),
+                                        : new Container()
+                                  ],
+                                ),
                                 SizedBox(height: 10.0),
                                 Row(
                                   children: [
@@ -431,9 +438,10 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                 Column(
                                   children: reviewList
                                       .map((review) => Padding(
-                                        padding: const EdgeInsets.only(bottom: 10.0),
-                                        child: Container(
-                                          color: Colors.grey[100],
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10.0),
+                                            child: Container(
+                                              color: Colors.grey[100],
                                               padding: EdgeInsets.all(10.0),
                                               child: Column(
                                                 children: [
@@ -458,14 +466,16 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                                             Axis.horizontal,
                                                         allowHalfRating: false,
                                                         itemCount: 5,
-                                                        itemPadding:
-                                                            EdgeInsets.symmetric(
-                                                                horizontal: 1.0),
+                                                        itemPadding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    1.0),
                                                         itemBuilder:
-                                                            (context, _) => Icon(
+                                                            (context, _) =>
+                                                                Icon(
                                                           Icons.star,
-                                                          color:
-                                                              Constants.zc_orange,
+                                                          color: Constants
+                                                              .zc_orange,
                                                           size: 10.0,
                                                         ),
                                                         onRatingUpdate:
@@ -498,15 +508,18 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                                             .createdDateTime,
                                                         color: Constants
                                                             .zc_font_light_grey,
-                                                        fontSize: kSmallFontSize,
+                                                        fontSize:
+                                                            kSmallFontSize,
                                                       )
                                                     ],
                                                   ),
-                                                  SizedBox(height: 10.0,)
+                                                  SizedBox(
+                                                    height: 10.0,
+                                                  )
                                                 ],
                                               ),
                                             ),
-                                      ))
+                                          ))
                                       .toList(),
                                 ),
                                 SizedBox(
@@ -530,7 +543,9 @@ class ProductDetailState extends State<ProductDetailScreen> {
     );
   }
 
-  getProductDetail(String productId, ) {
+  getProductDetail(
+    String productId,
+  ) {
     AppUtils.isConnectedToInternet(context).then((isConnected) {
       if (isConnected) {
         setState(() => isLoading = true);
@@ -582,23 +597,60 @@ class ProductDetailState extends State<ProductDetailScreen> {
 
   _showBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
-            context: context,
-            builder: (BuildContext context) {
-              return Container(
-                height: 300,
-                child: Center(
-                  child: Column(
-                    
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Column(children: _productDetail.productOptions.map((option) => Column(children: [
-                        ZCText(text: option.label,)
-                      ])).toList(),)
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 300,
+          padding: EdgeInsets.all(18.0),
+          child: _productDetail.productOptions != null
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: _productDetail.productOptions
+                          .map((option) => Column(children: [
+                                ZCText(
+                                  text: option.label + " : ",
+                                  semiBold: true,
+                                ),
+                                Container(
+                                  height: 60.0,
+                                  child: Wrap(
+                                    direction: Axis.vertical,
+                                    children: option.value
+                                        .map((opItem) => Row(
+                                              children: [
+                                                Checkbox(
+                                                  value: false,
+                                                  onChanged: (val) {
+                                                    print(val);
+                                                  },
+                                                  checkColor: Colors.grey[200],
+                                                  activeColor: Colors.grey,
+                                                ),
+                                                ZCText(
+                                                  text: opItem.optionTitle,
+                                                )
+                                              ],
+                                            ))
+                                        .toList(),
+                                  ),
+                                )
+                              ]))
+                          .toList(),
+                    )
+                  ],
+                )
+              : Center(
+                  child: ZCText(
+                  text: "No Product options",
+                )),
+        );
+      },
+    );
   }
 }
