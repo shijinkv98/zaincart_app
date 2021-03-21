@@ -219,11 +219,21 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                       onTap: () {
                                         _showBottomSheet(context);
                                       },
-                                      child: new ZCText(
-                                        text: "Varients",
-                                        color: Colors.black54,
-                                        semiBold: true,
-                                        fontSize: kFontSize,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          new ZCText(
+                                            text: "Varients",
+                                            color: Colors.black54,
+                                            semiBold: true,
+                                            fontSize: kFontSize,
+                                          ),
+                                          _productDetail.specifications != null
+                                              ? new Container()
+                                              : Icon(Icons
+                                                  .keyboard_arrow_down_outlined)
+                                        ],
                                       ),
                                     ),
                                     SizedBox(height: 8.0),
@@ -600,17 +610,52 @@ class ProductDetailState extends State<ProductDetailScreen> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 300,
-          padding: EdgeInsets.all(18.0),
+          height: 400,
           child: _productDetail.productOptions != null
               ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: ZCText(
+                            text: "CHANGE VARIENTS",
+                            color: Constants.zc_font_grey,
+                          ),
+                        ),
+                        Expanded(child: Container()),
+                        Container(
+                          width: 1.0,
+                          height: 45.0,
+                          color: Constants.zc_font_light_grey,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: ZCText(
+                            text: "CANCEL",
+                            semiBold: true,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15.0),
+                          color: Constants.zc_orange,
+                          child: ZCText(
+                            text: "APPLY",
+                            color: Colors.white,
+                            semiBold: true,
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      height: 1.0,
+                      color: Constants.zc_font_light_grey,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: _productDetail.productOptions
                           .map((option) => Column(children: [
                                 ZCText(
@@ -618,24 +663,62 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   semiBold: true,
                                 ),
                                 Container(
-                                  height: 60.0,
+                                  height: 40.0,
                                   child: Wrap(
+                                    alignment: WrapAlignment.start,
                                     direction: Axis.vertical,
                                     children: option.value
-                                        .map((opItem) => Row(
-                                              children: [
-                                                Checkbox(
-                                                  value: false,
-                                                  onChanged: (val) {
-                                                    print(val);
-                                                  },
-                                                  checkColor: Colors.grey[200],
-                                                  activeColor: Colors.grey,
+                                        .map((opItem) => InkWell(
+                                              onTap: () {
+                                                var pId = _productDetail
+                                                    .childProduct
+                                                    .where((child) =>
+                                                        child.productSku ==
+                                                        opItem.sku)
+                                                    .first
+                                                    .productId;
+                                                getProductDetail(pId);
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                        height: 20.0,
+                                                        width: 20.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              color: Constants
+                                                                  .zc_font_grey),
+                                                          color: opItem
+                                                                      .sku ==
+                                                                  _productDetail
+                                                                      .productSku
+                                                              ? Constants
+                                                                  .zc_orange
+                                                              : Colors.white,
+                                                        ),
+                                                        child: opItem
+                                                                    .sku ==
+                                                                _productDetail
+                                                                    .productSku
+                                                            ? Icon(
+                                                                Icons.check,
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 17.0,
+                                                              )
+                                                            : new Container()),
+                                                    SizedBox(width: 5.0),
+                                                    ZCText(
+                                                      text: opItem.optionTitle,
+                                                    )
+                                                  ],
                                                 ),
-                                                ZCText(
-                                                  text: opItem.optionTitle,
-                                                )
-                                              ],
+                                              ),
                                             ))
                                         .toList(),
                                   ),
