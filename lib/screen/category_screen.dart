@@ -316,7 +316,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         categoryId:
             Provider.of<HomeBloc>(context, listen: false).selectedCategoryId,
         pageNo: "1",
-        newest: _radioGroup.value == 1 ? "1" : "0",
-        priceVal: _radioGroup == 1 ? "asc" : _radioGroup.value);
+        newest: _radioGroup.value == "1" ? "1" : "0",
+        priceVal: _radioGroup.value == "1" ? "asc" : _radioGroup.value);
   }
 }

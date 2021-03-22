@@ -130,7 +130,7 @@ class ZCCategoryItem extends StatelessWidget {
                         width: 3.0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 5.0),
+                        padding: const EdgeInsets.only(right: 10.0),
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 10,
@@ -159,8 +159,6 @@ class ZCCategoryItem extends StatelessWidget {
                                             .wishListAdd(
                                                 context, product.productId);
                                       }
-                                      print(
-                                          "Add to faviorate button clicked.....");
                                     },
                                   )),
                         ),

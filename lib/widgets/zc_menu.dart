@@ -221,7 +221,7 @@ class ZCMenu extends StatelessWidget {
                               children: [
                                 Image.asset(
                                   Constants.ic_feedback,
-                                  scale: 7.0,
+                                  //scale: 7.0,
                                 ),
                                 SizedBox(
                                   width: 8.0,
