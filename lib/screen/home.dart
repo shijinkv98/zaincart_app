@@ -60,13 +60,13 @@ class HomeState extends State<Home> {
         currentTab = index;
         switch (index) {
           case 0:
-            _title = "My Wallet";
+            _title = "Home";
             break;
           case 1:
-            _title = "Register a Diamond";
+            _title = "Wishlist";
             break;
           case 2:
-            _title = "Search";
+            _title = "Cart";
             break;
           case 3:
             _title = "Requests";
