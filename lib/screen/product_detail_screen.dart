@@ -31,7 +31,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
 
   @override
   void initState() {
-    getProductDetail("454");
+    getProductDetail(widget.productId);
     getProductReview(widget.productId);
     super.initState();
   }

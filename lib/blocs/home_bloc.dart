@@ -74,6 +74,7 @@ class HomeBloc extends ChangeNotifier {
           isLoading = false;
           notifyListeners();
           if (response.statusCode == 200) {
+            _wishlistItems.clear();
             WishlistResponse wishlistResponse =
                 WishlistResponse.fromJson(response.data);
             if (wishlistResponse.success == 0) {
@@ -188,6 +189,7 @@ class HomeBloc extends ChangeNotifier {
                 WishlistAddResponse.fromJson(response.data);
             if (wishlistResponse.success == 0) {
               AlertUtils.showToast(wishlistResponse.error, context);
+              getWishlistItems(context);
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
             } else if (wishlistResponse.success == 1) {
@@ -214,6 +216,7 @@ class HomeBloc extends ChangeNotifier {
                 WishlistAddResponse.fromJson(response.data);
             if (wishlistResponse.success == 0) {
               AlertUtils.showToast(wishlistResponse.error, context);
+              getWishlistItems(context);
             } else if (wishlistResponse.success == 3) {
               kMoveToLogin(context);
             } else if (wishlistResponse.success == 1) {
