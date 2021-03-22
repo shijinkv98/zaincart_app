@@ -556,10 +556,7 @@ class APIService {
   //checkoutdetails///
   Future<Response> getCheckoutDetails(dynamic address) async {
     var url = APIClient.checkoutDetails;
-    var queryParams = {
-      "customertoken": "$token",
-      "CustomerId" : "$customerId"
-    };
+    var queryParams = {"customertoken": "$token", "CustomerId": "$customerId"};
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
     print("RESPONSE:::" + response.data.toString());
@@ -583,14 +580,13 @@ class APIService {
   }
 
   //Buy now///
-  Future<Response> buyNowProduct(
-      {String productSku, String qty}) async {
+  Future<Response> buyNowProduct({String productSku, String qty}) async {
     var url = APIClient.buynow;
-   var queryParams = {
+    var queryParams = {
       "customer_id": "$customerId",
       "customertoken": "$token",
-      "Product_sku" : "$productSku",
-      "Product_qty" : "$qty"
+      "Product_sku": "$productSku",
+      "Product_qty": "$qty"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);
@@ -604,7 +600,24 @@ class APIService {
     var queryParams = {
       "customer_id": "$customerId",
       "customertoken": "$token",
-      "orderid" : "$orderId"
+      "orderid": "$orderId"
+    };
+    print("URL:::" + url + "$queryParams");
+    Response response = await dio.post(url, queryParameters: queryParams);
+    print("RESPONSE:::" + response.data.toString());
+    return response;
+  }
+
+  //sort product///
+  Future<Response> sortProducts(
+      {String subCategory,String pageNo, String newest, String priceVal}) async {
+    var url = APIClient.sortProducts(pageNo);
+    var queryParams = {
+      "Customer_id": "$customerId",
+      "customertoken": "$token",
+      "category": "$subCategory",
+      "newest": "$newest",
+      "Price_val": "$priceVal"
     };
     print("URL:::" + url + "$queryParams");
     Response response = await dio.post(url, queryParameters: queryParams);

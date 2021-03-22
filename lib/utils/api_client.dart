@@ -64,4 +64,7 @@ class APIClient {
   static final contactus = Base_URL + "contactus";
   static final buynow = Base_URL + "buynow";
   static final reorder = Base_URL + "reorder";
+  static sortProducts(String pageNo) {
+    return Base_URL + "sortproducts/$pageNo";
+  }
 }

@@ -6,7 +6,6 @@ import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/profile_bloc.dart';
 import 'package:zaincart_app/screen/category_screen.dart';
 import 'package:zaincart_app/screen/grocery_screen.dart';
-import 'package:zaincart_app/screen/order_success_screen.dart';
 import 'package:zaincart_app/screen/product_search_screen.dart';
 import 'package:zaincart_app/utils/constants.dart';
 import 'package:zaincart_app/widgets/zc_account.dart';

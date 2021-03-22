@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
@@ -21,6 +23,7 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   bool isLoading = false;
   //var subCategory = ValueNotifier("");
+  var _radioGroup = ValueNotifier("");
 
   @override
   void initState() {
@@ -144,6 +147,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               }),
                         )),
                         InkWell(
+                          onTap: () => _showSortPopup(context),
+                          child: Container(
+                            width: 40,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.sort,
+                                  size: 8.0,
+                                ),
+                                ZCText(
+                                  text: "Sort",
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (BuildContext context) =>
@@ -186,5 +206,117 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ],
               )),
     );
+  }
+
+  _showSortPopup(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Hello there",
+      barrierDismissible: true,
+      transitionDuration: Duration(milliseconds: 200), //This is time
+      barrierColor: Colors.black.withOpacity(0.6), // Add this property is color
+      pageBuilder: (BuildContext context, Animation animation,
+          Animation secondaryAnimation) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Material(
+              color: Colors.transparent,
+              child: new Column(
+                children: <Widget>[
+                  Container(
+                    color: Colors.white,
+                    height: 300.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: Container()),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 20.0, top: 50.0),
+                              child: IconButton(
+                                  icon: Icon(
+                                    Icons.close,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: ZCText(
+                            text: "SORT BY",
+                          ),
+                        ),
+                        ValueListenableBuilder(
+                            valueListenable: _radioGroup,
+                            builder: (context, radio, child) => new Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: [
+                                        new Radio(
+                                          value: "1",
+                                          groupValue: radio,
+                                          onChanged: (val) => _sortProduct(val),
+                                        ),
+                                        new Text(
+                                          'Newest First',
+                                          style: new TextStyle(fontSize: 16.0),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        new Radio(
+                                          value: "asc",
+                                          groupValue: radio,
+                                          onChanged: (val) => _sortProduct(val),
+                                        ),
+                                        new Text(
+                                          'Price - low to high',
+                                          style: new TextStyle(fontSize: 16.0),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        new Radio(
+                                          value: "desc",
+                                          groupValue: radio,
+                                          onChanged: (val) => _sortProduct(val),
+                                        ),
+                                        new Text(
+                                          'Price - high to low',
+                                          style: new TextStyle(fontSize: 16.0),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ))
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  _sortProduct(String sortBy) {
+    _radioGroup.value = sortBy;
+    Provider.of<HomeBloc>(context, listen: false).getSortProducts(
+        context: context,
+        categoryId:
+            Provider.of<HomeBloc>(context, listen: false).selectedCategoryId,
+        pageNo: "1",
+        newest: _radioGroup.value == 1 ? "1" : "0",
+        priceVal: _radioGroup == 1 ? "asc" : _radioGroup.value);
   }
 }
