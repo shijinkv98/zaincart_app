@@ -14,7 +14,7 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   bool isLoading = false;
   TextEditingController _reasonController = new TextEditingController();
-  var priceRange = ValueNotifier(0.0);
+  var priceRange = ValueNotifier(1.0);
 
   @override
   Widget build(BuildContext context) {
@@ -53,99 +53,132 @@ class _FilterScreenState extends State<FilterScreen> {
                     children: [
                       Column(
                         children: homeBloc.filterValues
-                            .map((e) => ExpansionTile(
-                                  title: ZCText(
-                                    text: e.key,
-                                    color: Constants.zc_orange,
-                                  ),
-                                  children: e.values
-                                      .map((value) => InkWell(
-                                            onTap: () {
-                                              homeBloc.selectedSubCategoryId =
-                                                  value.value;
-                                              homeBloc.getFilterProducts(
-                                                  context: context,
-                                                  categoryId: homeBloc
-                                                      .selectedCategoryId,
-                                                  filterVal: value.value,
-                                                  key: e.key);
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 40.0,
-                                                  top: 3.0,
-                                                  bottom: 3.0),
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: ZCText(
-                                                  text: value.label +
-                                                      " (${value.count})",
-                                                  textAlign: TextAlign.left,
+                            .map((filter) => filter.code != "price"
+                                ? ExpansionTile(
+                                    title: ZCText(
+                                      text: filter.key,
+                                      color: Constants.zc_orange,
+                                    ),
+                                    children: filter.values
+                                        .map((value) => InkWell(
+                                              onTap: () {
+                                                homeBloc.selectedSubCategoryId =
+                                                    value.value;
+                                                homeBloc.getFilterProducts(
+                                                    context: context,
+                                                    categoryId: homeBloc
+                                                        .selectedCategoryId,
+                                                    filterVal: value.value,
+                                                    key: filter.key);
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 40.0,
+                                                    top: 3.0,
+                                                    bottom: 3.0),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: ZCText(
+                                                    text: value.label +
+                                                        " (${value.count})",
+                                                    textAlign: TextAlign.left,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ))
-                                      .toList(),
-                                ))
+                                            ))
+                                        .toList(),
+                                  )
+                                : ExpansionTile(
+                                    title: ZCText(
+                                      text: "Price",
+                                      color: Constants.zc_orange,
+                                    ),
+                                    children: <Widget>[
+                                      ValueListenableBuilder(
+                                          valueListenable: priceRange,
+                                          builder: (context, range, child) =>
+                                              Column(
+                                                children: [
+                                                  ZCText(
+                                                    text:
+                                                        "QAR: ${range.toStringAsFixed(2)}",
+                                                  ),
+                                                  SliderTheme(
+                                                    data:
+                                                        SliderTheme.of(context)
+                                                            .copyWith(
+                                                      valueIndicatorColor:
+                                                          Colors.blue,
+                                                      inactiveTrackColor:
+                                                          Constants
+                                                              .zc_font_light_grey,
+                                                      activeTrackColor:
+                                                          Constants.zc_orange,
+                                                      thumbColor:
+                                                          Constants.zc_orange,
+                                                      overlayColor:
+                                                          Color(0x29EB1555),
+                                                      thumbShape:
+                                                          RoundSliderThumbShape(
+                                                              enabledThumbRadius:
+                                                                  15.0),
+                                                      overlayShape:
+                                                          RoundSliderOverlayShape(
+                                                              overlayRadius:
+                                                                  20.0),
+                                                    ),
+                                                    child: Slider(
+                                                      value: range,
+                                                      onChanged: (price) {
+                                                        print(price);
+                                                        priceRange.value =
+                                                            price;
+                                                      },
+                                                      onChangeEnd: (price) {
+                                                        // homeBloc.selectedSubCategoryId =
+                                                        //       value.value;
+                                                        homeBloc.getFilterProducts(
+                                                            context: context,
+                                                            categoryId: homeBloc
+                                                                .selectedCategoryId,
+                                                            filterVal: price
+                                                                .toStringAsFixed(2),
+                                                            key: filter.key);
+                                                      },
+                                                      min: filter.minPrice
+                                                          .toDouble(),
+                                                      max: filter.maxPrice
+                                                          .toDouble(),
+                                                      label: range.toString(),
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      ZCText(
+                                                        text:
+                                                            "QAR: ${filter.minPrice.toString()}",
+                                                        fontSize:
+                                                            kSmallFontSize,
+                                                      ),
+                                                      ZCText(
+                                                        text:
+                                                            "QAR: ${filter.maxPrice.toString()}",
+                                                        fontSize:
+                                                            kSmallFontSize,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              )),
+                                    ],
+                                  ))
                             .toList(),
                       ),
-                      // ExpansionTile(
-                      //   title: ZCText(
-                      //     text: "Price",
-                      //     semiBold: true,
-                      //   ),
-                      //   children: <Widget>[
-                      //     ValueListenableBuilder(
-                      //         valueListenable: priceRange,
-                      //         builder: (context, range, child) => Column(
-                      //               children: [
-                      //                 ZCText(
-                      //                   text:
-                      //                       "QAR: ${range.toInt().toString()}",
-                      //                 ),
-                      //                 SliderTheme(
-                      //                   data: SliderTheme.of(context).copyWith(
-                      //                     valueIndicatorColor: Colors.blue,
-                      //                     inactiveTrackColor:
-                      //                         Constants.zc_font_light_grey,
-                      //                     activeTrackColor: Constants.zc_orange,
-                      //                     thumbColor: Constants.zc_orange,
-                      //                     overlayColor: Color(0x29EB1555),
-                      //                     thumbShape: RoundSliderThumbShape(
-                      //                         enabledThumbRadius: 15.0),
-                      //                     overlayShape: RoundSliderOverlayShape(
-                      //                         overlayRadius: 20.0),
-                      //                   ),
-                      //                   child: Slider(
-                      //                     value: range,
-                      //                     onChanged: (price) {
-                      //                       print(price);
-                      //                       priceRange.value = price;
-                      //                     },
-                      //                     min: 0.0,
-                      //                     max: 40.0,
-                      //                     label: range.toString(),
-                      //                   ),
-                      //                 ),
-                      //                 Row(
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceBetween,
-                      //                   children: [
-                      //                     ZCText(
-                      //                       text: "QAR:00",
-                      //                       fontSize: kSmallFontSize,
-                      //                     ),
-                      //                     ZCText(
-                      //                       text: "QAR:40",
-                      //                       fontSize: kSmallFontSize,
-                      //                     )
-                      //                   ],
-                      //                 ),
-                      //               ],
-                      //             )),
-                      //   ],
-                      // ),
                       SizedBox(
                         height: 30.0,
                       ),
