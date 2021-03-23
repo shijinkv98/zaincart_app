@@ -149,13 +149,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         InkWell(
                           onTap: () => _showSortPopup(context),
                           child: Container(
-                            width: 40,
+                            width: 50,
                             child: Row(
                               children: [
-                                Icon(
-                                  Icons.sort,
-                                  size: 8.0,
-                                ),
+                                Image.asset(Constants.ic_sort, height: 14.0, width: 14.0,),
+                                SizedBox(width: 3.0,),
                                 ZCText(
                                   text: "Sort",
                                 ),

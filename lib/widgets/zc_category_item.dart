@@ -98,7 +98,7 @@ class ZCCategoryItem extends StatelessWidget {
                                   MainAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  Constants.ic_add_to_cart,
+                                  Constants.ic_cart_white,
                                   height: 23.0,
                                   width: 23.0,
                                 ),

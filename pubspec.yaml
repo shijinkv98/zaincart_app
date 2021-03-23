@@ -62,6 +62,7 @@ flutter:
     - assets/ic_hide.png
     - assets/ic_cart_white.png
     - assets/ic_feedback.png
+    - assets/ic_sort.png
     
 
   # fonts:
