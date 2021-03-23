@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:zaincart_app/blocs/home_bloc.dart';
 import 'package:zaincart_app/blocs/mycart_bloc.dart';
 import 'package:zaincart_app/models/product_detail_response.dart';
@@ -371,11 +372,24 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 10.0,
+                                  height: 15.0,
                                 ),
-                                ZCText(
-                                  text: "Share this app",
-                                  color: Colors.grey,
+                                InkWell(
+                                  onTap: () =>
+                                      shareProduct(_productDetail.productUrl),
+                                  child: Row(
+                                    children: [
+                                      ZCText(
+                                        text: "Share",
+                                        color: Colors.grey,
+                                      ),
+                                      Icon(
+                                        Icons.share,
+                                        color: Constants.zc_font_light_grey,
+                                        size: 15.0,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 10.0,
@@ -693,16 +707,14 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                                           border: Border.all(
                                                               color: Constants
                                                                   .zc_font_grey),
-                                                          color: opItem
-                                                                      .sku ==
+                                                          color: opItem.sku ==
                                                                   _productDetail
                                                                       .productSku
                                                               ? Constants
                                                                   .zc_orange
                                                               : Colors.white,
                                                         ),
-                                                        child: opItem
-                                                                    .sku ==
+                                                        child: opItem.sku ==
                                                                 _productDetail
                                                                     .productSku
                                                             ? Icon(
@@ -735,5 +747,12 @@ class ProductDetailState extends State<ProductDetailScreen> {
         );
       },
     );
+  }
+
+  shareProduct(String url) {
+    final RenderBox renderBox = context.findRenderObject();
+    Share.share(_productDetail.productUrl,
+        sharePositionOrigin:
+            renderBox.localToGlobal(Offset.zero) & renderBox.size);
   }
 }
