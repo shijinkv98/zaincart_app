@@ -47,8 +47,17 @@ class Details {
   String mail;
   String address;
   String workingtime;
+  String latitude;
+  String longitude;
 
-  Details({this.phone, this.mobile, this.mail, this.address, this.workingtime});
+  Details(
+      {this.phone,
+      this.mobile,
+      this.mail,
+      this.address,
+      this.workingtime,
+      this.latitude,
+      this.longitude});
 
   Details.fromJson(Map<String, dynamic> json) {
     phone = json['phone'];
@@ -56,6 +65,8 @@ class Details {
     mail = json['mail'];
     address = json['address'];
     workingtime = json['workingtime'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +76,8 @@ class Details {
     data['mail'] = this.mail;
     data['address'] = this.address;
     data['workingtime'] = this.workingtime;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
     return data;
   }
 }

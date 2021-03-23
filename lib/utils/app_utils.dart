@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:zaincart_app/utils/dialog_utils.dart';
 
 class AppUtils {
@@ -80,4 +81,10 @@ class AppUtils {
   //     return null;
   //   }
   // }
+
+  static void launchMapwithlocation({String lat, String lang}) {
+    var latitude = double.parse(lat);
+    var longitude = double.parse(lang);
+    MapsLauncher.launchCoordinates(latitude, longitude);
+  }
 }

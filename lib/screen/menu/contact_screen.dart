@@ -110,6 +110,19 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                               ZCText(
                                   text: details.value.workingtime,
                                   fontSize: kFieldFontSize),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              InkWell(
+                                  onTap: () {
+                                    AppUtils.launchMapwithlocation(
+                                        lang: details.value.longitude,
+                                        lat: details.value.latitude);
+                                  },
+                                  child: ZCText(
+                                    text: "Directions ",
+                                    color: Colors.blue,
+                                  ))
                             ],
                           ),
                   )),
