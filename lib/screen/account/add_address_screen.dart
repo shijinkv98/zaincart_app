@@ -8,6 +8,7 @@ import 'package:zaincart_app/utils/preferences.dart';
 import 'package:zaincart_app/widgets/zc_appbar_title.dart';
 import 'package:zaincart_app/widgets/zc_button.dart';
 import 'package:zaincart_app/widgets/zc_dropdown.dart';
+import 'package:zaincart_app/widgets/zc_text.dart';
 import 'package:zaincart_app/widgets/zc_textformfield.dart';
 
 class AddAddressScreen extends StatefulWidget {
@@ -31,6 +32,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Address _address = new Address();
   bool isLoading = false;
   String _country;
+  var shippingAddress = ValueNotifier(1);
+  var billingAddress = ValueNotifier(0);
 
   @override
   void initState() {
@@ -172,6 +175,59 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             emptyValidatorMsg: "Should not be empty",
                           ),
                           SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: [
+                              ValueListenableBuilder(
+                                  valueListenable: shippingAddress,
+                                  builder: (context, ch, child) => Checkbox(
+                                        value: ch == 1 ? true : false,
+                                        onChanged: (val) {
+                                          if (val) {
+                                            if (billingAddress.value == 1) {
+                                              billingAddress.value = 0;
+                                            }
+                                            shippingAddress.value = 1;
+                                          } else {
+                                            shippingAddress.value = 0;
+                                          }
+                                        },
+                                        checkColor: Colors.grey[200],
+                                        activeColor: Colors.grey,
+                                      )),
+                              ZCText(
+                                text: "Set as default shipping address.",
+                                fontSize: kSmallFontSize,
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              ValueListenableBuilder(
+                                  valueListenable: billingAddress,
+                                  builder: (context, ch, child) => Checkbox(
+                                        value: ch == 1 ? true : false,
+                                        onChanged: (val) {
+                                          if (val) {
+                                            if (shippingAddress.value == 1) {
+                                              shippingAddress.value = 0;
+                                            }
+                                            billingAddress.value = 1;
+                                          } else {
+                                            billingAddress.value = 0;
+                                          }
+                                        },
+                                        checkColor: Colors.grey[200],
+                                        activeColor: Colors.grey,
+                                      )),
+                              ZCText(
+                                text: "Set as default billing address.",
+                                fontSize: kSmallFontSize,
+                              )
+                            ],
+                          ),
+                          SizedBox(
                             height: 20.0,
                           ),
                           Padding(
@@ -207,8 +263,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       _address.state = _stateController.text;
       _address.customerId = await Preferences.get(PrefKey.id);
       _address.customertoken = await Preferences.get(PrefKey.token);
-      _address.defaultbilling = 1;
-      _address.defaultshipping = 1;
+      _address.defaultbilling = billingAddress.value;
+      _address.defaultshipping = shippingAddress.value;
       _address.saveinaddressbook = "1";
       widget.address != null
           ? Provider.of<ProfileBloc>(context, listen: false)
