@@ -108,6 +108,7 @@ class HomeState extends State<Home> {
       // eventually breaking the app
       child: Scaffold(
         // indexed stack shows only one child
+        key: drawerScaffoldKey,
         body: IndexedStack(
           index: currentTab,
           children: tabs.map((e) => e.page).toList(),

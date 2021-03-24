@@ -71,7 +71,8 @@ class OrderSuccessScreen extends StatelessWidget {
               ZCButton(
                 title: "CONTINUE SHOPPING",
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => Home()));
                 },
               )
             ],
