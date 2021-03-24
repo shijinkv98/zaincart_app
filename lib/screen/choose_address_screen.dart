@@ -283,16 +283,17 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         ZCButton(
                           title: "NEXT",
                           onPressed: () {
-                            if (_paymentMethod.value.isNotEmpty &&
-                                _shippingMethod.value.isNotEmpty) {
+                            if (_paymentMethod.value.isEmpty) {
+                              AlertUtils.showToast("Select Payment Method", context);
+                            } else if (_shippingMethod.value.isEmpty) {
+                              AlertUtils.showToast("Select Shipping Method", context);
+                            } else {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       PlaceOrderScreen(
                                         paymentMethod: _paymentMethod.value,
                                         shippingMethod: _shippingMethod.value,
                                       )));
-                            } else {
-                              AlertUtils.showToast("Select method", context);
                             }
                           },
                         )
