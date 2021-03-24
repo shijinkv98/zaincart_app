@@ -29,6 +29,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
   bool isLoading = false;
   ProductDetail _productDetail;
   List<Review> reviewList = List<Review>();
+  var isFavorite = ValueNotifier(false);
 
   @override
   void initState() {
@@ -101,36 +102,42 @@ class ProductDetailState extends State<ProductDetailScreen> {
                                       ),
                                     ))
                                 : new Container(),
-                            Positioned(
-                                right: 10.0,
-                                top: 10.0,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  radius: 18,
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: _productDetail.productWishlisted
-                                        ? Icon(
-                                            Icons.favorite,
-                                            color: Constants.zc_orange_dark,
-                                          )
-                                        : Icon(Icons.favorite_border_outlined),
-                                    color: _productDetail.productWishlisted
-                                        ? Constants.zc_orange_dark
-                                        : Colors.grey,
-                                    onPressed: () {
-                                      _productDetail.productWishlisted
-                                          ? Provider.of<HomeBloc>(context,
-                                                  listen: false)
-                                              .wishListRemove(context,
-                                                  _productDetail.productId)
-                                          : Provider.of<HomeBloc>(context,
-                                                  listen: false)
-                                              .wishListAdd(context,
-                                                  _productDetail.productId);
-                                    },
-                                  ),
-                                ))
+                            ValueListenableBuilder(
+                                valueListenable: isFavorite,
+                                builder: (context, isFav, child) => Positioned(
+                                    right: 10.0,
+                                    top: 10.0,
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      radius: 18,
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        icon: isFav
+                                            ? Icon(
+                                                Icons.favorite,
+                                                color: Constants.zc_orange_dark,
+                                              )
+                                            : Icon(
+                                                Icons.favorite_border_outlined),
+                                        color: isFav
+                                            ? Constants.zc_orange_dark
+                                            : Colors.grey,
+                                        onPressed: () {
+                                          isFav
+                                              ? isFavorite.value = false
+                                              : isFavorite.value = true;
+                                          isFav
+                                              ? Provider.of<HomeBloc>(context,
+                                                      listen: false)
+                                                  .wishListRemove(context,
+                                                      _productDetail.productId)
+                                              : Provider.of<HomeBloc>(context,
+                                                      listen: false)
+                                                  .wishListAdd(context,
+                                                      _productDetail.productId);
+                                        },
+                                      ),
+                                    )))
                           ],
                         ),
                         Align(
@@ -584,6 +591,7 @@ class ProductDetailState extends State<ProductDetailScreen> {
               setState(() {
                 _productDetail = productDetailResponse.productDetail;
               });
+              isFavorite.value = _productDetail.productWishlisted;
             }
           } else {
             AlertUtils.showToast("Login Failed", context);
