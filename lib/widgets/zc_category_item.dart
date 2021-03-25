@@ -30,7 +30,7 @@ class ZCCategoryItem extends StatelessWidget {
                 children: [
                   Container(
                       height: 90.0,
-                      width: 130.0,
+                      width: 110.0,
                       child: ZCNetworkImage(
                         product.productImage,
                       )),

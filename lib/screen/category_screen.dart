@@ -156,6 +156,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 SizedBox(width: 3.0,),
                                 ZCText(
                                   text: "Sort",
+                                  color: Constants.zc_font_grey,
                                 ),
                               ],
                             ),
@@ -178,6 +179,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ),
                                 ZCText(
                                   text: "FIlter",
+                                  color: Constants.zc_font_grey,
                                 ),
                               ],
                             ),
